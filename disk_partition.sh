@@ -1,5 +1,5 @@
 #！/bin/bash
-# 磁盘分区
+# 阿里云ECS 磁盘分区
 function disk_partition(){
 	echo -e "${RED}开始分区...${END}"
 
