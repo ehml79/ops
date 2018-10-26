@@ -1,10 +1,20 @@
 #!/bin/bash
 
 install_nginx(){
-	# centos
-	yum -y install pcre-devel openssl-devel
-	# ubuntu
-	apt install  libpcre3 libpcre3-dev  zlib1g-dev openssl
+
+	# 判断系统
+	if [ -f /etc/os-release ];then
+		echo 'ubuntu'
+		apt install  libpcre3 libpcre3-dev  zlib1g-dev openssl
+	elif [ -f /etc/redhat-release ];then
+		echo 'centOS'
+		yum -y install pcre-devel openssl-devel
+	else
+		echo 'unknow OS'
+		exit 1
+	fi
+
+
 	mkdir -p /data/service/src
 	wget http://nginx.org/download/nginx-1.14.0.tar.gz  -P /data/service/src
 	cd /data/service/src ; tar xf  nginx-1.14.0.tar.gz
