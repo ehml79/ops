@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# vars
 # 备份mysql数据脚本
 
+# vars
 date=$(date +%F)
 time=$(date +%H-%M-%S)
 backup_dir=/data/backup/database/${date}/${time}
