@@ -16,6 +16,7 @@ umysql="/data/service/mysql/bin/mysql"
 if [ ! -e ${backup_dir} ];then
     mkdir -p ${backup_dir}
 fi
+
 # 删除以前备份
 
 # 备份 
@@ -44,7 +45,14 @@ ${umysql} ${mycnf}  -uroot  -A -N  -e  "show databases" | while read line
     done
 }
 
+function compress(){
+    cd /data/backup/database/${date}
+    tar -czf ${time}.tar.gz ${time}
+    rm -fr ${time}
+}
+
 
 echo "${date} ${time} 开始备份" >> $backup_log
 mysqlbackup
+compress
 echo "${date} ${time} 备份结束" >> $backup_log
