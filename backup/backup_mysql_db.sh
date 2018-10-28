@@ -18,7 +18,7 @@ if [ ! -e ${backup_dir} ];then
     mkdir -p ${backup_dir}
 fi
 
-# 删除以前备份
+# 删除旧备份
 
 # 备份 
 function mysqlbackup(){
