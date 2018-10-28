@@ -3,10 +3,10 @@
 # vars
 # 备份mysql数据脚本
 
-start_time=$(date +%s)
+start_ctime=$(date +%s)
 date=$(date +%F)
-time=$(date +%H-%M-%S)
-backup_dir=/data/backup/database/${date}/${time}
+ctime=$(date +%H-%M-%S)
+backup_dir=/data/backup/database/${date}/${ctime}
 backup_log=/data/backup/log/backup_mysql_db.log
 mycnf="--defaults-extra-file=/data/service/mysql/my57.cnf"
 umysqldump="/data/service/mysql/bin/mysqldump"
@@ -48,15 +48,15 @@ ${umysql} ${mycnf}  -uroot  -A -N  -e  "show databases" | while read line
 # 压缩备份
 function compress(){
     cd /data/backup/database/${date}
-    tar -czf ${time}.tar.gz ${time}
+    tar -czf ${ctime}.tar.gz ${ctime}
     # 数据大小
-    backup_size=$(du -sh ${time} | awk '{print $1}')
-    tar_size=$(du -sh ${time}.tar.gz | awk '{print $1}')
-    rm -fr ${time}
+    backup_size=$(du -sh ${ctime} | awk '{print $1}')
+    tar_size=$(du -sh ${ctime}.tar.gz | awk '{print $1}')
+    rm -fr ${ctime}
 }
 
 echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> $backup_log
 mysqlbackup
 compress
-end_time=$(date +%s)
-echo "$(date '+%F %T %s') ${0} ${@} 备份结束 脚本用时 $((${end_time}-${start_time}))s 数据 ${backup_size} 压缩后 ${tar_size}" >> $backup_log
+end_ctime=$(date +%s)
+echo "$(date '+%F %T %s') ${0} ${@} 备份结束 脚本用时 $((${end_ctime}-${start_ctime}))s 数据 ${backup_size} 压缩后 ${tar_size}" >> $backup_log
