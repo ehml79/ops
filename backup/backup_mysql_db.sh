@@ -3,6 +3,7 @@
 # vars
 # 备份mysql数据脚本
 
+start_time=$(date +%s)
 date=$(date +%F)
 time=$(date +%H-%M-%S)
 backup_dir=/data/backup/database/${date}/${time}
@@ -51,8 +52,8 @@ function compress(){
     rm -fr ${time}
 }
 
-
 echo "$(date '+%F %T %s') 开始备份" >> $backup_log
 mysqlbackup
 compress
-echo "$(date '+%F %T %s') 备份结束" >> $backup_log
+end_time=$(date +%s)
+echo "$(date '+%F %T %s') 备份结束  脚本用时 $((${end_time}-${start_time}))s" >> $backup_log
