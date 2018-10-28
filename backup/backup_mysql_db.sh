@@ -52,8 +52,8 @@ function compress(){
     rm -fr ${time}
 }
 
-echo "$(date '+%F %T %s') 开始备份" >> $backup_log
+echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> $backup_log
 mysqlbackup
 compress
 end_time=$(date +%s)
-echo "$(date '+%F %T %s') 备份结束  脚本用时 $((${end_time}-${start_time}))s" >> $backup_log
+echo "$(date '+%F %T %s') ${0} ${@} 备份结束  脚本用时 $((${end_time}-${start_time}))s" >> $backup_log
