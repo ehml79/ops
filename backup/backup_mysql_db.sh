@@ -44,7 +44,7 @@ ${umysql} ${mycnf}  -uroot  -A -N  -e  "show databases" | while read line
         done
     done
 }
-
+# 压缩备份
 function compress(){
     cd /data/backup/database/${date}
     tar -czf ${time}.tar.gz ${time}
