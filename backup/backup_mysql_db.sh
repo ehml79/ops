@@ -49,6 +49,9 @@ ${umysql} ${mycnf}  -uroot  -A -N  -e  "show databases" | while read line
 function compress(){
     cd /data/backup/database/${date}
     tar -czf ${time}.tar.gz ${time}
+    # 数据大小
+    backup_size=$(du -sh ${time} | awk '{print $1}')
+    tar_size=$(du -sh ${time}.tar.gz | awk '{print $1}')
     rm -fr ${time}
 }
 
@@ -56,4 +59,4 @@ echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> $backup_log
 mysqlbackup
 compress
 end_time=$(date +%s)
-echo "$(date '+%F %T %s') ${0} ${@} 备份结束  脚本用时 $((${end_time}-${start_time}))s" >> $backup_log
+echo "$(date '+%F %T %s') ${0} ${@} 备份结束 脚本用时 $((${end_time}-${start_time}))s 数据 ${backup_size} 压缩后 ${tar_size}" >> $backup_log
