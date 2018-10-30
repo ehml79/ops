@@ -1,5 +1,6 @@
 #！/bin/bash
 # 阿里云ECS 磁盘分区
+
 function disk_partition(){
 	echo -e "${RED}开始分区...${END}"
 
@@ -15,7 +16,7 @@ function disk_partition(){
 	mkdir /data
 	echo '/dev/vdb1 /data ext4 barrier=0 0 0' >> /etc/fstab
 	mount /dev/vdb1 /data/
-    rmdir /data/lost+found/
+        rmdir /data/lost+found/
 }
 
 disk_partition

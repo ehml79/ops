@@ -1,4 +1,5 @@
 # 安装java8
+
 function install_java8_env(){
 	echo -e "${RED}开始安装java8 ...${END}"
 	sudo apt-get update
