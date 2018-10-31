@@ -13,6 +13,9 @@ umysqldump="/data/service/mysql/bin/mysqldump"
 umysql="/data/service/mysql/bin/mysql"
 
 
+# 减锁，执行脚本
+chattr -R -i /data/backup
+
 # 建立备份目录
 if [ ! -e ${backup_dir} ];then
     mkdir -p ${backup_dir}
@@ -62,8 +65,7 @@ function compress(){
     rm -fr ${ctime}
 }
 
-# 减锁，执行脚本
-chattr -R -i /data/backup
+
 
 echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> $backup_log
 mysqlbackup
