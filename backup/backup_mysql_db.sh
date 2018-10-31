@@ -11,10 +11,10 @@ backup_log=/data/backup/log/backup_mysql_db.log
 mycnf="--defaults-extra-file=/data/service/mysql/my57.cnf"
 umysqldump="/data/service/mysql/bin/mysqldump"
 umysql="/data/service/mysql/bin/mysql"
-
+keep_day=7
 
 # 减锁，执行脚本
-chattr -R -i /data/backup
+chattr -R -i /data/backup/database
 
 # 建立备份目录
 if [ ! -e ${backup_dir} ];then
@@ -26,9 +26,11 @@ if [ ! -e ${backup_dir} ];then
     mkdir -p /data/backup/log
 fi
 
-
-
 # 删除旧备份
+function clean_backup(){
+    find /data/backup/database/ -mtime +${keep_day} -exec rm -fr {} \;
+}
+
 
 # 备份 
 function mysqlbackup(){
@@ -66,7 +68,8 @@ function compress(){
 }
 
 
-
+echo "$(date '+%F %T %s') ${0} ${@} 清理旧备份" >> $backup_log
+clean_backup
 echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> $backup_log
 mysqlbackup
 compress
@@ -74,4 +77,4 @@ end_ctime=$(date +%s)
 echo "$(date '+%F %T %s') ${0} ${@} 备份结束 脚本用时:$((${end_ctime}-${start_ctime}))s 数据:${backup_size} 压缩后:${tar_size}" >> $backup_log
 
 # 加锁,防误删
-chattr -R +i  /data/backup
+chattr -R +i  /data/backup/database
