@@ -32,7 +32,7 @@ function backup_code_file(){
 
     ls /data | while read line
     do
-        backup_dirs=$(echo ${line} | grep -v backup | grep -v  save | grep -v service | grep -v sh | grep -v database  | grep svn )
+        backup_dirs=$(echo ${line} | grep -v backup | grep -v  save | grep -v service | grep -v sh | grep -v database  | grep -v svn | grep -v logs )
         #echo ${backup_dirs}
         for dir in ${backup_dirs}
         do
