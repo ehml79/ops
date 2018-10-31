@@ -7,7 +7,7 @@ start_ctime=$(date +%s)
 date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 backup_dir=/data/backup/database/${date}/${ctime}
-backup_log=/data/backup/log/backup_mysql_db.log
+backup_log=/data/backup/log/${0}.log
 mycnf="--defaults-extra-file=/data/service/mysql/my57.cnf"
 umysqldump="/data/service/mysql/bin/mysqldump"
 umysql="/data/service/mysql/bin/mysql"
