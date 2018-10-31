@@ -37,7 +37,7 @@ function backup_code_file(){
         for dir in ${backup_dirs}
         do
             #echo ${dir}
-            cd /data &&  tar -czf ${dir}.tar.gz ${dir}
+            cd /data &&  tar -czf ${dir}.tar.gz --exclude=*.apk ${dir}
             mv ${dir}.tar.gz ${backup_dir}
         done
     done
