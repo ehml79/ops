@@ -18,7 +18,7 @@ if [ ! -e ${backup_dir} ];then
 fi
 
 # 建立备份日志目录
-if [ ! -e ${backup_dir} ];then
+if [ ! -e /data/backup/log ];then
     mkdir -p /data/backup/log
 fi
 
@@ -32,7 +32,7 @@ function backup_code_file(){
 
     ls /data | while read line
     do
-        backup_dirs=$(echo ${line} | grep -v backup | grep -v  save | grep -v service | grep -v sh)
+        backup_dirs=$(echo ${line} | grep -v backup | grep -v  save | grep -v service | grep -v sh | grep -v database  | grep svn )
         #echo ${backup_dirs}
         for dir in ${backup_dirs}
         do
