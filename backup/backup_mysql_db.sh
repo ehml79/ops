@@ -31,7 +31,6 @@ function clean_backup(){
     find /data/backup/database/ -mtime +${keep_day} -exec rm -fr {} \;
 }
 
-
 # 备份 
 function mysqlbackup(){
 ${umysql} ${mycnf}  -uroot  -A -N  -e  "show databases" | while read line
