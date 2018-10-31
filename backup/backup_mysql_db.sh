@@ -62,8 +62,14 @@ function compress(){
     rm -fr ${ctime}
 }
 
+# 减锁，执行脚本
+chattr -R -i /data/backup
+
 echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> $backup_log
 mysqlbackup
 compress
 end_ctime=$(date +%s)
 echo "$(date '+%F %T %s') ${0} ${@} 备份结束 脚本用时:$((${end_ctime}-${start_ctime}))s 数据:${backup_size} 压缩后:${tar_size}" >> $backup_log
+
+# 加锁,防误删
+chattr -R +i  /data/backup
