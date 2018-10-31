@@ -22,7 +22,7 @@ if [ ! -e ${backup_dir} ];then
 fi
 
 # 建立备份日志目录
-if [ ! -e ${backup_dir} ];then
+if [ ! -e /data/backup/log ];then
     mkdir -p /data/backup/log
 fi
 
