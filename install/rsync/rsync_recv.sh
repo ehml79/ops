@@ -3,7 +3,7 @@
 
 apt -y install rsync
 mkdir -p  /etc/rsyncd/
-echo "uRHultBQJFPBmkdP" >  /etc/rsyncd/rsyncd.pass
+echo "rsync_password" >  /etc/rsyncd/rsyncd.pass
 chmod 600  /etc/rsyncd/rsyncd.pass
 
 

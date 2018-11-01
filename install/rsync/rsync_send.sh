@@ -5,7 +5,7 @@ apt -y install rsync
 mkdir -p /etc/rsyncd
 touch /etc/rsyncd/{rsyncd.conf,rsyncd.motd,rsyncd.secrets}
 
-echo "backup:uRHultBQJFPBmkdP"  /etc/rsyncd/rsyncd.secrets
+echo "backup:rsync_password"  /etc/rsyncd/rsyncd.secrets
 chmod 600 /etc/rsyncd/rsyncd.secrets
 
 cat > cat /etc/rsyncd/rsyncd.conf << EOF
