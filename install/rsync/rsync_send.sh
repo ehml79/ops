@@ -1,13 +1,26 @@
 #!/bin/bash
 
 
-apt -y install rsync
-mkdir -p /etc/rsyncd
-touch /etc/rsyncd/{rsyncd.conf,rsyncd.motd,rsyncd.secrets}
+function rsync_send(){
 
-echo "backup:rsync_password"  /etc/rsyncd/rsyncd.secrets
-chmod 600 /etc/rsyncd/rsyncd.secrets
+    if [ -f /etc/os-release ];then
+        echo 'ubuntu'
+        apt -y install rsync
+    elif [ -f /etc/redhat-release ];then
+        echo 'centOS'
+        yum -y install rsync
+    else
+        echo 'unknow OS'
+        exit 1
+    fi
 
+
+    
+    mkdir -p /etc/rsyncd
+    
+    echo "backup:rsync_password"  /etc/rsyncd/rsyncd.secrets
+    chmod 600 /etc/rsyncd/rsyncd.secrets
+    
 cat > cat /etc/rsyncd/rsyncd.conf << EOF
 uid = nobody
 gid = nobody
@@ -32,7 +45,10 @@ gid = root
 auth users = backup
 secrets file = /etc/rsyncd/rsyncd.secrets
 EOF
+    
+    # 启动
+    
+    rsync --daemon --config=/etc/rsyncd/rsyncd.conf
+}
 
-# 启动
-
-rsync --daemon --config=/etc/rsyncd/rsyncd.conf
+rsync_send
