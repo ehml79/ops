@@ -44,9 +44,9 @@ function backup_code_file(){
 }
 
 
-echo "$(date '+%F %T %s') ${0} ${@} 清理旧备份" >> $backup_log
+echo "$(date '+%F %T %s') ${0} ${@} 清理旧备份" >> ${backup_log}
 clean_backup
-echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> $backup_log
+echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> ${backup_log}
 backup_code_file
 end_ctime=$(date +%s)
 echo "$(date '+%F %T %s') ${0} ${@} 备份结束 脚本用时:$((${end_ctime}-${start_ctime}))s " >> $backup_log

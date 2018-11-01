@@ -67,9 +67,9 @@ function compress(){
 }
 
 
-echo "$(date '+%F %T %s') ${0} ${@} 清理旧备份" >> $backup_log
+echo "$(date '+%F %T %s') ${0} ${@} 清理旧备份" >> ${backup_log}
 clean_backup
-echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> $backup_log
+echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> ${backup_log}
 mysqlbackup
 compress
 end_ctime=$(date +%s)
