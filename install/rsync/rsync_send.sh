@@ -1,6 +1,11 @@
 #!/bin/bash
 
 
+rsync_user=backup
+rsync_passwd=
+rsync_hosts_allow=
+
+
 function rsync_send(){
 
     if [ -f /etc/os-release ];then
@@ -18,7 +23,7 @@ function rsync_send(){
     
     mkdir -p /etc/rsyncd
     
-    echo "backup:rsync_password" > /etc/rsyncd/rsyncd.secrets
+    echo "${rsync_user}:${rsync_passwd}" > /etc/rsyncd/rsyncd.secrets
     chmod 600 /etc/rsyncd/rsyncd.secrets
     
 cat >  /etc/rsyncd/rsyncd.conf << EOF
@@ -37,7 +42,7 @@ comment = backup file
 ignore errors
 read only = no
 write only = no
-hosts allow = 192.168.172.128
+hosts allow = ${rsync_hosts_allow}
 hosts deny = *
 list = false
 uid = root

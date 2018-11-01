@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rsync_passwd=
+
 
 function rsync_recv(){
     
@@ -18,7 +20,7 @@ function rsync_recv(){
     
     
     mkdir -p  /etc/rsyncd/
-    echo "rsync_password" >  /etc/rsyncd/rsyncd.pass
+    echo "${rsync_passwd}" >  /etc/rsyncd/rsyncd.pass
     chmod 600  /etc/rsyncd/rsyncd.pass
 
 
