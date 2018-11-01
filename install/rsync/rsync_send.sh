@@ -18,10 +18,10 @@ function rsync_send(){
     
     mkdir -p /etc/rsyncd
     
-    echo "backup:rsync_password"  /etc/rsyncd/rsyncd.secrets
+    echo "backup:rsync_password" > /etc/rsyncd/rsyncd.secrets
     chmod 600 /etc/rsyncd/rsyncd.secrets
     
-cat > cat /etc/rsyncd/rsyncd.conf << EOF
+cat >  /etc/rsyncd/rsyncd.conf << EOF
 uid = nobody
 gid = nobody
 use chroot = no
