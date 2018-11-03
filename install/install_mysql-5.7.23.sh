@@ -1,62 +1,65 @@
+#!/bin/bash
 
+# 安装 mysql 5.7.23
 
 function install_mysql(){
 
-	# 创建mysql密码文件
-	if [ ! -f /data/save/mysql_root ];then
-		mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
-		echo ${mysql_passwd} > /data/save/mysql_root
-	fi
-
-	# 检查有没有mysql存在
-	if [ -S /tmp/mysql.sock -o -S /var/lib/mysql/mysql.sock ];then
-		echo "mysql exisit ,exit "
-		exit 1
-	fi
-	
-	if [ ! -f /data/service/src ];then
-		mkdir -p /data/service/src/ 
-	fi
-	
-	# 判断系统
-	if [ -f /etc/os-release ];then
-		echo 'ubuntu'
-		sudo apt update &&
-		sudo apt-get -y install make cmake gcc g++ bison libncurses5-dev build-essential
-	elif [ -f /etc/redhat-release ];then
-		echo 'centOS'
-		yum -y install gcc gcc-c++  ncurses-devel bison libgcrypt perl  cmake
-	else
-		echo 'unknow OS'
-		exit 1
-	fi
-
-	groupadd mysql
-	useradd -r -g mysql -s /bin/false mysql
-
-	# 下载包好慢，建议提前下载好
-	wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.23.tar.gz -P /data/service/src/
-	wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz -P  /data/service/src/
-
-	cd /data/service/src/  && tar -xf mysql-5.7.23.tar.gz 
-	cd mysql-5.7.23
-	mkdir bld
-	cd bld
-
-
-
-	cmake .. -DCMAKE_INSTALL_PREFIX=/data/service/mysql \
-	-DDOWNLOAD_BOOST=0  \
-	-DWITH_BOOST=/data/service/src/
-
-	make -j $( grep processor /proc/cpuinfo | wc -l) && make install
-
-	cd /data/service/mysql/
-
-	cat > /etc/my.cnf << EOF
+    # 创建mysql密码文件
+    if [ ! -f /data/save/mysql_root ];then
+    	mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
+    	echo ${mysql_passwd} > /data/save/mysql_root
+        chmod 600 /data/save/mysql_root
+    fi
+    
+    # 检查有没有mysql存在
+    if [ -S /tmp/mysql.sock -o -S /var/lib/mysql/mysql.sock ];then
+    	echo "mysql exisit ,exit "
+    	exit 1
+    fi
+    
+    if [ ! -f /data/service/src ];then
+    	mkdir -p /data/service/src/ 
+    fi
+    
+    # 判断系统
+    if [ -f /etc/os-release ];then
+    	echo 'ubuntu'
+    	sudo apt update &&
+    	sudo apt-get -y install make cmake gcc g++ bison libncurses5-dev build-essential
+    elif [ -f /etc/redhat-release ];then
+    	echo 'centOS'
+    	yum -y install gcc gcc-c++  ncurses-devel bison libgcrypt perl  cmake
+    else
+    	echo 'unknow OS'
+    	exit 1
+    fi
+    
+    groupadd mysql
+    useradd -r -g mysql -s /bin/false mysql
+    
+    # 下载包好慢，建议提前下载好
+#    wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.23.tar.gz -P /data/service/src/
+#    wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz -P  /data/service/src/
+    
+    cd /data/service/src/  && tar -xf mysql-5.7.23.tar.gz 
+    cd mysql-5.7.23
+    mkdir bld
+    cd bld
+    
+    
+    
+    cmake .. -DCMAKE_INSTALL_PREFIX=/data/service/mysql \
+    -DDOWNLOAD_BOOST=0  \
+    -DWITH_BOOST=/data/service/src/
+    
+    make -j $( grep processor /proc/cpuinfo | wc -l) && make install
+    
+    cd /data/service/mysql/
+    
+    cat > /etc/my.cnf << EOF
 
 [client]
-password   = \${mysql_passwd}
+password   = ${mysql_passwd}
 port        = 3306
 socket      = /tmp/mysql.sock
 
@@ -120,28 +123,33 @@ interactive-timeout
 
 EOF
 
-	# 有密码的mysql
-	# bin/mysqld   --defaults-file=/etc/my.cnf \
-	# --user=mysql   \
-	# --basedir=/data/service/mysql/ \
-	# --datadir=/data/service/mysql/data/   \
-	# --initialize
+    # 有密码的mysql
+    # bin/mysqld   --defaults-file=/etc/my.cnf \
+    # --user=mysql   \
+    # --basedir=/data/service/mysql/ \
+    # --datadir=/data/service/mysql/data/   \
+    # --initialize
 
-	chmod 600 /etc/my.cnf
+    chmod 600 /etc/my.cnf
+    chown mysql.mysql /data/service/mysql/data/ 
 	
-	# 没有密码的mysql
+    # 没有密码的mysql
     bin/mysqld --initialize-insecure --user=mysql --basedir=/data/service/mysql/  --datadir=/data/service/mysql/data/ 
     bin/mysql_ssl_rsa_setup  
     bin/mysqld_safe   --defaults-file=/etc/my.cnf --user=mysql  & 
+
     
-    chown mysql.mysql /data/service/mysql/data/ 
     cp support-files/mysql.server /etc/init.d/mysql.server
     systemctl enable mysql.server
-	/etc/init.d/mysql.server stop
-	/etc/init.d/mysql.server start
+    /etc/init.d/mysql.server stop
+    /etc/init.d/mysql.server start
 
-
-
+# 修改密码始终不成功
+#    /data/service/mysql/bin/mysql -uroot -e "update user set password=password('${mysql_passwd}') where user='root' ; flush privileges; "
+    /usr/bin/mysql -uroot -p${mysql_passwd} <<EOF
+SET PASSWORD = PASSWORD('${mysql_passwd}');
+grant all privileges on *.* to root@'%' identified by 'shanghai2017';
+EOF
 
 }
 
