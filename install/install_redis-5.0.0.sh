@@ -4,7 +4,9 @@
 
 function install_redis(){
     
-    wget http://download.redis.io/releases/redis-5.0.0.tar.gz  -P /data/service/src/
+    apt -y install make  build-essential libjemalloc-dev
+    mkdir -p /data/service/src/
+#    wget http://download.redis.io/releases/redis-5.0.0.tar.gz  -P /data/service/src/
     cd /data/service/src
     tar xf redis-5.0.0.tar.gz
     cd redis-5.0.0/
