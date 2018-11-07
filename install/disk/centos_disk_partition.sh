@@ -1,4 +1,4 @@
-#！/bin/bash
+#!/bin/bash
 # 阿里云ECS 磁盘分区
 
 function centos_disk_partition(){
