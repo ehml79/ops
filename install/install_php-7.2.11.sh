@@ -1,10 +1,12 @@
 #!/bin/bash
 
+web_user=www
+
 
 function install_php(){
 
-    groupadd nginx
-    useradd -s /sbin/nologin -g nginx nginx
+    groupadd ${web_user}
+    useradd -s /sbin/nologin -g ${web_user} ${web_user}
     # 判断系统
     if [ -f /etc/os-release ];then
         echo 'ubuntu'
@@ -38,8 +40,8 @@ function install_php(){
     ./configure --prefix=/data/service/php \
     --with-config-file-path=/data/service/php/etc \
     --with-config-file-scan-dir=/data/service/php/conf.d \
-    --enable-fpm --with-fpm-user=nginx \
-    --with-fpm-group=nginx --enable-mysqlnd \
+    --enable-fpm --with-fpm-user=${web_user} \
+    --with-fpm-group=${web_user} --enable-mysqlnd \
     --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd \
     --with-iconv-dir --with-freetype-dir=/usr/local/freetype \
     --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr \
