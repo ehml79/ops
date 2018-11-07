@@ -1,3 +1,6 @@
+#!/bin/bash
+
+
 # 安装java8
 
 function install_java8_env(){
