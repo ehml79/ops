@@ -35,6 +35,7 @@ install_nginx(){
     make  && make install
 
     mkdir -p /data/service/nginx/conf/vhost/
+    sed -i '/worker_processes/i\user  www;'  /data/service/nginx/conf/nginx.conf
     sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  /data/service/nginx/conf/nginx.conf
     
 
