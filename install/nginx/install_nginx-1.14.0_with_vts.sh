@@ -1,5 +1,7 @@
 #!/bin/bash
 
+web_user=www
+
 install_nginx(){
 
     # 判断系统
@@ -15,8 +17,8 @@ install_nginx(){
     fi
     
     
-    groupadd www
-    useradd -s /sbin/nologin -g www  www
+    groupadd ${web_user}
+    useradd -s /sbin/nologin -g ${web_user}  ${web_user}
     mkdir -p /data/service/src
     wget http://nginx.org/download/nginx-1.14.0.tar.gz  -P /data/service/src
     cd /data/service/src ; tar xf  nginx-1.14.0.tar.gz
