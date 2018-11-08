@@ -3,7 +3,16 @@
 # redis 单机主从
 
 function install_redis(){
-    apt -y install make  build-essential libjemalloc-dev 
+    # 判断系统
+    if [ -f /etc/os-release ];then
+        apt -y install make  build-essential libjemalloc-dev
+    elif [ -f /etc/redhat-release ];then
+	    yum -y install  gcc gcc-c++
+    else
+	    echo 'unknow OS'
+	    exit 1
+    fi
+
     mkdir -p /data/service/src/
     
 #    wget http://download.redis.io/releases/redis-5.0.0.tar.gz  -P /data/service/src/
