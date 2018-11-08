@@ -7,6 +7,7 @@ function install_mysql(){
     # 创建mysql密码文件
     if [ ! -f /data/save/mysql_root ];then
     	mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
+	mkdir  -p /data/save/
     	echo ${mysql_passwd} > /data/save/mysql_root
         chmod 600 /data/save/mysql_root
     fi
