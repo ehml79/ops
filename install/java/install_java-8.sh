@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-tar xf jdk-8u191-linux-x64.tar.gz -C /data/service/jdk
+tar xf jdk-8u191-linux-x64.tar.gz -C /data/service/
+mv /data/service/jdk-8u191-linux-x64 /data/service/jdk
 
 
 bash_file=
