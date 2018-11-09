@@ -4,10 +4,15 @@
 mkdir -p /data/service/
 
 tar xf jdk-8u191-linux-x64.tar.gz -C /data/service/
-mv /data/service/jdk-8u191-linux-x64 /data/service/jdk
+mv /data/service/jdk1.8.0_191 /data/service/jdk
 
 
 bash_file="/etc/profile"
+
+export JAVA_HOME=/data/service/jdk/             
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH
+export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
 
 echo "export JAVA_HOME=/data/service/jdk/"  >>  ${bash_file}
 echo "export JRE_HOME=\${JAVA_HOME}/jre"  >> ${bash_file}
