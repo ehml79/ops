@@ -1,0 +1,9 @@
+/data/backup/log/rsync.log {
+    daily
+    rotate 7
+    create 0600 root root
+    dateext
+    missingok
+    notifempty
+}
+
