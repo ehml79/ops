@@ -10,11 +10,10 @@ function install_php(){
     # 判断系统
     if [ -f /etc/os-release ];then
         echo 'ubuntu'
-
         sudo apt-get -y install git libpcre3 libpcre3-dev  zlib1g-dev  \
         build-essential libxml2-dev openssl libssl-dev make curl \
         libcurl4-gnutls-dev libjpeg-dev libpng-dev  libmcrypt-dev \
-        libcurl4-openssl-dev pkg-config libxml2-dev openssl  libfreetype6-dev
+        libcurl4-openssl-dev pkg-config libxml2-dev openssl  libfreetype6-dev  libmcrypt-dev 
     elif [ -f /etc/redhat-release ];then
         echo 'centOS'
         yum install -y git gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  \
@@ -23,7 +22,7 @@ function install_php(){
 	bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs \
 	e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap \
 	openldap-devel nss_ldap openldap-clients openldap-servers libicu-devel \
-	libxslt-devel  libfreetype6-dev   libxslt-dev
+	libxslt-devel  libfreetype6-dev   libxslt-dev libmcrypt-devel
     else
         echo 'unknow OS'
         exit 1
@@ -63,9 +62,22 @@ function install_php(){
 
     sed -i 's@;pid = run/php-fpm.pid@pid = run/php-fpm.pid@' /data/service/php/etc/php-fpm.conf
     cp /data/service/php/etc/php-fpm.d/www.conf.default  /data/service/php/etc/php-fpm.d/www.conf
+
+
+
+    # mcrypt
+    wget wget http://pecl.php.net/get/mcrypt-1.0.1.tgz  -P  /data/service/src/
+    cd /data/service/src/
+    tar xf mcrypt-1.0.1.tgz 
+    cd mcrypt-1.0.1
+    /data/service/php/bin/phpize
+    ./configure
+    make && sudo make install
+    echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
+
     # 启动 php
     /etc/init.d/php-fpm start
-
+    /etc/init.d/php-fpm restart
 
 }
 
