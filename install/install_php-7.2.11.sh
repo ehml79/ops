@@ -74,6 +74,7 @@ function install_php(){
     ./configure
     make && sudo make install
     echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
+    echo "security.limit_extensions = .php .php3 .php4 .php5 .do .html" >> /data/service/php/etc/php.ini
 
     # 启动 php
     /etc/init.d/php-fpm start
