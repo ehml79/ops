@@ -2,6 +2,7 @@
 
 
 function install_mongodb(){
+    mkdir -p /data/service/src/
     wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.4.tgz -P /data/service/src/ 
     cd /data/service/src
     tar xf mongodb-linux-x86_64-4.0.4.tgz
