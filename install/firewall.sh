@@ -20,11 +20,9 @@ echo "setting up input chain"
 /sbin/iptables -A INPUT -p tcp --dport 22 -j ACCEPT #ssh
 /sbin/iptables -A INPUT -s ${ip} -j ACCEPT #while list
 /sbin/iptables -A INPUT -p tcp  --dport 10050 -j ACCEPT #zabbix
-/sbin/iptables -A INPUT -s ${ip} -j ACCEPT #while list
-/sbin/iptables -A INPUT -s ${ip} -j ACCEPT #while list
 /sbin/iptables -A INPUT -p tcp --dport 80 -j ACCEPT #http
-/sbin/iptables -A INPUT -p tcp --dport 3306 -j ACCEPT #http
-/sbin/iptables -A INPUT -p tcp --dport 443 -j ACCEPT #http
+/sbin/iptables -A INPUT -p tcp --dport 3306 -j ACCEPT #mysql
+/sbin/iptables -A INPUT -p tcp --dport 443 -j ACCEPT #https
 /sbin/iptables -A INPUT -p tcp --dport 873 -j ACCEPT #rsync
 /sbin/iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT   #ping
 /sbin/iptables -A INPUT -p tcp -j DROP
