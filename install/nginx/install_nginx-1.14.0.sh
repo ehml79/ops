@@ -41,6 +41,10 @@ install_nginx(){
     sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  /data/service/nginx/conf/nginx.conf
     
 
+    echo 'export PATH=$PATH:/data/service/nginx/sbin' >> /etc/profile
+    export PATH=$PATH:/data/service/nginx/sbin
+
+
 }
 
 
