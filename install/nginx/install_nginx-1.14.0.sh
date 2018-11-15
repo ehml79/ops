@@ -1,6 +1,7 @@
 #!/bin/bash
 
-web_user=www
+run_user=www
+nginx_install_dir=/data/service/nginx
 
 install_nginx(){
 
@@ -18,21 +19,41 @@ install_nginx(){
     
     
     groupadd ${web_user}
-    useradd -s /sbin/nologin -g ${web_user}  ${web_user}
+    useradd -M -s /sbin/nologin -g ${web_user}  ${web_user}
     mkdir -p /data/service/src
     wget http://nginx.org/download/nginx-1.14.0.tar.gz  -P /data/service/src
     cd /data/service/src ; tar xf  nginx-1.14.0.tar.gz
     cd nginx-1.14.0 
 
 
-    ./configure --prefix=/data/service/nginx \
-    # 支持https
-    --with-http_ssl_module \
-    # 支持nginx状态查询
-    --with-http_stub_status_module \
-    # 为了支持rewrite重写功能，必须指定pcre
+    ./configure --prefix=${nginx_install_dir} \
+    --user=${run_user} \
+    --group=${run_user} \
     --with-pcre  \
-    --with-stream
+    --with-http_ssl_module \
+    --with-http_stub_status_module \
+    --with-http_v2_module \
+    --with-http_spdy_module 
+    --with-http_gzip_static_module 
+    --with-http_sub_module 
+    --with-http_realip_module \
+    --with-http_flv_module \
+    --with-http_mp4_module \
+    --with-stream 
+    --with-stream_ssl_module 
+    --with-openssl=../openssl-${openssl_ver} \
+    --with-pcre-jit \
+    --with-ipv6 
+    --with-ld-opt='-ljemalloc' \
+    ${nginx_modules_options}
+    ${Nginx_Modules_Options}
+    ${Nginx_Modules_Options}
+    ${Nginx_Module_Lua} 
+    ${Nginx_Module_Lua} 
+    ${NginxMAOpt} 
+    ${NginxMAOpt} 
+
+
     
     make  && make install
 
