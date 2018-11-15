@@ -33,17 +33,17 @@ install_nginx(){
     --with-http_ssl_module \
     --with-http_stub_status_module \
     --with-http_v2_module \
-    --with-http_spdy_module 
-    --with-http_gzip_static_module 
-    --with-http_sub_module 
+    --with-http_spdy_module \
+    --with-http_gzip_static_module \
+    --with-http_sub_module \
     --with-http_realip_module \
     --with-http_flv_module \
     --with-http_mp4_module \
-    --with-stream 
-    --with-stream_ssl_module 
+    --with-stream \
+    --with-stream_ssl_module \
     --with-openssl=../openssl-${openssl_ver} \
     --with-pcre-jit \
-    --with-ipv6 
+    --with-ipv6 \
     --with-ld-opt='-ljemalloc' \
     ${nginx_modules_options}
     ${Nginx_Modules_Options}
