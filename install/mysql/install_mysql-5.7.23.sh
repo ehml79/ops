@@ -145,11 +145,14 @@ EOF
     /etc/init.d/mysql.server stop
     /etc/init.d/mysql.server start
 
+    echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
+    export PATH=$PATH:/data/service/mysql/bin
+
 # 修改密码始终不成功
 #    /data/service/mysql/bin/mysql -uroot -e "update user set password=password('${mysql_passwd}') where user='root' ; flush privileges; "
-    /usr/bin/mysql -uroot -p${mysql_passwd} <<EOF
+    /data/service/mysql/bin/mysql -uroot -p${mysql_passwd} <<EOF
 SET PASSWORD = PASSWORD('${mysql_passwd}');
-grant all privileges on *.* to root@'%' identified by 'shanghai2017';
+grant all privileges on *.* to root@'%' identified by '${mysql_passwd}';
 EOF
 
 }
