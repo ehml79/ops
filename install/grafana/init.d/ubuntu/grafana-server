@@ -19,24 +19,24 @@
 #  1. New lsb that define start-stop-daemon
 #  3. Centos with initscripts package installed
 
-PATH=/bin:/usr/bin:/sbin:/usr/sbin
+PATH=/data/service/grafana/bin
 NAME=grafana-server
 DESC="Grafana Server"
-DEFAULT=/etc/default/$NAME
+DEFAULT=/data/service/grafana/default/$NAME
 
 GRAFANA_USER=grafana
 GRAFANA_GROUP=grafana
-GRAFANA_HOME=/usr/share/grafana
-CONF_DIR=/etc/grafana
+GRAFANA_HOME=/data/service/grafana
+CONF_DIR=/data/service/grafana/conf
 WORK_DIR=$GRAFANA_HOME
-DATA_DIR=/var/lib/grafana
-PLUGINS_DIR=/var/lib/grafana/plugins
-LOG_DIR=/var/log/grafana
+DATA_DIR=/data/service/grafana/data
+PLUGINS_DIR=/data/service/grafana/data/plugins
+LOG_DIR=/data/service/grafana/data/log
 CONF_FILE=$CONF_DIR/grafana.ini
 PROVISIONING_CFG_DIR=$CONF_DIR/provisioning
 MAX_OPEN_FILES=10000
-PID_FILE=/var/run/$NAME.pid
-DAEMON=/usr/sbin/$NAME
+PID_FILE=/data/service/grafana/run/$NAME.pid
+DAEMON=/data/service/grafana/bin/$NAME
 
 umask 0027
 
@@ -59,7 +59,7 @@ fi
 DAEMON_OPTS="--pidfile=${PID_FILE} --config=${CONF_FILE} cfg:default.paths.provisioning=$PROVISIONING_CFG_DIR cfg:default.paths.data=${DATA_DIR} cfg:default.paths.logs=${LOG_DIR} cfg:default.paths.plugins=${PLUGINS_DIR}"
 
 function checkUser() {
-  if [ `id -u` -ne 0 ]; then
+  if [ `/usr/bin/id -u` -ne 0 ]; then
   	echo "You need root privileges to run this script"
   	exit 4
   fi
@@ -78,19 +78,19 @@ case "$1" in
 	fi
 
 	# Prepare environment
-	mkdir -p "$LOG_DIR" "$DATA_DIR" && chown "$GRAFANA_USER":"$GRAFANA_GROUP" "$LOG_DIR" "$DATA_DIR"
-	touch "$PID_FILE" && chown "$GRAFANA_USER":"$GRAFANA_GROUP" "$PID_FILE"
+	/bin/mkdir -p "$LOG_DIR" "$DATA_DIR" && /bin/chown "$GRAFANA_USER":"$GRAFANA_GROUP" "$LOG_DIR" "$DATA_DIR"
+	/usr/bin/touch "$PID_FILE" && /bin/chown "$GRAFANA_USER":"$GRAFANA_GROUP" "$PID_FILE"
 
   if [ -n "$MAX_OPEN_FILES" ]; then
 		ulimit -n $MAX_OPEN_FILES
 	fi
 
 	# Start Daemon
-	start-stop-daemon --start -b --chdir "$WORK_DIR" --user "$GRAFANA_USER" -c "$GRAFANA_USER" --pidfile "$PID_FILE" --exec $DAEMON -- $DAEMON_OPTS
+	/sbin/start-stop-daemon --start -b --chdir "$WORK_DIR" --user "$GRAFANA_USER" -c "$GRAFANA_USER" --pidfile "$PID_FILE" --exec $DAEMON -- $DAEMON_OPTS
 	return=$?
 	if [ $return -eq 0 ]
 	then
-	  sleep 1
+	  /bin/sleep 1
 
     # check if pid file has been written to
 	  if ! [[ -s $PID_FILE ]]; then
@@ -103,7 +103,7 @@ case "$1" in
 		# Wait for the process to be properly started before exiting
 		until { cat "$PID_FILE" | xargs kill -0; } >/dev/null 2>&1
 		do
-			sleep 1
+			/bin/sleep 1
 			i=$(($i + 1))
       if [ $i -gt $timeout ]; then
 			  log_end_msg 1
@@ -118,17 +118,17 @@ case "$1" in
 	log_daemon_msg "Stopping $DESC"
 
 	if [ -f "$PID_FILE" ]; then
-		start-stop-daemon --stop --pidfile "$PID_FILE" \
+		/sbin/start-stop-daemon --stop --pidfile "$PID_FILE" \
 			--user "$GRAFANA_USER" \
 			--retry=TERM/20/KILL/5 >/dev/null
 		if [ $? -eq 1 ]; then
 			log_progress_msg "$DESC is not running but pid file exists, cleaning up"
 		elif [ $? -eq 3 ]; then
-			PID="`cat $PID_FILE`"
+			PID="`/bin/cat $PID_FILE`"
 			log_failure_msg "Failed to stop $DESC (pid $PID)"
 			exit 1
 		fi
-		rm -f "$PID_FILE"
+		/bin/rm -f "$PID_FILE"
 	else
 		log_progress_msg "(not running)"
 	fi

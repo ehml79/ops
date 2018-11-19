@@ -1,0 +1,24 @@
+GRAFANA_USER=grafana
+
+GRAFANA_GROUP=grafana
+
+GRAFANA_HOME=/data/service/grafana
+
+LOG_DIR=/data/service/grafana/data/log
+
+DATA_DIR=/data/service/grafana/data
+
+MAX_OPEN_FILES=10000
+
+CONF_DIR=/data/service/grafana/conf
+
+CONF_FILE=/data/service/grafana/conf/grafana.ini
+
+RESTART_ON_UPGRADE=true
+
+PLUGINS_DIR=/data/service/grafana/data/plugins
+
+PROVISIONING_CFG_DIR=/data/service/grafana/conf/provisioning
+
+# Only used on systemd systems
+PID_FILE_DIR=/data/service/grafana/run
