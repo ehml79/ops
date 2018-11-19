@@ -1,4 +1,4 @@
-#！/bin/bash
+#!/bin/bash
 # 自动部署proftpd，先上传文件proftpd_config.tgz(包含proftpd-1.3.4rc2.tar.gz ， proftpd.conf)到/root
 
 FRed="\E[31;40m"; FGreen="\E[32;40m"; FBlue="\E[34;40m"; St0="\033[1m"; St1="\033[1;5m"; Ed="\033[0m"
