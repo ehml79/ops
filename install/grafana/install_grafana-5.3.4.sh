@@ -15,6 +15,7 @@ mv /data/service/grafana-5.3.4/ /data/service/grafana
 #mv /data/service/grafana/conf/defaults.ini  /data/service/grafana/conf/grafana.ini
 cp conf/grafana.ini  /data/service/grafana/conf/grafana.ini
 cp init.d/ubuntu/grafana-server /etc/init.d/grafana-server
+cp grafana-server.sh /root/grafana-server.sh
 chmod +x /etc/init.d/grafana-server
 mkdir -p /data/service/grafana/default
 cp default/grafana-server /data/service/grafana/default/
