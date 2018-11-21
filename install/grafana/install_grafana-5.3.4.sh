@@ -34,11 +34,12 @@ echo 'export PATH=$PATH:/data/service/grafana/bin/' >> /etc/profile
 
 
 # install piechart plugin
-/data/service/grafana/bin/grafana-cli plugins install grafana-piechart-panel
+/data/service/grafana/bin/grafana-cli --pluginsDir /data/service/grafana/data/plugins/ plugins install grafana-piechart-panel
 
 # install zabbix plugin
-/data/service/grafana/bin/grafana-cli plugins install alexanderzobnin-zabbix-app
+/data/service/grafana/bin/grafana-cli --pluginsDir /data/service/grafana/data/plugins/ plugins install alexanderzobnin-zabbix-app
 
 # install percona plugin
-/data/service/grafana/bin/grafana-cli plugins install percona-percona-app
+/data/service/grafana/bin/grafana-cli --pluginsDir /data/service/grafana/data/plugins/ plugins install percona-percona-app
+
 
