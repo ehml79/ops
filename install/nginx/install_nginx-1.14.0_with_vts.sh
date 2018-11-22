@@ -33,13 +33,23 @@ install_nginx(){
     git clone https://github.com/vozlt/nginx-module-vts.git /data/service/src/nginx-module-vts/
 
     ./configure --prefix=${nginx_install_dir} \
-    # 支持https
+    --user=${run_user} \
+    --group=${run_user} \
+    --with-pcre  \
     --with-http_ssl_module \
-    # 支持nginx状态查询
     --with-http_stub_status_module \
-    # 为了支持rewrite重写功能，必须指定pcre
-    --with-pcre \
+    --with-http_v2_module \
+    --with-http_gzip_static_module \
+    --with-http_sub_module \
+    --with-http_realip_module \
+    --with-http_flv_module \
+    --with-http_mp4_module \
+    --with-stream \
+    --with-stream_ssl_module \
+    --with-openssl=../openssl-1.1.1 \
+    --with-pcre-jit \
     --add-module=/data/service/src/nginx-module-vts
+
     
     make  && make install
 
@@ -70,6 +80,14 @@ cat > /data/service/nginx/conf/vhost/status.conf  <<EOF
        }
    }
 EOF
+
+    # install nginx-vts-exporter 
+    wget https://github.com/hnlq715/nginx-vts-exporter/releases/download/v0.10.3/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz -P /data/service/src 
+    cd /data/service/src
+    tar xf nginx-vts-exporter-0.10.3.linux-amd64.tar.gz
+
+    
+
 }
 
 
