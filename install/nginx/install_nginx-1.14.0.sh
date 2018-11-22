@@ -23,7 +23,6 @@ install_nginx(){
     cd /data/service/src
     tar xf  openssl-1.1.1.tar.gz
     
-
     groupadd ${run_user}
     useradd -M -s /sbin/nologin -g ${run_user}  ${run_user}
     mkdir -p /data/service/src

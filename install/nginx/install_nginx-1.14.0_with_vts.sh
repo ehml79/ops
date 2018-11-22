@@ -1,6 +1,7 @@
 #!/bin/bash
 
-web_user=www
+run_user=www
+nginx_install_dir=/data/service/nginx
 
 install_nginx(){
 
@@ -16,9 +17,14 @@ install_nginx(){
     	exit 1
     fi
     
+    # install openssl
+
+    wget https://www.openssl.org/source/openssl-1.1.1.tar.gz -P /data/service/src
+    cd /data/service/src
+    tar xf  openssl-1.1.1.tar.gz
     
-    groupadd ${web_user}
-    useradd -s /sbin/nologin -g ${web_user}  ${web_user}
+    groupadd ${run_user}
+    useradd -M -s /sbin/nologin -g ${run_user}  ${run_user}
     mkdir -p /data/service/src
     wget http://nginx.org/download/nginx-1.14.0.tar.gz  -P /data/service/src
     cd /data/service/src ; tar xf  nginx-1.14.0.tar.gz
@@ -26,7 +32,7 @@ install_nginx(){
 
     git clone https://github.com/vozlt/nginx-module-vts.git /data/service/src/nginx-module-vts/
 
-    ./configure --prefix=/data/service/nginx \
+    ./configure --prefix=${nginx_install_dir} \
     # 支持https
     --with-http_ssl_module \
     # 支持nginx状态查询
