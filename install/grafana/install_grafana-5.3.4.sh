@@ -24,11 +24,8 @@ chown -R grafana.grafana /data/service/grafana
 
 
 # 启动脚本
+cp grafana-server.sh /root/grafana-server.sh
 
-
-
-
-#systemctl enable grafana-server
 
 
 
