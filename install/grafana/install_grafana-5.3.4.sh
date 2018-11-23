@@ -39,3 +39,4 @@ cp grafana-server.sh /root/grafana-server.sh
 /data/service/grafana/bin/grafana-cli --pluginsDir /data/service/grafana/data/plugins/ plugins install percona-percona-app
 
 
+

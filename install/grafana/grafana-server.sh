@@ -17,7 +17,7 @@ case "$1" in
   start)
 	# Prepare environment
 	/bin/mkdir -p "$LOG_DIR" "$DATA_DIR" && /bin/chown "$GRAFANA_USER":"$GRAFANA_GROUP" "$LOG_DIR" "$DATA_DIR"
-	/usr/bin/touch "$PID_FILE" && /bin/chown "$GRAFANA_USER":"$GRAFANA_GROUP" "$PID_FILE"
+	touch "$PID_FILE" && /bin/chown "$GRAFANA_USER":"$GRAFANA_GROUP" "$PID_FILE"
 
         if [ -n "$MAX_OPEN_FILES" ]; then
 		ulimit -n $MAX_OPEN_FILES
