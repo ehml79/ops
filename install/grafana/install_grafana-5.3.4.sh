@@ -12,21 +12,20 @@ wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.4.l
 tar -xf /data/service/src/grafana-5.3.4.linux-amd64.tar.gz -C /data/service/
 
 mv /data/service/grafana-5.3.4/ /data/service/grafana
-#mv /data/service/grafana/conf/defaults.ini  /data/service/grafana/conf/grafana.ini
+
 cp conf/grafana.ini  /data/service/grafana/conf/grafana.ini
-#cp init.d/ubuntu/grafana-server /etc/init.d/grafana-server
-#chmod +x /etc/init.d/grafana-server
-cp grafana-server.sh /root/grafana-server.sh
+
 mkdir -p /data/service/grafana/default
+
 cp default/grafana-server /data/service/grafana/default/
 
 mkdir /data/service/grafana/run
 chown -R grafana.grafana /data/service/grafana
 
 
+# 启动脚本
 
-export PATH=$PATH:/data/service/grafana/bin/
-echo 'export PATH=$PATH:/data/service/grafana/bin/' >> /etc/profile
+
 
 
 #systemctl enable grafana-server
