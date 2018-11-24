@@ -54,32 +54,34 @@ install_nginx(){
     make  && make install
 
     mkdir -p /data/service/nginx/conf/vhost/
-    cp /data/service/src/nginx-module-vts/share/status.template.html /data/service/nginx/html/status.html
-    sed -i '/#tcp_nopush/a\    vhost_traffic_status_dump /var/log/nginx/vts.db;'  /data/service/nginx/conf/nginx.conf
-    sed -i '/#tcp_nopush/a\    vhost_traffic_status_zone;'  /data/service/nginx/conf/nginx.conf
-    sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  /data/service/nginx/conf/nginx.conf
+#    cp /data/service/src/nginx-module-vts/share/status.template.html /data/service/nginx/html/status.html
+    #sed -i '/#tcp_nopush/a\    vhost_traffic_status_dump /var/log/nginx/vts.db;'  /data/service/nginx/conf/nginx.conf
+    #sed -i '/#tcp_nopush/a\    vhost_traffic_status_zone;'  /data/service/nginx/conf/nginx.conf
+    #sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  /data/service/nginx/conf/nginx.conf
+    sed -i '/default_type/a\    vhost_traffic_status_filter_by_host on;'  /data/service/nginx/conf/nginx.conf
+    sed -i '/default_type/a\    vhost_traffic_status_zone;'  /data/service/nginx/conf/nginx.conf
     
 
-cat > /data/service/nginx/conf/vhost/status.conf  <<EOF
-   server {
-       server_name example.org;
-       root /data/service/nginx/html;
-
-       # Redirect requests for / to /status.html
-       location = / {
-           return 301 /status.html;
-       }
-
-       location = /status.html {}
-
-       # Everything beginning /status (except for /status.html) is
-       # processed by the status handler
-       location /status {
-           vhost_traffic_status_display;
-           vhost_traffic_status_display_format json;
-       }
-   }
-EOF
+#cat > /data/service/nginx/conf/vhost/status.conf  <<EOF
+#   server {
+#       server_name example.org;
+#       root /data/service/nginx/html;
+#
+#       # Redirect requests for / to /status.html
+#       location = / {
+#           return 301 /status.html;
+#       }
+#
+#       location = /status.html {}
+#
+#       # Everything beginning /status (except for /status.html) is
+#       # processed by the status handler
+#       location /status {
+#           vhost_traffic_status_display;
+#           vhost_traffic_status_display_format json;
+#       }
+#   }
+#EOF
 
     # install nginx-vts-exporter 
     wget https://github.com/hnlq715/nginx-vts-exporter/releases/download/v0.10.3/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz -P /data/service/src 
