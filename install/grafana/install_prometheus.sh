@@ -15,8 +15,9 @@ function install_prometheus(){
     
     # 启动脚本
     mkdir -p /data/service/prometheus/log 
-    /data/service/prometheus/prometheus --config.file="/data/service/prometheus/prometheus.yml"  >> /data/service/prometheus/log/prometheus.log 2>&1 & 
-    
+    /data/service/prometheus/prometheus --config.file="/data/service/prometheus/prometheus.yml" --storage.tsdb.path="/data/service/prometheus/data" --storage.tsdb.retention=60d  >> /data/service/prometheus/log/prometheus.log 2>&1 &
+
+
     # 根据自身服务器，修改 prometheus.yml 
 
     # 生成nginx 访问地址
