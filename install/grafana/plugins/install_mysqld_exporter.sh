@@ -12,12 +12,12 @@ function install_mysqld_exporter(){
     
     # mysql grant
     
-    GRANT REPLICATION CLIENT, PROCESS ON *.* TO 'exporter'@'localhost' identified by 'password';
-    GRANT SELECT ON performance_schema.* TO 'exporter'@'localhost';
+    CREATE USER 'exporter'@'localhost' IDENTIFIED BY 'XXXXXXXX' WITH MAX_USER_CONNECTIONS 3;
+    GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'localhost';
     flush privileges;
     
     mkdir -p /data/.secret/
-cat >> /data/.secret/my.cnf < EOF
+cat > /data/.secret/my.cnf << EOF
 [client]
 user=exporter
 password=password
