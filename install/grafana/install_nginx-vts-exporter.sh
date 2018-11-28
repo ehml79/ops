@@ -16,11 +16,14 @@ mkdir -p  /data/service/nginx-vts-exporter/log
 
 # 启动脚本
 cat >  /root/nginx-vts-exporter-restart.sh <<EOF
+#!/bin/bash
+
 ip_addr="${ip_addr}"
 
-ulimit -SHn 65535
-kill $(ps aux|grep -w nginx-vts-exporter|grep -wv grep| grep -v sh | awk '{print $2}')
+process_name=nginx-vts-exporter
 
-/data/service/nginx-vts-exporter/nginx-vts-exporter -nginx.scrape_timeout 10 -nginx.scrape_uri http://${ip_addr}/status/format/json  >> /data/service/nginx-vts-exporter/log/nginx-vts-exporter.log  2>&1 &
+
+kill \$(ps aux|grep -w \${process_name}|grep -wv grep| grep -v sh | awk '{print \$2}')
+ulimit -SHn 65535
 /data/service/nginx-vts-exporter/nginx-vts-exporter -nginx.scrape_timeout 10 -nginx.scrape_uri http://${ip_addr}/status/format/json  >> /data/service/nginx-vts-exporter/log/nginx-vts-exporter.log  2>&1 &
 EOF
