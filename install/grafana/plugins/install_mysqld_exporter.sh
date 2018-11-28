@@ -30,7 +30,7 @@ EOF
     cat >/root/mysqld_exporter-restart.sh<<EOF
 #!/bin/bash
 
-process_name=nginx-vts-exporter
+process_name=mysqld_exporter
 
 kill \$(ps aux|grep -w \${process_name}|grep -wv grep| grep -v sh | awk '{print \$2}')   
 ulimit -SHn 65535
