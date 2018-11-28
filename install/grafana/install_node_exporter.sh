@@ -9,6 +9,13 @@ function install_node_exporter(){
     
     # 启动脚本
     mkdir -p /data/service/node_exporter/log
-    /data/service/node_exporter/node_exporter  >> /data/service/node_exporter/log/node_exporter.log 2>&1 &
+    cat > /root/node_exporter-restart.sh << EOF
+#!/bin/bash
 
+process_name=node_exporter
+
+kill \$(ps aux|grep -w \${process_name} | grep -wv grep| grep -v sh | awk '{print \$2}')
+ulimit -SHn 65535
+/data/service/node_exporter/node_exporter  >> /data/service/node_exporter/log/node_exporter.log 2>&1 &
+EOF
 }
