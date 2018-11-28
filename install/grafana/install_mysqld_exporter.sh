@@ -27,8 +27,15 @@ EOF
     
     # 启动脚本
     mkdir -p /data/service/mysqld_exporter/log/
-    /data/service/mysqld_exporter/mysqld_exporter --config.my-cnf="/data/.secret/my.cnf"  >>/data/service/mysqld_exporter/log/mysqld_exporter.log  2>&1 &
+    cat >/root/mysqld_exporter-restart.sh<<EOF
+#!/bin/bash
 
+process_name=nginx-vts-exporter
+
+kill \$(ps aux|grep -w \${process_name}|grep -wv grep| grep -v sh | awk '{print \$2}')   
+ulimit -SHn 65535
+/data/service/mysqld_exporter/mysqld_exporter --config.my-cnf="/data/.secret/my.cnf"  >>/data/service/mysqld_exporter/log/mysqld_exporter.log  2>&1 &
+EOF
 
 }
 
