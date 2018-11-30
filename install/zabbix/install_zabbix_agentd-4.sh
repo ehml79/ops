@@ -33,12 +33,12 @@ user='root'
 password='password'
 EOF
 
-chmod 600 /data/.secret/zabbix.cnf 
-chown zabbix.zabbix /data/.secret/zabbix.cnf 
+    chmod 600 /data/.secret/zabbix-my.cnf 
+    chown zabbix.zabbix /data/.secret/zabbix.cnf 
 
 cat > /data/service/zabbix/etc/zabbix_agentd.conf.d/userparameter_mysql.conf <<EOF
 UserParameter=mysql.ping,HOME=/data/service/mysql/bin/mysqladmin ping 2>/dev/null | grep -c alive
-UserParameter=mysql.status[*],/data/service/zabbix/share/zabbix/externalscripts/check_mysql $1
+UserParameter=mysql.status[*],/data/service/zabbix/share/zabbix/externalscripts/check_mysql \$1
 UserParameter=mysql.version,/data/service/mysql/bin/mysql -V
 EOF
 
@@ -114,8 +114,8 @@ om_begin)"
 esac
 EOF
 
-chown zabbix.zabbix  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
-chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
+    chown zabbix.zabbix  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
+    chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
 
     if [ -f /etc/os-release ];then
         # ubuntu
