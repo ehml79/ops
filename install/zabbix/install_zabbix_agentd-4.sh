@@ -26,7 +26,8 @@ Hostname=Zabbix server
 Include=/data/service/zabbix/etc/zabbix_agentd.conf.d/*.conf
 EOF
 
-cat > /data/.secret/zabbix.cnf <<EOF
+mkdir -p /data/.secret/
+cat > /data/.secret/zabbix-my.cnf <<EOF
 [client]
 host=localhost
 user='root'
@@ -34,7 +35,7 @@ password='password'
 EOF
 
     chmod 600 /data/.secret/zabbix-my.cnf 
-    chown zabbix.zabbix /data/.secret/zabbix.cnf 
+    chown zabbix.zabbix /data/.secret/zabbix-my.cnf 
 
 cat > /data/service/zabbix/etc/zabbix_agentd.conf.d/userparameter_mysql.conf <<EOF
 UserParameter=mysql.ping,HOME=/data/service/mysql/bin/mysqladmin ping 2>/dev/null | grep -c alive
@@ -42,6 +43,7 @@ UserParameter=mysql.status[*],/data/service/zabbix/share/zabbix/externalscripts/
 UserParameter=mysql.version,/data/service/mysql/bin/mysql -V
 EOF
 
+mkdir -p /data/service/zabbix/share/zabbix/externalscripts/
 cat > /data/service/zabbix/share/zabbix/externalscripts/check_mysql << EOF
 #!/bin/bash
 # 主机地址/IP
