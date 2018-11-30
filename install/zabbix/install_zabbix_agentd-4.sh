@@ -49,7 +49,7 @@ MYSQL_HOST='localhost'
 # 端口
 MYSQL_PORT='3306'
 # 数据连接
-MYSQL_CONN="/data/service/mysql/bin/mysqladmin --defaults-file=/data/.secret/zabbix.cnf"
+MYSQL_CONN="/data/service/mysql/bin/mysqladmin --defaults-file=/data/.secret/zabbix-my.cnf"
 
 # 参数是否正确
 if [ \$# -ne "1" ];then
