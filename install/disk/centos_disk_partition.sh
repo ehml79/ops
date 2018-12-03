@@ -11,6 +11,7 @@ function centos_disk_partition(){
     
     w
     " | fdisk /dev/vdb
+    partx /dev/vdb
     mkfs.ext4 /dev/vdb1
     cp /etc/fstab /etc/fstab.bak
     mkdir /data
