@@ -17,13 +17,13 @@ function install_mysqld_exporter(){
     flush privileges;
     
     mkdir -p /data/.secret/
-cat > /data/.secret/my.cnf << EOF
+cat > /data/.secret/exporter-my.cnf << EOF
 [client]
 user=exporter
 password=password
 EOF
 
-    chmod 600 /data/.secret/my.cnf
+    chmod 600 /data/.secret/exporter-my.cnf
     
     # 启动脚本
     mkdir -p /data/service/mysqld_exporter/log/
@@ -34,7 +34,7 @@ process_name=mysqld_exporter
 
 kill \$(ps aux|grep -w \${process_name}|grep -wv grep| grep -v sh | awk '{print \$2}')   
 ulimit -SHn 65535
-/data/service/mysqld_exporter/mysqld_exporter --config.my-cnf="/data/.secret/my.cnf"  >>/data/service/mysqld_exporter/log/mysqld_exporter.log  2>&1 &
+/data/service/mysqld_exporter/mysqld_exporter --config.my-cnf="/data/.secret/exporter-my.cnf"  >>/data/service/mysqld_exporter/log/mysqld_exporter.log  2>&1 &
 EOF
 
 }
