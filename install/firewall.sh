@@ -21,8 +21,8 @@ echo "setting up input chain"
 /sbin/iptables -A INPUT -s ${ip} -j ACCEPT #while list
 /sbin/iptables -A INPUT -p tcp  --dport 10050 -j ACCEPT #zabbix
 /sbin/iptables -A INPUT -p tcp --dport 80 -j ACCEPT #http
-/sbin/iptables -A INPUT -p tcp --dport 3306 -j ACCEPT #mysql
 /sbin/iptables -A INPUT -p tcp --dport 443 -j ACCEPT #https
+/sbin/iptables -A INPUT -p tcp --dport 3306 -j ACCEPT #mysql
 /sbin/iptables -A INPUT -p tcp --dport 873 -j ACCEPT #rsync
 /sbin/iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT   #ping
 /sbin/iptables -A INPUT -p tcp -j DROP
@@ -32,8 +32,8 @@ echo "setting up output chain"
 /sbin/iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT #allow exist connection
 /sbin/iptables -A OUTPUT -p tcp --sport 10051 -j ACCEPT #zabbix
 /sbin/iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT #yum
-/sbin/iptables -A OUTPUT -p tcp --dport 8080 -j ACCEPT #tomcat
 /sbin/iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT #https
+/sbin/iptables -A OUTPUT -p tcp --dport 8080 -j ACCEPT #tomcat
 /sbin/iptables -A OUTPUT -p tcp --dport 6379 -j ACCEPT #redis
 /sbin/iptables -A OUTPUT -p tcp --dport 9002 -j ACCEPT #redis
 /sbin/iptables -A OUTPUT -p udp --dport 53  -j ACCEPT #DNS
