@@ -12,6 +12,14 @@ function install_mysql(){
         chmod 600 /data/.secret/mysql_root
     fi
     
+    # 创建my.cnf 备份用
+    if [ ! -f /data/.secert/my.cnf ];then
+       echo "[client]" > /data/.secret/my.cnf
+       echo "user = root" >> /data/.secret/my.cnf
+       echo "host = localhost" >> /data/.secret/my.cnf
+       echo "password = ${mysql_passwd}" >> /data/.secret/my.cnf
+    fi
+
     # 检查有没有mysql存在
     if [ -S /tmp/mysql.sock -o -S /var/lib/mysql/mysql.sock ];then
     	echo "mysql exisit ,exit "
