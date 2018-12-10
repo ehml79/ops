@@ -7,6 +7,8 @@ TXN="$2"
 SVNLOOK=/usr/bin/svnlook
 LOGMSG=$($SVNLOOK log -t "$TXN" "$REPOS" | wc -c)
 if [ "$LOGMSG" -lt 17 ]; then
-   echo  "请填写至少5个字的中文英文备注" 1>&2
+   echo "请填写至少5个字的中文英文备注" 1>&2
+   echo "例如：【职位】代码相关操作"
+   echo "【开发】页游相关，获取页游渠道链接"
    exit 1
 fi
