@@ -1,0 +1,12 @@
+#!/bin/sh
+# svn hooks  
+# svn commit 必须提交5个字的中文字符
+export LANG="en_US.UTF-8"
+REPOS="$1"
+TXN="$2"
+SVNLOOK=/usr/bin/svnlook
+LOGMSG=$($SVNLOOK log -t "$TXN" "$REPOS" | wc -c)
+if [ "$LOGMSG" -lt 17 ]; then
+   echo  "请填写至少5个字的中文英文备注" 1>&2
+   exit 1
+fi
