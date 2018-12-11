@@ -11,7 +11,7 @@ install_nginx(){
     	apt -y install  git libpcre3 libpcre3-dev  zlib1g-dev openssl libssl-dev  build-essential 
     elif [ -f /etc/redhat-release ];then
     	echo 'centOS'
-    	yum -y install git pcre-devel openssl-devel
+    	yum -y install git pcre-devel openssl-devel wget gcc-c++
     else
     	echo 'unknow OS'
     	exit 1
