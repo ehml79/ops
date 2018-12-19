@@ -138,7 +138,6 @@ EOF
 
 
     echo 'export PATH=$PATH:/data/service/nginx/sbin' >> /etc/profile
-    source /etc/profile
     . /etc/profile
     export PATH=$PATH:/data/service/nginx/sbin
 
