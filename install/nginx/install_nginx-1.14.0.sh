@@ -83,7 +83,7 @@ http {
                                 '\$status \$body_bytes_sent "\$http_referer" '
                                 '"\$http_user_agent" \$http_x_forwarded_for "\$request_body"';
 
-        access_log  /data/nginx_logs/access.log  main;
+        access_log  /data/service/nginx/logs/access.log  main;
 
         charset  utf-8;
         server_names_hash_bucket_size 128;
