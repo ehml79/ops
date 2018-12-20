@@ -6,7 +6,7 @@ web_user=www
 function install_openssl(){
     # install openssl
 
-#    wget https://www.openssl.org/source/openssl-1.1.1.tar.gz -P /data/service/src
+    wget https://www.openssl.org/source/openssl-1.1.1.tar.gz -P /data/service/src
     cd /data/service/src
     tar xf  openssl-1.1.1.tar.gz
     cd openssl-1.1.1/
@@ -30,13 +30,15 @@ function install_php(){
     # 判断系统
     if [ -f /etc/os-release ];then
         echo 'ubuntu'
-        sudo apt -y install git libpcre3 libpcre3-dev  \
-        zlib1g-dev build-essential libxml2-dev openssl \
-        libssl-dev make curl libcurl4-openssl-dev \
-        libjpeg-dev libpng-dev  libmcrypt-dev libcurl4-gnutls-dev \
-        libxslt-dev pkg-config libxml2-dev openssl  \
-        libfreetype6-dev  libmcrypt-dev  libsodium-dev \
-        argon2 libargon2-0 libargon2-0-dev
+        sudo apt -y install git libpcre3 libpcre3-dev  
+        sudo apt -y install zlib1g-dev build-essential libxml2-dev openssl 
+        sudo apt -y install libssl-dev make curl libcurl4-openssl-dev 
+        sudo apt -y install libjpeg-dev libpng-dev  libmcrypt-dev libcurl4-gnutls-dev 
+        sudo apt -y install libxslt-dev pkg-config libxml2-dev openssl  
+        sudo apt -y install libfreetype6-dev  libmcrypt-dev  libsodium-dev 
+        sudo apt -y install argon2 libargon2-0 libargon2-0-dev libxml2-dev
+        sudo apt -y install m4
+        sudo apt -y install autoconf
     elif [ -f /etc/redhat-release ];then
         echo 'centOS'
         yum install -y git gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  \
@@ -51,9 +53,7 @@ function install_php(){
         exit 1
     fi
 
-
-    # http://cn2.php.net/distributions/php-7.2.11.tar.xz
-#    wget http://cn.php.net/distributions/php-7.2.11.tar.gz  -P /data/service/src/
+    wget http://cn.php.net/distributions/php-7.2.11.tar.gz  -P /data/service/src/
     
     cd /data/service/src/
     tar xf php-7.2.11.tar.gz
@@ -105,34 +105,98 @@ function install_php(){
     --disable-debug \
     --disable-fileinfo \
     --enable-exif \
-    #--with-password-argon2  \
     --with-png-dir 
+    #--with-password-argon2  \
 
-    exit
 
     make && make install
 
     cp /data/service/php/etc/php-fpm.conf.default  /data/service/php/etc/php-fpm.conf
     cp /data/service/src/php-7.2.11/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+
     chmod +x /etc/init.d/php-fpm
     cp /data/service/src/php-7.2.11/php.ini-production /data/service/php/etc/php.ini
 
-
+    #  配置 /data/service/php/etc/php-fpm.conf
     sed -i 's@;pid = run/php-fpm.pid@pid = run/php-fpm.pid@' /data/service/php/etc/php-fpm.conf
+    sed -i 's@;emergency_restart_threshold.*@emergency_restart_threshold =10@' /data/service/php/etc/php-fpm.conf
+    sed -i 's@;emergency_restart_interval.*@emergency_restart_interval = 1m@' /data/service/php/etc/php-fpm.conf
+    sed -i 's@;process_control_timeout.*@process_control_timeout = 5s@' /data/service/php/etc/php-fpm.conf
+    sed -i 's@;daemonize.*@daemonize = yes@' /data/service/php/etc/php-fpm.conf
+
+    # 配置 /data/service/php/etc/php-fpm.d/www.conf
     cp /data/service/php/etc/php-fpm.d/www.conf.default  /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;listen.backlog.*@listen.backlog = -1@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;listen.allowed_clients.*@listen.allowed_clients =127.0.0.1@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@pm.max_children.*@pm.max_children = 256@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@pm.start_servers.*@pm.start_servers = 20@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@pm.min_spare_servers.*@pm.min_spare_servers = 5@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@pm.max_spare_servers.*@pm.max_spare_servers = 35@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;pm.max_requests.*@pm.max_requests = 1024@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;pm.status_path.*@pm.status_path = /status@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;ping.path.*@ping.path = /ping@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;ping.response.*@ping.response = pong@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;request_slowlog_timeout.*@request_slowlog_timeout= 10@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;slowlog.*@slowlog = log/$pool.log.slow@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;rlimit_files.*@rlimit_files = 65535@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;rlimit_core.*@rlimit_core = 0@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;catch_workers_output.*@catch_workers_output = yes@' /data/service/php/etc/php-fpm.d/www.conf
+    
+    # 配置 /data/service/php/etc/php.ini
+    mkdir -p /data/service/php/log/
+    sed -i 's@; output_buffering@output_buffering = on@' /data/service/php/etc/php.ini
+    sed -i 's@; output_buffering.*@output_buffering = on@' /data/service/php/etc/php.ini
+    sed -i 's@short_open_tag.*@short_open_tag = On@' /data/service/php/etc/php.ini
+    sed -i 's@expose_php.*@expose_php = Off@' /data/service/php/etc/php.ini
+    sed -i 's@memory_limit.*@memory_limit = 2048M@' /data/service/php/etc/php.ini
+    sed -i 's@error_reporting.*@error_reporting = E_ALL & ~E_NOTICE & ~E_STRICT@' /data/service/php/etc/php.ini
+    sed -i 's@;track_errors =.*@track_errors = Off@' /data/service/php/etc/php.ini
+    sed -i 's@;date.timezone.*@date.timezone = Asia/Shanghai@' /data/service/php/etc/php.ini
+    sed -i 's@mail.add_x_header.*@mail.add_x_header = On@' /data/service/php/etc/php.ini
+    sed -i 's@;cgi.fix_pathinfo.*@cgi.fix_pathinfo=0@' /data/service/php/etc/php.ini
+
+    # sed -i 's@; max_input_vars.*@; max_input_vars = 1000@' /data/service/php/etc/php.ini
+    sed -i 's@; extension_dir.*@extension_dir = "/data/service/php/lib/php/extensions/no-debug-non-zts-20170718/"@' /data/service/php/etc/php.ini
+    # sed -i 's@; Development Value.*@; Development Value: On@' /data/service/php/etc/php.ini
+
+
+    # mcrypt
+    wget http://pecl.php.net/get/mcrypt-1.0.1.tgz  -P  /data/service/src/
+    cd /data/service/src/
+    tar xf mcrypt-1.0.1.tgz 
+    cd mcrypt-1.0.1
+    /data/service/php/bin/phpize
+    ./configure --with-php-config=/data/service/php/bin/php-config
+    make && sudo make install
+
+
+    # igbinary
+    wget http://pecl.php.net/get/igbinary-2.0.8.tgz -P  /data/service/src/
+    cd /data/service/src/ 
+    tar xf igbinary-2.0.8.tgz   
+    cd igbinary-2.0.8
+    /data/service/php/bin/phpize
+    ./configure --with-php-config=/data/service/php/bin/php-config
+    make && sudo make install
+ 
+
+    # redis.so
+    wget http://pecl.php.net/get/redis-4.2.0.tgz  -P  /data/service/src/
+    cd /data/service/src/
+    tar xf redis-4.2.0.tgz
+    cd redis-4.2.0
+    /data/service/php/bin/phpize
+    ./configure --with-php-config=/data/service/php/bin/php-config
+    make && sudo make install
 
 
 
-   # mcrypt
-   # wget http://pecl.php.net/get/mcrypt-1.0.1.tgz  -P  /data/service/src/
-   # cd /data/service/src/
-   # tar xf mcrypt-1.0.1.tgz 
-   # cd mcrypt-1.0.1
-   # /data/service/php/bin/phpize
-   # ./configure
-   # make && sudo make install
-   # echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
+    # 配置扩展
+    echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
     echo "security.limit_extensions = .php .php3 .php4 .php5 .do .html" >> /data/service/php/etc/php.ini
+    echo "cgi.fix_pathinfo=0"  >> /data/service/php/etc/php.ini
+    echo 'extension = "igbinary.so"' >> /data/service/php/etc/php.ini
+    echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
 
     # 启动 php
     /etc/init.d/php-fpm start
