@@ -180,7 +180,7 @@ function install_php(){
     make && sudo make install
  
 
-    # redis.so
+    # redis
     wget http://pecl.php.net/get/redis-4.2.0.tgz  -P  /data/service/src/
     cd /data/service/src/
     tar xf redis-4.2.0.tgz
