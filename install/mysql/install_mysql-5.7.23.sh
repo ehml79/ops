@@ -119,6 +119,7 @@ quick
 max_allowed_packet = 16M
 
 [mysql]
+prompt="(\u@\h) [\d]> "
 no-auto-rehash
 
 [myisamchk]
