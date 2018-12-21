@@ -119,7 +119,7 @@ function install_php(){
 
     #  配置 /data/service/php/etc/php-fpm.conf
     sed -i 's@;pid = run/php-fpm.pid@pid = run/php-fpm.pid@' /data/service/php/etc/php-fpm.conf
-    sed -i 's@;emergency_restart_threshold.*@emergency_restart_threshold =10@' /data/service/php/etc/php-fpm.conf
+    sed -i 's@;emergency_restart_threshold.*@emergency_restart_threshold = 10@' /data/service/php/etc/php-fpm.conf
     sed -i 's@;emergency_restart_interval.*@emergency_restart_interval = 1m@' /data/service/php/etc/php-fpm.conf
     sed -i 's@;process_control_timeout.*@process_control_timeout = 5s@' /data/service/php/etc/php-fpm.conf
     sed -i 's@;daemonize.*@daemonize = yes@' /data/service/php/etc/php-fpm.conf
