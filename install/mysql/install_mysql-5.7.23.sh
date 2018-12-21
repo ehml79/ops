@@ -4,6 +4,30 @@
 
 function install_mysql(){
 
+    # 检查有没有mysql存在
+    if [ -S /tmp/mysql.sock -o -S /var/lib/mysql/mysql.sock ];then
+    	echo "mysql exisit ,exit "
+    	exit 1
+    fi
+    
+    # 判断系统
+    if [ -f /etc/os-release ];then
+    	echo 'ubuntu'
+    	sudo apt update &&
+    	sudo apt-get -y install make cmake gcc g++ bison libncurses5-dev build-essential
+    elif [ -f /etc/redhat-release ];then
+    	echo 'centOS'
+    	yum -y install gcc gcc-c++  ncurses-devel bison libgcrypt perl  cmake
+    else
+    	echo 'unknow OS'
+    	exit 1
+    fi
+
+    # 创建文件夹
+    if [ ! -f /data/service/src ];then
+    	mkdir -p /data/service/src/ 
+    fi
+
     # 创建mysql密码文件
     if [ ! -f /data/.secret/mysql_root ];then
     	mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
@@ -20,42 +44,18 @@ function install_mysql(){
        echo "password = ${mysql_passwd}" >> /data/.secret/my.cnf
     fi
 
-    # 检查有没有mysql存在
-    if [ -S /tmp/mysql.sock -o -S /var/lib/mysql/mysql.sock ];then
-    	echo "mysql exisit ,exit "
-    	exit 1
-    fi
-    
-    if [ ! -f /data/service/src ];then
-    	mkdir -p /data/service/src/ 
-    fi
-    
-    # 判断系统
-    if [ -f /etc/os-release ];then
-    	echo 'ubuntu'
-    	sudo apt update &&
-    	sudo apt-get -y install make cmake gcc g++ bison libncurses5-dev build-essential
-    elif [ -f /etc/redhat-release ];then
-    	echo 'centOS'
-    	yum -y install gcc gcc-c++  ncurses-devel bison libgcrypt perl  cmake
-    else
-    	echo 'unknow OS'
-    	exit 1
-    fi
     
     groupadd mysql
     useradd -r -g mysql -s /bin/false mysql
     
     # 下载包好慢，建议提前下载好
-#    wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.23.tar.gz -P /data/service/src/
-#    wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz -P  /data/service/src/
+    wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.23.tar.gz -P /data/service/src/
+    wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz -P  /data/service/src/
     
     cd /data/service/src/  && tar -xf mysql-5.7.23.tar.gz 
     cd mysql-5.7.23
     mkdir bld
     cd bld
-    
-    
     
     cmake .. -DCMAKE_INSTALL_PREFIX=/data/service/mysql \
     -DDOWNLOAD_BOOST=0  \
@@ -119,7 +119,7 @@ quick
 max_allowed_packet = 16M
 
 [mysql]
-prompt="(\u@\h) [\d]> "
+prompt=(\\u@\\h) [\\d]>\\_  
 no-auto-rehash
 
 [myisamchk]
