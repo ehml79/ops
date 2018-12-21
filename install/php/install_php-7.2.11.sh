@@ -127,7 +127,7 @@ function install_php(){
     # 配置 /data/service/php/etc/php-fpm.d/www.conf
     cp /data/service/php/etc/php-fpm.d/www.conf.default  /data/service/php/etc/php-fpm.d/www.conf
     sed -i 's@;listen.backlog.*@listen.backlog = -1@' /data/service/php/etc/php-fpm.d/www.conf
-    sed -i 's@;listen.allowed_clients.*@listen.allowed_clients =127.0.0.1@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;listen.allowed_clients.*@listen.allowed_clients = 127.0.0.1@' /data/service/php/etc/php-fpm.d/www.conf
     sed -i 's@pm.max_children.*@pm.max_children = 256@' /data/service/php/etc/php-fpm.d/www.conf
     sed -i 's@pm.start_servers.*@pm.start_servers = 20@' /data/service/php/etc/php-fpm.d/www.conf
     sed -i 's@pm.min_spare_servers.*@pm.min_spare_servers = 5@' /data/service/php/etc/php-fpm.d/www.conf
