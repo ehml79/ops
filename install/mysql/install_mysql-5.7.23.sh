@@ -29,11 +29,11 @@ function install_mysql(){
     fi
 
     # 创建mysql密码文件
-    if [ ! -f /data/.secret/mysql_root ];then
+    if [ ! -f /data/.secret/mysql.pass ];then
     	mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 	mkdir  -p /data/.secret/
-    	echo ${mysql_passwd} > /data/.secret/mysql_root
-        chmod 600 /data/.secret/mysql_root
+    	echo ${mysql_passwd} > /data/.secret/mysql.pass
+        chmod 600 /data/.secret/mysql.pass
     fi
     
     # 创建my.cnf 备份用
