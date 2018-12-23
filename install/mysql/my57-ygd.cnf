@@ -1,15 +1,16 @@
 [client]
+password = 1Rv372z2X00VTUv3
 port    = 3306
 socket  = /tmp/mysql.sock
-password = 1Rv372z2X00VTUv3
 
 [mysqld]
+port    = 3306
+sql_mode="NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 character-set-server = utf8
 replicate-ignore-db = mysql
 replicate-ignore-db = test
 replicate-ignore-db = information_schema
 user    = mysql
-port    = 3306
 socket  = /tmp/mysql.sock
 basedir = /usr/local/mysql
 datadir = /data/mysql
@@ -54,7 +55,6 @@ myisam_sort_buffer_size = 128M
 myisam_max_sort_file_size = 10G
 myisam_repair_threads = 1
 #myisam_recover
-sql_mode="NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
 interactive_timeout = 120
 wait_timeout = 120

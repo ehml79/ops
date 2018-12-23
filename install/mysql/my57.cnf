@@ -1,14 +1,19 @@
 [client]
-password   = BwwRsef0FLt5d6qak6Nw
-port        = 3306
-socket      = /data/service/mysql/mysql.sock
+password = BwwRsef0FLt5d6qak6Nw
+port    = 3306
+socket  = /data/service/mysql/mysql.sock
 #socket      = /tmp/mysql.sock
 
 [mysqld]
+port    = 3306
 sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
-port        = 3306
-socket      = /data/service/mysql/mysql.sock
-#socket      = /tmp/mysql.sock
+character-set-server = utf8
+replicate-ignore-db = mysql
+replicate-ignore-db = test
+replicate-ignore-db = information_schema
+user    = mysql
+socket  = /tmp/mysql.sock
+#socket      = /data/service/mysql/mysql.sock
 datadir = /data/service/mysql/data/
 skip-external-locking
 key_buffer_size = 16M
@@ -47,9 +52,6 @@ innodb_log_buffer_size = 8M
 innodb_flush_log_at_trx_commit = 1
 innodb_lock_wait_timeout = 50
 
-[mysqldump]
-quick
-max_allowed_packet = 16M
 
 [mysql]
 no-auto-rehash
@@ -62,3 +64,7 @@ write_buffer = 2M
 
 [mysqlhotcopy]
 interactive-timeout
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
