@@ -159,7 +159,6 @@ function install_php(){
     sed -i 's@; extension_dir.*@extension_dir = "/data/service/php/lib/php/extensions/no-debug-non-zts-20170718/"@' /data/service/php/etc/php.ini
     # sed -i 's@; Development Value.*@; Development Value: On@' /data/service/php/etc/php.ini
 
-
     # mcrypt
     wget http://pecl.php.net/get/mcrypt-1.0.1.tgz  -P  /data/service/src/
     cd /data/service/src/
@@ -168,6 +167,7 @@ function install_php(){
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
+    echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
 
 
     # igbinary
@@ -178,6 +178,7 @@ function install_php(){
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
+    echo 'extension = "igbinary.so"' >> /data/service/php/etc/php.ini
  
 
     # redis
@@ -188,15 +189,13 @@ function install_php(){
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
+    echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
 
 
 
     # 配置扩展
-    echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
     echo "security.limit_extensions = .php .php3 .php4 .php5 .do .html" >> /data/service/php/etc/php.ini
     echo "cgi.fix_pathinfo=0"  >> /data/service/php/etc/php.ini
-    echo 'extension = "igbinary.so"' >> /data/service/php/etc/php.ini
-    echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
 
     # 启动 php
     /etc/init.d/php-fpm start
