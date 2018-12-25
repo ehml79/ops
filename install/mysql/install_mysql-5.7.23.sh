@@ -66,21 +66,71 @@ function install_mysql(){
     cd /data/service/mysql/
     
     cat > /etc/my.cnf << EOF
-
+#
 [client]
-password   = ${mysql_passwd}
-port        = 3306
-socket      = /tmp/mysql.sock
+password = ${mysql_passwd}
+port    = 3306
+socket  = /tmp/mysql.sock
 
 [mysqld]
+port    = 3306
 sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
-port        = 3306
-socket      = /tmp/mysql.sock
-datadir = /data/service/mysql/data/
+socket  = /tmp/mysql.sock
+basedir = /data/service/mysql
+datadir = /data/service/mysql/data
+character-set-server = utf8
+user    = mysql
+#log-error = /data/service/mysql/data/iZuf60n322uwbuisp4kf48Z.err
+#pid-file = /data/mysql/mysql.pid
+#skip-grant-tables
+open_files_limit = 65535
+back_log = 600
+max_connections = 65535
+max_connect_errors = 6000
+#table_cache = 614
+external-locking = FALSE
+max_allowed_packet = 32M
+sort_buffer_size = 1M
+join_buffer_size = 1M
+thread_cache_size = 300
+#thread_concurrency = 8
+query_cache_size = 512M
+query_cache_limit = 2M
+query_cache_min_res_unit = 2k
+#default-storage-engine = innodb
+thread_stack = 192K
+transaction_isolation = READ-COMMITTED
+tmp_table_size = 246M
+max_heap_table_size = 246M
+long_query_time = 3
+log-slave-updates
+#log-bin = /data/service/mysql/data/binlog
+
+log-bin = mysql-bin
+binlog_format = MIXED
+#binlog_cache_size = 4M
+#max_binlog_cache_size = 8M
+#max_binlog_size = 1G
+expire_logs_days = 30
+key_buffer_size = 256M
+read_buffer_size = 1M
+read_rnd_buffer_size = 16M
+bulk_insert_buffer_size = 64M
+myisam_sort_buffer_size = 128M
+myisam_max_sort_file_size = 10G
+myisam_repair_threads = 1
+#myisam_recover
+
+server-id = 1
+interactive_timeout = 120
+wait_timeout = 120
+
+skip-name-resolve
+#master-connect-retry = 10
 skip-external-locking
-key_buffer_size = 16M
 max_allowed_packet = 1M
 table_open_cache = 64
+key_buffer_size = 16M
 sort_buffer_size = 512K
 net_buffer_length = 8K
 read_buffer_size = 256K
@@ -90,36 +140,49 @@ thread_cache_size = 8
 query_cache_size = 8M
 tmp_table_size = 16M
 performance_schema_max_table_instances = 500
-
 explicit_defaults_for_timestamp = true
 #skip-networking
-max_connections = 65535
-max_connect_errors = 100
-open_files_limit = 65535
-
-log-bin=mysql-bin
-binlog_format=mixed
-server-id   = 1
 expire_logs_days = 10
 early-plugin-load = ""
 
-default_storage_engine = InnoDB
-innodb_file_per_table = 1
-innodb_data_home_dir = /data/service/mysql/data
-innodb_data_file_path = ibdata1:10M:autoextend
-innodb_log_group_home_dir = /data/service/mysql/data
-innodb_buffer_pool_size = 16M
-innodb_log_file_size = 5M
-innodb_log_buffer_size = 8M
-innodb_flush_log_at_trx_commit = 1
-innodb_lock_wait_timeout = 50
+# replicate
+replicate-ignore-db = mysql
+replicate-ignore-db = test
+replicate-ignore-db = information_schema
+slave-skip-errors = 1032,1062,126,1114,1146,1048,1396
 
-[mysqldump]
-quick
-max_allowed_packet = 16M
+#master-host     =   192.168.1.2
+#master-user     =   username
+#master-password =   password
+#master-port     =  3306
+
+#relay-log-index = /data/mysql/relaylog
+#relay-log-info-file = /data/mysql/relaylog
+#relay-log = /data/mysql/relaylog
+
+default_storage_engine = InnoDB
+#innodb_additional_mem_pool_size = 16M
+innodb_buffer_pool_size = 512M
+innodb_log_file_size = 128M
+innodb_lock_wait_timeout = 120
+innodb_file_per_table = 1
+innodb_log_buffer_size = 16M
+innodb_data_file_path = ibdata1:256M:autoextend
+innodb_flush_log_at_trx_commit = 2
+innodb_log_files_in_group = 3
+#innodb_file_io_threads = 4
+innodb_thread_concurrency = 8
+innodb_max_dirty_pages_pct = 90
+
+innodb_data_home_dir = /data/service/mysql/data
+innodb_log_group_home_dir = /data/service/mysql/data
+
+
+#log-slow-queries = /data/service/mysql/slow.log
+#long_query_time = 10
 
 [mysql]
-prompt=(\\u@\\h) [\\d]>\\_  
+prompt=(\\u@\\h) [\\d]>\\_
 no-auto-rehash
 
 [myisamchk]
@@ -131,6 +194,9 @@ write_buffer = 2M
 [mysqlhotcopy]
 interactive-timeout
 
+[mysqldump]
+quick
+max_allowed_packet = 32M
 EOF
 
     # 有密码的mysql
