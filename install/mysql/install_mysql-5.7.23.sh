@@ -80,7 +80,9 @@ basedir = /data/service/mysql
 datadir = /data/service/mysql/data
 character-set-server = utf8
 user    = mysql
+# 默认就好
 #log-error = /data/service/mysql/data/iZuf60n322uwbuisp4kf48Z.err
+# 默认就好
 #pid-file = /data/mysql/mysql.pid
 #skip-grant-tables
 open_files_limit = 65535
@@ -227,7 +229,12 @@ EOF
 #    /data/service/mysql/bin/mysql -uroot -e "update user set password=password('${mysql_passwd}') where user='root' ; flush privileges; "
     /data/service/mysql/bin/mysql -uroot -p${mysql_passwd} <<EOF
 SET PASSWORD = PASSWORD('${mysql_passwd}');
+update mysql.user set authentication_string=password('${mysql_passwd}') where user="root";
+delete from mysql.user where user='';
+delete from mysql.user where user="root" and host!="localhost";
+drop database if exists test ;
 grant all privileges on *.* to root@'%' identified by '${mysql_passwd}';
+FLUSH PRIVILEGES;
 EOF
 
 }
