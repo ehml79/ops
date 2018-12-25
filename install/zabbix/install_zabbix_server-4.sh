@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-zabbix_server_ip=
+zabbix_server_ip=1.1.1.1
+zabbix_db_password=password
 
 function install_zabbix_server_4(){
 
@@ -48,9 +49,8 @@ cat > /data/service/zabbix/etc/zabbix_server.conf <<EOF
 DBHost=${zabbix_server_ip}
 DBName=zabbix
 DBUser=zabbix
-DBPassword=zabbix
-ListenIP=${zabbix_server_ip}
-StartIPMIPollers=10
+DBPassword=${zabbix_db_password} 
+ListenIP=0.0.0.0
 StartPollersUnreachable=10
 StartTrappers=10
 StartPingers=10
@@ -101,18 +101,18 @@ EOF
 
     # 导入数据库
     cd /data/service/src/zabbix-4.0.0/database/mysql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "create database zabbix default chatset utf-8"
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < schema.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < images.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < data.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to 'zabbix'@'localhost' identified by 'AbuPll6J6ikemIj0';"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "create database zabbix default charset utf8"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/zabbix-4.0.0/database/mysql/schema.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/zabbix-4.0.0/database/mysql/images.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/zabbix-4.0.0/database/mysql/data.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to 'zabbix'@'localhost' identified by '${zabbix_db_password}';"
 
 
 cat > /data/service/nginx/conf/vhost/zabbix.conf <<EOF
 #
     server {
-        listen       81;
-        server_name  localhost;
+        listen       80;
+        server_name  zabbix.example.com;
 
         location / {
             root   /data/web/zabbix;
@@ -127,7 +127,7 @@ cat > /data/service/nginx/conf/vhost/zabbix.conf <<EOF
             root           /data/web/zabbix;
             fastcgi_pass   127.0.0.1:9000;
             fastcgi_index  index.php;
-            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            fastcgi_param  SCRIPT_FILENAME  \$document_root\$fastcgi_script_name;
             include        fastcgi_params;
         }
 
@@ -135,11 +135,15 @@ cat > /data/service/nginx/conf/vhost/zabbix.conf <<EOF
 
 EOF
 
+    nginx -s reload
+
     # 配置 php.ini 参数
     sed -i 's/post_max_size.*/post_max_size = 	16M/' /data/service/php/etc/php.ini
     sed -i 's/max_execution_time.*/max_execution_time = 300/' /data/service/php/etc/php.ini
     sed -i 's/max_input_time.*/max_input_time = 300/' /data/service/php/etc/php.ini
     sed -i 's@;date.timezone.*@date.timezone = Asia/Shanghai@'  /data/service/php/etc/php.ini
+
+    /etc/init.d/php-fpm restart
 
 
 
