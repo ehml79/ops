@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-zabbix_server_ip=47.101.141.194
+zabbix_server_ip=1.1.1.1
 
 
 function install_zabbix_agentd_4(){
