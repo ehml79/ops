@@ -233,7 +233,7 @@ update mysql.user set authentication_string=password('${mysql_passwd}') where us
 delete from mysql.user where user='';
 delete from mysql.user where user="root" and host!="localhost";
 drop database if exists test ;
-grant all privileges on *.* to root@'%' identified by '${mysql_passwd}';
+grant all privileges on *.* to root@'localhost identified by '${mysql_passwd}';
 FLUSH PRIVILEGES;
 EOF
 
