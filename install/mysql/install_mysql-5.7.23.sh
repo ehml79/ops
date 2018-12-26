@@ -228,12 +228,7 @@ EOF
 # 修改密码始终不成功
 #    /data/service/mysql/bin/mysql -uroot -e "update user set password=password('${mysql_passwd}') where user='root' ; flush privileges; "
     /data/service/mysql/bin/mysql -uroot -p${mysql_passwd} <<EOF
-SET PASSWORD = PASSWORD('${mysql_passwd}');
 update mysql.user set authentication_string=password('${mysql_passwd}') where user="root";
-delete from mysql.user where user='';
-delete from mysql.user where user="root" and host!="localhost";
-drop database if exists test ;
-grant all privileges on *.* to root@'localhost identified by '${mysql_passwd}';
 FLUSH PRIVILEGES;
 EOF
 
