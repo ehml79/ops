@@ -8,6 +8,7 @@ function install_openssl(){
 
     wget https://www.openssl.org/source/openssl-1.1.1.tar.gz -P /data/service/src
     cd /data/service/src
+    mv openssl-1.1.1 openssl-1.1.1_`date '+%Y%M%d%H%M%S'`
     tar xf  openssl-1.1.1.tar.gz
     cd openssl-1.1.1/
     ./config -fPIC --prefix=/data/service/openssl --openssldir=/data/service/openssl
