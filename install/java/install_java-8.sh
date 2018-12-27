@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-mkdir -p /data/service/
+mkdir -p /data/service/src
+cd /data/service/src/
 
 tar xf jdk-8u191-linux-x64.tar.gz -C /data/service/
 mv /data/service/jdk1.8.0_191 /data/service/jdk
