@@ -10,8 +10,8 @@ backup_database_dir=/data/backup/database
 backup_dir=/data/backup/database/${date}/${ctime}
 backup_log=/data/backup/log/backup_mysql_db.log
 mycnf="--defaults-extra-file=/etc/my.cnf"
-umysqldump="/usr/local/mysql/bin/mysqldump"
-umysql="/usr/local/mysql/bin/mysql"
+umysqldump="/data/service/mysql/bin/mysqldump"
+umysql="/data/service/mysql/bin/mysql"
 keep_day=7
 
 # 减锁，执行脚本

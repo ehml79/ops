@@ -7,7 +7,7 @@ date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 back_cron_conf_dir=/data/backup/crontab_conf
 backup_dir=/data/backup/crontab_conf/${date}/${ctime}
-backup_log=/data/backup/log/backup_code_file.log
+backup_log=/data/backup/log/backup_crontab.log
 keep_day=7
 
 # 减锁，执行脚本

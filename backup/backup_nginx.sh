@@ -7,8 +7,8 @@ date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 backup_nginx_conf_dir=/data/backup/nginx_conf
 backup_dir=/data/backup/nginx_conf/${date}/${ctime}
-backup_log=/data/backup/log/backup_code_file.log
-nginx_dir=/usr/local/nginx
+backup_log=/data/backup/log/backup_nginx.log
+nginx_dir=/data/service/nginx
 keep_day=7
 
 # 减锁，执行脚本
