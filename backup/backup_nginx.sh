@@ -5,13 +5,14 @@
 start_ctime=$(date +%s)
 date=$(date +%F)
 ctime=$(date +%H-%M-%S)
+backup_nginx_conf_dir=/data/backup/nginx_conf
 backup_dir=/data/backup/nginx_conf/${date}/${ctime}
 backup_log=/data/backup/log/backup_code_file.log
 nginx_dir=/usr/local/nginx
 keep_day=7
 
 # 减锁，执行脚本
-chattr -R -i /data/backup/nginx_conf
+chattr -R -i ${backup_nginx_conf_dir}
 
 # 建立备份目录
 if [ ! -e ${backup_dir} ];then
@@ -25,7 +26,7 @@ fi
 
 # 删除旧备份
 function clean_backup(){
-    find /data/backup/code -mtime +${keep_day} -exec rm -fr {} \;
+    find ${backup_nginx_conf_dir}  -mtime +${keep_day} -exec rm -fr {} \;
 }
 
 
@@ -44,4 +45,4 @@ end_ctime=$(date +%s)
 echo "$(date '+%F %T %s') ${0} ${@} 备份结束 脚本用时:$((${end_ctime}-${start_ctime}))s " >> $backup_log
 
 # 加锁,防误删
-chattr -R +i /data/backup/nginx_conf
+chattr -R +i ${backup_nginx_conf_dir}

@@ -6,6 +6,7 @@
 start_ctime=$(date +%s)
 date=$(date +%F)
 ctime=$(date +%H-%M-%S)
+backup_database_dir=/data/backup/database
 backup_dir=/data/backup/database/${date}/${ctime}
 backup_log=/data/backup/log/backup_mysql_db.log
 mycnf="--defaults-extra-file=/etc/my.cnf"
@@ -14,7 +15,7 @@ umysql="/usr/local/mysql/bin/mysql"
 keep_day=7
 
 # 减锁，执行脚本
-chattr -R -i /data/backup/database
+chattr -R -i ${backup_database_dir}
 
 # 建立备份目录
 if [ ! -e ${backup_dir} ];then
@@ -28,7 +29,7 @@ fi
 
 # 删除旧备份
 function clean_backup(){
-    find /data/backup/database/ -mtime +${keep_day} -exec rm -fr {} \;
+    find ${backup_database_dir} -mtime +${keep_day} -exec rm -fr {} \;
 }
 
 # 备份 
@@ -76,4 +77,4 @@ end_ctime=$(date +%s)
 echo "$(date '+%F %T %s') ${0} ${@} 备份结束 脚本用时:$((${end_ctime}-${start_ctime}))s 数据:${backup_size} 压缩后:${tar_size}" >> $backup_log
 
 # 加锁,防误删
-chattr -R +i  /data/backup/database
+chattr -R +i  ${backup_database_dir}
