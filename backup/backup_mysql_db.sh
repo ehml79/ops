@@ -8,9 +8,9 @@ date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 backup_dir=/data/backup/database/${date}/${ctime}
 backup_log=/data/backup/log/backup_mysql_db.log
-mycnf="--defaults-extra-file=/data/.secret/my.cnf"
-umysqldump="/data/service/mysql/bin/mysqldump"
-umysql="/data/service/mysql/bin/mysql"
+mycnf="--defaults-extra-file=/etc/my.cnf"
+umysqldump="/usr/local/mysql/bin/mysqldump"
+umysql="/usr/local/mysql/bin/mysql"
 keep_day=7
 
 # 减锁，执行脚本
@@ -67,9 +67,9 @@ function compress(){
 }
 
 
-echo "$(date '+%F %T %s') ${0} ${@} 清理旧备份" >> ${backup_log}
+echo "$(date '+%F %T %s') ${0} ${@} 清理旧备份" >> $backup_log
 clean_backup
-echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> ${backup_log}
+echo "$(date '+%F %T %s') ${0} ${@} 开始备份" >> $backup_log
 mysqlbackup
 compress
 end_ctime=$(date +%s)

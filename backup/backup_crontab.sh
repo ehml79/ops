@@ -5,12 +5,12 @@
 start_ctime=$(date +%s)
 date=$(date +%F)
 ctime=$(date +%H-%M-%S)
-backup_dir=/data/backup/code/${date}/${ctime}
+backup_dir=/data/backup/crontab_conf/${date}/${ctime}
 backup_log=/data/backup/log/backup_code_file.log
 keep_day=7
 
 # 减锁，执行脚本
-chattr -R -i /data/backup/code
+chattr -R -i /data/backup/crontab_conf
 
 # 建立备份目录
 if [ ! -e ${backup_dir} ];then
@@ -41,4 +41,4 @@ end_ctime=$(date +%s)
 echo "$(date '+%F %T %s') ${0} ${@} 备份结束 脚本用时:$((${end_ctime}-${start_ctime}))s " >> $backup_log
 
 # 加锁,防误删
-chattr -R +i /data/backup/code
+chattr -R +i /data/backup/crontab_conf
