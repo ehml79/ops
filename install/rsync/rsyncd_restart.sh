@@ -13,4 +13,3 @@ if [ -f ${pid_file} ];then
 else
     ${rsync_daemon}
 fi
-
