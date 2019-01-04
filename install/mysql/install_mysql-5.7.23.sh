@@ -74,7 +74,7 @@ socket  = /tmp/mysql.sock
 
 [mysqld]
 port    = 3306
-sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
+sql_mode="NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 socket  = /tmp/mysql.sock
 basedir = /data/service/mysql
 datadir = /data/service/mysql/data
