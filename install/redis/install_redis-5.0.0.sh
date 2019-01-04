@@ -25,6 +25,10 @@ function install_redis(){
      
     sed -i 's/^daemonize.*/daemonize yes/' /data/service/redis/etc/redis.conf
     sed -i 's/^bind.*/bind 127.0.0.1/' /data/service/redis/etc/redis.conf
+
+    # 设置密码
+    sed -i 's/^requirepass.*/requirepass yourpassword/' /data/service/redis/etc/redis.conf
+
     # 启动redis
     /data/service/redis/bin/redis-server /data/service/redis/etc/redis.conf
     
