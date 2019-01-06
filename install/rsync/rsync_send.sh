@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-rsync_user=backup
+rsync_user=rsync
 rsync_passwd=
 rsync_hosts_allow=
 
@@ -38,7 +38,7 @@ write only = no
 hosts allow = ${rsync_hosts_allow}
 hosts deny = *
 list = false
-auth users = backup
+auth users = rsync
 pid file = /var/run/rsyncd.pid
 lock file = /var/run/rsync.lock
 log file = /var/log/rsyncd.log

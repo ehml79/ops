@@ -21,7 +21,7 @@ echo >> ${rsync_log}
 
 for remote_ip in ${ip_list[@]}
 do
-    ${relRsync} backup@${remote_ip}::backup  /data/backup/rsync/ygd/${remote_ip}  >> ${rsync_log} 2>&1
+    ${relRsync} rsync@${remote_ip}::backup  /data/backup/rsync/ygd/${remote_ip}  >> ${rsync_log} 2>&1
 done
 
 
