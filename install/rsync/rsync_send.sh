@@ -27,28 +27,26 @@ function rsync_send(){
     chmod 600 /etc/rsyncd/rsyncd.secrets
     
 cat >  /etc/rsyncd/rsyncd.conf << EOF
-uid = nobody
-gid = nobody
+uid = root
+gid = root
 use chroot = no
-max connections = 10
+max connections = 200
 strict modes = yes
-pid file = /var/run/rsyncd.pid
-lock file = /var/run/rsync.lock
-log file = /var/log/rsyncd.log
-
-[backup]
-path = /data/backup
-comment = backup file
 ignore errors
 read only = no
 write only = no
 hosts allow = ${rsync_hosts_allow}
 hosts deny = *
 list = false
-uid = root
-gid = root
 auth users = backup
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+log file = /var/log/rsyncd.log
 secrets file = /etc/rsyncd/rsyncd.secrets
+
+[backup]
+path = /data/backup
+comment = backup file
 EOF
     
     # 启动
