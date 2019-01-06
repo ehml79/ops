@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-rsync_log=/data/backup/log/rsync.log
+rsync_log=/data/backup/log/rsync_recv_scripts.log
 speed='--bwlimit=5000'
 #delete='--delete'
 ip_list=()
