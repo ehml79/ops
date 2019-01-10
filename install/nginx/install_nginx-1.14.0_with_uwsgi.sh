@@ -291,7 +291,7 @@ if [ -n "\${pid_num}" ];then
 fi
 
 #
-uwsgi --ini /data/service/nginx/conf/uwsgi.ini
+#uwsgi --ini /data/service/nginx/conf/uwsgi.ini
 # development
 uwsgi --py-auto-reload=1 --ini /data/service/nginx/conf/uwsgi.ini
 EOF
