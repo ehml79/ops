@@ -277,7 +277,7 @@ EOF
     export PATH=$PATH:/data/service/nginx/sbin
 
 # 生成启动脚本
-cat > /root/uswgi_restart.sh <<EOF
+cat > /root/uwsgi_restart.sh <<EOF
 
 #!/bin/bash
 
@@ -290,7 +290,10 @@ if [ -n "\${pid_num}" ];then
     sleep 1
 fi
 
+#
 uwsgi --ini /data/service/nginx/conf/uwsgi.ini
+# development
+uwsgi --py-auto-reload=1 --ini /data/service/nginx/conf/uwsgi.ini
 EOF
 
 
