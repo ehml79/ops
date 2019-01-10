@@ -217,6 +217,8 @@ cat > /data/service/nginx/conf/vhost/uwsgi_sample.conf <<EOF
                 location ~ .*\.(php)?$
                 {
                         fastcgi_pass  127.0.0.1:9000;
+                        #fastcgi_pass  unix:/tmp/uwsgi.sock;
+
                         fastcgi_index index.php;
                         include fcgi.conf;
                 }
