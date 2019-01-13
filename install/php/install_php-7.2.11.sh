@@ -161,6 +161,11 @@ function install_php(){
     sed -i 's@; extension_dir.*@extension_dir = "/data/service/php/lib/php/extensions/no-debug-non-zts-20170718/"@' /data/service/php/etc/php.ini
     # sed -i 's@; Development Value.*@; Development Value: On@' /data/service/php/etc/php.ini
 
+
+
+    echo 'export PATH=$PATH:/data/service/php/bin/' >>/etc/profile
+    echo 'export PATH=$PATH:/data/service/php/sbin/' >>/etc/profile
+
     # mcrypt
     wget http://pecl.php.net/get/mcrypt-1.0.1.tgz  -P  /data/service/src/
     cd /data/service/src/
