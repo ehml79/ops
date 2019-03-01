@@ -143,6 +143,8 @@ function install_php(){
     sed -i 's@;rlimit_files.*@rlimit_files = 65535@' /data/service/php/etc/php-fpm.d/www.conf
     sed -i 's@;rlimit_core.*@rlimit_core = 0@' /data/service/php/etc/php-fpm.d/www.conf
     sed -i 's@;catch_workers_output.*@catch_workers_output = yes@' /data/service/php/etc/php-fpm.d/www.conf
+    # .do 访问
+    sed -i 's@;security.limit_extensions.*@security.limit_extensions = .php .php3 .php4 .php5 .php7 .do@' /data/service/php/etc/php-fpm.d/www.conf
     
     # 配置 /data/service/php/etc/php.ini
     mkdir -p /data/service/php/log/
@@ -204,7 +206,7 @@ function install_php(){
 
 
     # 配置扩展
-    echo "security.limit_extensions = .php .php3 .php4 .php5 .do .html" >> /data/service/php/etc/php.ini
+    #echo "security.limit_extensions = .php .php3 .php4 .php5 .do .html" >> /data/service/php/etc/php.ini
     echo "cgi.fix_pathinfo=0"  >> /data/service/php/etc/php.ini
 
     # 启动 php
