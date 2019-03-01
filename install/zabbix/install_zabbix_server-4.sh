@@ -50,6 +50,7 @@ DBHost=${zabbix_server_ip}
 DBName=zabbix
 DBUser=zabbix
 DBPassword=${zabbix_db_password} 
+DBSocket=/tmp/mysql.sock
 ListenIP=0.0.0.0
 StartPollersUnreachable=10
 StartTrappers=10
