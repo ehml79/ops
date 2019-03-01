@@ -43,6 +43,13 @@ LogFile=/tmp/zabbix_agentd.log
 Server=127.0.0.1
 ServerActive=127.0.0.1
 Hostname=Zabbix server
+Include=/data/service/zabbix/etc/zabbix_agentd.conf.d/*.conf
+EOF
+
+cat > /data/service/zabbix/etc/zabbix_agentd.conf.d/userparameter_mysql.conf <<EOF
+UserParameter=mysql.ping,HOME=/data/service/mysql/bin/mysqladmin ping 2>/dev/null | grep -c alive
+UserParameter=mysql.status[*],/data/service/zabbix/share/zabbix/externalscripts/check_mysql \$1
+UserParameter=mysql.version,/data/service/mysql/bin/mysql -V
 EOF
 
 cat > /data/service/zabbix/etc/zabbix_server.conf <<EOF
