@@ -1,0 +1,15 @@
+#!/bin/sh
+
+
+REPOS="$1"
+REV="$2"
+TXN_NAME="$3"
+
+#"$REPOS"/hooks/mailer.py commit "$REPOS" $REV "$REPOS"/mailer.conf
+
+
+/usr/bin/ssh root@192.168.1.1 "/bin/bash  /data/sh/update/rsync_update_scripts.sh"
+echo `date '+%F %H:%M:%S'` $1 $2 $3 $REPOS $REV >> /data/log/post-commit.log
+
+
+
