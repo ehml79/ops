@@ -1,22 +1,22 @@
 #!/bin/bash
 
 
-
 project_name=kitty
 
 
 apt update
 apt -y install subversion
 
-mkdir -p /data/{svn,log}
-cd /data/svn
+mkdir /data/log
+mkdir -p /data/service/svn
+cd /data/service/svn
 
-svnadmin create /data/svn/${project_name}
+svnadmin create /data/service/svn/${project_name}
 
 
 # 配置conf
 
-cat > /data/svn/${project_name}/conf/authz << EOF
+cat > /data/service/svn/${project_name}/conf/authz << EOF
 
 developer = dev1,dev2,dev3
 
@@ -26,21 +26,21 @@ developer = dev1,dev2,dev3
 EOF
 
 # 配置passwd
-cat >  /data/svn/${project_name}/conf/authz << EOF
+cat >  /data/service/svn/${project_name}/conf/authz << EOF
 dev1 = dev1password
 dev2 = dev2password
 dev3 = dev3password
 EOF
 
 # 配置 svnserve.conf
-sed -i 's/anon-access = none
-sed -i 's/auth-access = write
-sed -i 's/password-db = passwd
-sed -i 's/authz-db = authz
+sed -i 's/.*anon-access = .*/anon-access = none/g' /data/service/svn/${project_name}/conf/svnserve.conf
+sed -i 's/.*auth-access =.*/auth-access = write/g' /data/service/svn/${project_name}/conf/svnserve.conf
+sed -i 's/.*password-db = .*/password-db = passwd/g' /data/service/svn/${project_name}/conf/svnserve.conf
+sed -i 's/.*authz-db =.*/authz-db = authz/'g  /data/service/svn/${project_name}/conf/svnserve.conf
 
 
 # 配置hooks
-cat > /data/svn/${project_name}/hooks/pre-commit << EOF
+cat > /data/service/svn/${project_name}/hooks/pre-commit << EOF
 #!/bin/sh
 # svn hooks
 # svn commit 必须提交5个字的中文字符
@@ -57,7 +57,7 @@ if [ "\$LOGMSG" -lt 17 ]; then
 fi
 EOF
 
-chmod +x /data/svn/${project_name}/hooks/pre-commit  
+chmod +x /data/service/svn/${project_name}/hooks/pre-commit  
 
 
 # 启动脚本
