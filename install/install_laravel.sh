@@ -11,6 +11,7 @@ wget https://getcomposer.org/download/1.8.0/composer.phar -O  /usr/bin/composer
 chmod +x /usr/bin/composer
 # 更改国内镜像
 /usr/bin/composer config -g repo.packagist composer https://packagist.phpcomposer.com
+mkdir -p /root/.config/composer/
 cat >/root/.config/composer/config.json << EOF
 {
     "config": {},
