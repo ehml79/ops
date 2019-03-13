@@ -181,7 +181,7 @@ innodb_log_group_home_dir = /data/service/mysql/data
 
 slow_query_log = ON
 #log-slow-queries = /data/service/mysql/slow.log
-#long_query_time = 10
+long_query_time = 1
 
 [mysql]
 prompt=(\\u@\\h) [\\d]>\\_
