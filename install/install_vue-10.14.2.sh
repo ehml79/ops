@@ -11,7 +11,7 @@ function install_vue(){
     wget https://npm.taobao.org/mirrors/node/v10.14.1/node-v10.14.1-linux-x64.tar.gz -P /data/service/src
     tar xf /data/service/src/node-v10.14.1-linux-x64.tar.gz -C /data/service/
     
-    mv /data/service/node-v10.14.1-linux-x64/  /data/service/node
+    mv /data/service/src/node-v10.14.1-linux-x64/  /data/service/node
     
     
     sudo ln -s /data/service/node/bin/node /usr/local/bin/node
