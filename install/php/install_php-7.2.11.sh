@@ -203,6 +203,16 @@ function install_php(){
     make && sudo make install
     echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
 
+    # openssl
+#    cd /data/service/src/php-7.2.11/ext/openssl
+#    cp config0.m4 config.m4
+#    /data/service/php/bin/phpize
+#    ./configure --with-openssl -with-php-config=/data/service/php/bin/php-config
+#    make
+#    make install
+#    echo 'extension = "openssl.so"' >> /data/service/php/etc/php.ini
+
+
 
 
     # 配置扩展
