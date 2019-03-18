@@ -101,7 +101,7 @@ EOF
 
     mkdir -p /data/web/zabbix
     cp -r /data/service/src/zabbix-4.0.0/frontends/php/* /data/web/zabbix/
-    chown -R nginx:nginx /data/web/zabbix/
+    chown -R www:www /data/web/zabbix/
     
     echo "/data/service/mysql/lib/" >>  /etc/ld.so.conf
     ldconfig
