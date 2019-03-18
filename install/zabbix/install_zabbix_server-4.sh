@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-zabbix_server_ip=1.1.1.1
+zabbix_server_ip=127.0.0.1
 zabbix_db_password=password
 
 function install_zabbix_server_4(){
