@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# 安装 mysql 5.7.23
+# 安装 mysql 5.7
+mysql_version="mysql-5.7.25"
+
 
 function install_mysql(){
 
@@ -49,10 +51,10 @@ function install_mysql(){
     useradd -r -g mysql -s /bin/false mysql
     
     # 下载包好慢，建议提前下载好
-    wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.23.tar.gz -P /data/service/src/
+    wget https://dev.mysql.com/get/Downloads/MySQL-5.7/${mysql_version}.tar.gz -P /data/service/src/
     wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz -P  /data/service/src/
     
-    cd /data/service/src/  && tar -xf mysql-5.7.23.tar.gz 
+    cd /data/service/src/  && tar -xf ${mysql_version}.tar.gz 
     cd mysql-5.7.23
     mkdir bld
     cd bld
