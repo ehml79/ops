@@ -179,7 +179,7 @@ function install_php(){
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
-    #echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
+    echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
 
 
     # igbinary
@@ -190,7 +190,7 @@ function install_php(){
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
-    #echo 'extension = "igbinary.so"' >> /data/service/php/etc/php.ini
+    echo 'extension = "igbinary.so"' >> /data/service/php/etc/php.ini
  
 
     # redis
@@ -201,7 +201,7 @@ function install_php(){
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
-    #echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
+    echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
 
     # openssl
 #    cd /data/service/src/php-7.2.11/ext/openssl
