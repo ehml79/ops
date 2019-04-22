@@ -153,7 +153,7 @@ function install_php(){
     sed -i 's@short_open_tag.*@short_open_tag = On@' /data/service/php/etc/php.ini
     sed -i 's@expose_php.*@expose_php = Off@' /data/service/php/etc/php.ini
     sed -i 's@memory_limit.*@memory_limit = 2048M@' /data/service/php/etc/php.ini
-    sed -i 's@error_reporting.*@error_reporting = E_ALL \& \~E_NOTICE \& \~E_STRICT@' /data/service/php/etc/php.ini
+    sed -i 's@error_reporting.*@error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT@' /data/service/php/etc/php.ini
     sed -i 's@;track_errors =.*@track_errors = Off@' /data/service/php/etc/php.ini
     sed -i 's@;date.timezone.*@date.timezone = Asia/Shanghai@' /data/service/php/etc/php.ini
     sed -i 's@mail.add_x_header.*@mail.add_x_header = On@' /data/service/php/etc/php.ini
@@ -179,7 +179,7 @@ function install_php(){
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
-    echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
+    #echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
 
 
     # igbinary
@@ -190,7 +190,7 @@ function install_php(){
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
-    echo 'extension = "igbinary.so"' >> /data/service/php/etc/php.ini
+    #echo 'extension = "igbinary.so"' >> /data/service/php/etc/php.ini
  
 
     # redis
@@ -201,7 +201,7 @@ function install_php(){
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
-    echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
+    #echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
 
     # openssl
 #    cd /data/service/src/php-7.2.11/ext/openssl
