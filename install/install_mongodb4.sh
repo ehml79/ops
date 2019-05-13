@@ -3,11 +3,11 @@
 
 function install_mongodb(){
     mkdir -p /data/service/src/
-    wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.4.tgz -P /data/service/src/ 
+    wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.9.tgz -P /data/service/src/ 
     cd /data/service/src
-    tar xf mongodb-linux-x86_64-4.0.4.tgz
-    cd mongodb-linux-x86_64-4.0.4/
-    mv mongodb-linux-x86_64-4.0.4 /data/service/mongodb
+    tar xf mongodb-linux-x86_64-4.0.9.tgz
+    cd mongodb-linux-x86_64-4.0.9/
+    mv mongodb-linux-x86_64-4.0.9 /data/service/mongodb
     mkdir -p /data/service/mongodb/data
     touch /data/service/mongodb/mongodb.log
     
