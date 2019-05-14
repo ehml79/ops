@@ -34,6 +34,6 @@ systemctl enable mysqld
 mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';"
 
 export PATH=$PATH:/data/service/mysql/bin
-echo "export PATH=$PATH:/data/service/mysql/bin" >> /etc/profile
+echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
 
 
