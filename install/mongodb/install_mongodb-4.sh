@@ -10,9 +10,9 @@ function install_mongodb(){
     mkdir -p /data/service/mongodb/data
     touch /data/service/mongodb/mongodb.log
     
-    /data/service/mongodb/bin/mongod --dbpath=/data/service/mongodb/data/  --logpath=/data/service/mongodb/mongodb.log -logappend --bind_ip 0.0.0.0 -port=27017 --fork
+    /data/service/mongodb/bin/mongod --dbpath=/data/service/mongodb/data/  --logpath=/data/service/mongodb/mongodb.log -logappend --bind_ip 0.0.0.0 -port=27017   --fork 
     
-    echo "PATH=$PATH:/data/service/mongodb/bin/" >>/etc/profile
+    echo 'export PATH=$PATH:/data/service/mongodb/bin/' >>/etc/profile
     export PATH=$PATH:/data/service/mongodb/bin/
 }
 
