@@ -13,7 +13,6 @@ mongodb_daemon="/data/service/mongodb/bin/mongod  \
 
 if [ -S ${mongo_file} ];then
     killall mongod
-    sleep 1
     ${mongodb_daemon}
 else
     ${mongodb_daemon}
