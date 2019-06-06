@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# django 需要
+apt -y install libsqlite3-dev 
 
-wget https://www.python.org/ftp/python/3.6.8/Python-3.6.8.tar.xz -O /data/service/src/
+
+wget https://www.python.org/ftp/python/3.6.8/Python-3.6.8.tar.xz -O /data/service/src/Python-3.6.8.tar.xz
 
 tar xf /data/service/src/Python-3.6.8.tar.xz
 
