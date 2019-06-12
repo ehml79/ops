@@ -55,7 +55,7 @@ function install_mysql(){
     wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz -P  /data/service/src/
     
     cd /data/service/src/  && tar -xf ${mysql_version}.tar.gz 
-    cd mysql-5.7.23
+    cd ${mysql_version}
     mkdir bld
     cd bld
     
