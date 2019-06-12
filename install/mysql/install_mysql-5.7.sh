@@ -63,7 +63,7 @@ function install_mysql(){
     -DDOWNLOAD_BOOST=0  \
     -DWITH_BOOST=/data/service/src/
     
-    make -j $( grep processor /proc/cpuinfo | wc -l) && make install
+    make && make install
     
     cd /data/service/mysql/
     
