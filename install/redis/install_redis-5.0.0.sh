@@ -35,7 +35,7 @@ function install_redis(){
     
     
     echo "/data/service/redis/bin/redis-server /data/service/redis/etc/redis.conf" > /root/redis_start.sh
-    echo "/data/service/redis/bin/redis-cli shutdown" > /root/redis_stop.sh
+    echo "/data/service/redis/bin/redis-cli -a ${redis_passwd} shutdown" > /root/redis_stop.sh
     
     export PATH="$PATH:/data/service/redis/bin/"
 
