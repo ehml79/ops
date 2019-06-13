@@ -2,7 +2,7 @@
 
 function install_node_exporter(){
     mkdir -p /data/service/src/
-    wget https://github.com/prometheus/node_exporter/releases/download/v0.17.0-rc.0/node_exporter-0.17.0-rc.0.linux-amd64.tar.gz -P /data/service/src/
+    wget -O /data/service/src/node_exporter-0.17.0-rc.0.linux-amd64.tar.gz https://github.com/prometheus/node_exporter/releases/download/v0.17.0-rc.0/node_exporter-0.17.0-rc.0.linux-amd64.tar.gz 
     cd /data/service/src/
     tar xf node_exporter-0.17.0-rc.0.linux-amd64.tar.gz -C /data/service/
     mv /data/service/node_exporter-0.17.0-rc.0.linux-amd64/ /data/service/node_exporter

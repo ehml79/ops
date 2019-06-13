@@ -25,7 +25,7 @@ function install_mariadb(){
     
     
     # 相当慢了....
-    wget https://mirrors.tuna.tsinghua.edu.cn/mariadb//mariadb-10.3.10/source/mariadb-10.3.10.tar.gz  -P /data/service/src
+    wget -O  /data/service/src/mariadb-10.3.10.tar.gz https://mirrors.tuna.tsinghua.edu.cn/mariadb//mariadb-10.3.10/source/mariadb-10.3.10.tar.gz 
     cd /data/service/src ; tar xf  mariadb-10.3.10.tar.gz
     cd mariadb-10.3.10/
     mkdir build-mariadb

@@ -3,7 +3,7 @@
 function install_mysqld_exporter(){
 
     mkdir -p /data/service/src/
-    wget https://github.com/prometheus/mysqld_exporter/releases/download/v0.11.0/mysqld_exporter-0.11.0.linux-amd64.tar.gz -P /data/service/src/
+    wget -O /data/service/src/mysqld_exporter-0.11.0.linux-amd64.tar.gz  https://github.com/prometheus/mysqld_exporter/releases/download/v0.11.0/mysqld_exporter-0.11.0.linux-amd64.tar.gz 
     
     cd /data/service/src/
     

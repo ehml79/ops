@@ -4,7 +4,7 @@ ip_addr=ip
 
 
 
-wget https://github.com/hnlq715/nginx-vts-exporter/releases/download/v0.10.3/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz -P /data/service/src
+wget -O /data/service/src/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz  https://github.com/hnlq715/nginx-vts-exporter/releases/download/v0.10.3/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz 
 
 cd /data/service/src
 

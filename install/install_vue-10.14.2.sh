@@ -6,9 +6,9 @@ function install_vue(){
 
     mkdir -p /data/service/src
     
-    #wget https://nodejs.org/dist/v10.14.2/node-v10.14.2.tar.gz -P /data/service/src
+    #wget -O /data/service/src/node-v10.14.2.tar.gz  https://nodejs.org/dist/v10.14.2/node-v10.14.2.tar.gz 
     
-    wget https://npm.taobao.org/mirrors/node/v10.14.1/node-v10.14.1-linux-x64.tar.gz -P /data/service/src
+    wget -O /data/service/src/node-v10.14.1-linux-x64.tar.gz  https://npm.taobao.org/mirrors/node/v10.14.1/node-v10.14.1-linux-x64.tar.gz 
     tar xf /data/service/src/node-v10.14.1-linux-x64.tar.gz -C /data/service/
     
     mv /data/service/src/node-v10.14.1-linux-x64/  /data/service/node

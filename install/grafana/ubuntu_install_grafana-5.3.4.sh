@@ -2,7 +2,7 @@
 
 
 
-wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_5.3.4_amd64.deb
+wget -O grafana_5.3.4_amd64.deb  https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_5.3.4_amd64.deb
 sudo dpkg -i grafana_5.3.4_amd64.deb
 
 sudo systemctl enable grafana-server.service

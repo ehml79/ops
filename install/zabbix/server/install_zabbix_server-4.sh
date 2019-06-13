@@ -22,7 +22,7 @@ function install_zabbix_server_4(){
     groupadd zabbix
     useradd -g zabbix zabbix
     mkdir -p /data/service/src/ 
-    wget https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.0.0/zabbix-4.0.0.tar.gz -P /data/service/src
+    wget -O /data/service/src/zabbix-4.0.0.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.0.0/zabbix-4.0.0.tar.gz 
     
     cd /data/service/src
     tar xf zabbix-4.0.0.tar.gz

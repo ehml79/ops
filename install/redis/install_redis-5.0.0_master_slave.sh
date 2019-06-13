@@ -15,7 +15,7 @@ function install_redis(){
 
     mkdir -p /data/service/src/
     
-#    wget http://download.redis.io/releases/redis-5.0.0.tar.gz  -P /data/service/src/
+#   wget -O /data/service/src/redis-5.0.0.tar.gz http://download.redis.io/releases/redis-5.0.0.tar.gz  
     cd /data/service/src
     tar xf redis-5.0.0.tar.gz
     cd redis-5.0.0/

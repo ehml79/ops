@@ -6,7 +6,7 @@ your_domain=domain
 
 function install_prometheus(){
     mkdir -p /data/service/src/
-    wget https://github.com/prometheus/prometheus/releases/download/v2.5.0/prometheus-2.5.0.linux-amd64.tar.gz -P /data/service/src/
+    wget -O /data/service/src/prometheus-2.5.0.linux-amd64.tar.gz  https://github.com/prometheus/prometheus/releases/download/v2.5.0/prometheus-2.5.0.linux-amd64.tar.gz 
     cd /data/service/src/
     tar xf  prometheus-2.5.0.linux-amd64.tar.gz
     

@@ -6,7 +6,7 @@ web_user=www
 function install_openssl(){
     # install openssl
 
-    wget https://www.openssl.org/source/openssl-1.1.1.tar.gz -P /data/service/src
+    wget -O /data/service/src/openssl-1.1.1.tar.gz https://www.openssl.org/source/openssl-1.1.1.tar.gz 
     cd /data/service/src
     mv openssl-1.1.1 openssl-1.1.1_`date '+%Y%M%d%H%M%S'`
     tar xf  openssl-1.1.1.tar.gz
@@ -54,7 +54,7 @@ function install_php(){
         exit 1
     fi
 
-    wget http://cn.php.net/distributions/php-7.2.11.tar.gz  -P /data/service/src/
+    wget -O /data/service/src/php-7.2.11.tar.gz http://cn.php.net/distributions/php-7.2.11.tar.gz 
     
     cd /data/service/src/
     tar xf php-7.2.11.tar.gz
@@ -172,7 +172,7 @@ function install_php(){
     echo 'export PATH=$PATH:/data/service/php/sbin/' >>/etc/profile
 
     # mcrypt
-    wget http://pecl.php.net/get/mcrypt-1.0.1.tgz  -P  /data/service/src/
+    wget -O /data/service/src/mcrypt-1.0.1.tgz http://pecl.php.net/get/mcrypt-1.0.1.tgz 
     cd /data/service/src/
     tar xf mcrypt-1.0.1.tgz 
     cd mcrypt-1.0.1
@@ -183,7 +183,7 @@ function install_php(){
 
 
     # igbinary
-    wget http://pecl.php.net/get/igbinary-2.0.8.tgz -P  /data/service/src/
+    wget -O /data/service/src/igbinary-2.0.8.tgz  http://pecl.php.net/get/igbinary-2.0.8.tgz 
     cd /data/service/src/ 
     tar xf igbinary-2.0.8.tgz   
     cd igbinary-2.0.8
@@ -194,7 +194,7 @@ function install_php(){
  
 
     # redis
-    wget http://pecl.php.net/get/redis-4.2.0.tgz  -P  /data/service/src/
+    wget -O /data/service/src/redis-4.2.0.tgz http://pecl.php.net/get/redis-4.2.0.tgz 
     cd /data/service/src/
     tar xf redis-4.2.0.tgz
     cd redis-4.2.0

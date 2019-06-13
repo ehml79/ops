@@ -51,8 +51,8 @@ function install_mysql(){
     useradd -r -g mysql -s /bin/false mysql
     
     # 下载包好慢，建议提前下载好
-    wget https://dev.mysql.com/get/Downloads/MySQL-5.7/${mysql_version}.tar.gz -P /data/service/src/
-    wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz -P  /data/service/src/
+    wget -O /data/service/src/${mysql_version}.tar.gz  https://dev.mysql.com/get/Downloads/MySQL-5.7/${mysql_version}.tar.gz 
+    wget -O /data/service/src/boost_1_59_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz 
     
     cd /data/service/src/  && tar -xf ${mysql_version}.tar.gz 
     cd ${mysql_version}

@@ -4,7 +4,7 @@
 apt -y install libevent-dev
 
 
-wget http://www.memcached.org/files/memcached-1.5.12.tar.gz -P /data/service/src/
+wget -O /data/service/src/memcached-1.5.12.tar.gz http://www.memcached.org/files/memcached-1.5.12.tar.gz 
 
 cd /data/service/src
 

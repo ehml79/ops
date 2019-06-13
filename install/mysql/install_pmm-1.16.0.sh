@@ -2,10 +2,9 @@
 # Percona Monitoring and Management
 
 # Grafana
-# wget https://www.percona.com/downloads/pmm/1.16.0/binary/tarball/pmm-client-1.16.0.tar.gz
 # Kibana 
 
-wget https://www.percona.com/downloads/pmm/1.16.0/binary/tarball/pmm-client-1.16.0.tar.gz -P /data/service/src
+wget -O /data/service/src/pmm-client-1.16.0.tar.gz https://www.percona.com/downloads/pmm/1.16.0/binary/tarball/pmm-client-1.16.0.tar.gz 
 
 cd /data/service/src
 tar xf pmm-client-1.16.0.tar.gz

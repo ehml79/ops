@@ -4,7 +4,7 @@
 function install_openssl(){
     # install openssl
 
-    wget https://www.openssl.org/source/openssl-1.1.1.tar.gz -P /data/service/src
+    wget -O /data/service/src/openssl-1.1.1.tar.gz  https://www.openssl.org/source/openssl-1.1.1.tar.gz 
     cd /data/service/src
     tar xf  openssl-1.1.1.tar.gz
     cd openssl-1.1.1/
