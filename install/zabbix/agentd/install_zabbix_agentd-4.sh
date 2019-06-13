@@ -2,6 +2,9 @@
 
 
 zabbix_server_ip=1.1.1.1
+zabbix_db_host=localhost
+zabbix_db_user=root
+zabbix_db_password=
 
 
 function install_zabbix_agentd_4(){
@@ -42,9 +45,9 @@ EOF
 mkdir -p /data/.secret/
 cat > /data/.secret/zabbix-my.cnf <<EOF
 [client]
-host=localhost
-user='root'
-password='password'
+host=${zabbix_db_host}
+user='${zabbix_db_user}'
+password='${zabbix_db_password}'
 EOF
 
     chmod 600 /data/.secret/zabbix-my.cnf 
