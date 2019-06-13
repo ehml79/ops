@@ -2,7 +2,7 @@
 
 
 zabbix_server_ip=127.0.0.1
-zabbix_db_password=password
+zabbix_db_password=
 
 function install_zabbix_server_4(){
 
@@ -109,7 +109,7 @@ EOF
 
     # 导入数据库
     cd /data/service/src/zabbix-4.0.0/database/mysql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "create database zabbix default charset utf8"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS zabbix default CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/zabbix-4.0.0/database/mysql/schema.sql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/zabbix-4.0.0/database/mysql/images.sql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/zabbix-4.0.0/database/mysql/data.sql
