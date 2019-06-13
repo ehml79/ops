@@ -7,7 +7,7 @@ groupadd grafana
 useradd -r -g grafana -s /bin/false grafana
 mkdir -p /data/service/src/
 
-wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.4.linux-amd64.tar.gz -P /data/service/src/
+wget -O /data/service/src/grafana-5.3.4.linux-amd64.tar.gz  https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.4.linux-amd64.tar.gz 
 
 tar -xf /data/service/src/grafana-5.3.4.linux-amd64.tar.gz -C /data/service/
 
