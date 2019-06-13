@@ -3,6 +3,7 @@
 
 zabbix_server_ip=127.0.0.1
 zabbix_db_password=
+zabbix_domain=zabbix.example.com
 
 function install_zabbix_server_4(){
 
@@ -120,7 +121,7 @@ cat > /data/service/nginx/conf/vhost/zabbix.conf <<EOF
 #
     server {
         listen       80;
-        server_name  zabbix.example.com;
+        server_name  ${zabbix_domain};
 
         location / {
             root   /data/web/zabbix;
