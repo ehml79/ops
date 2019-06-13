@@ -53,6 +53,21 @@ UserParameter=mysql.status[*],/data/service/zabbix/share/zabbix/externalscripts/
 UserParameter=mysql.version,/data/service/mysql/bin/mysql -V
 EOF
 
+# 报警脚本
+mkdir -p /data/service/zabbix/share/zabbix/alertscripts
+cp /root/sendmail.py /data/service/zabbix/share/zabbix/alertscripts/
+chown zabbix.zabbix  /data/service/zabbix/share/zabbix/alertscripts/sendmail.py
+chmod +x  /data/service/zabbix/share/zabbix/alertscripts/sendmail.py
+
+
+# mysql监控脚本
+mkdir -p /data/service/zabbix/share/zabbix/externalscripts/ 
+cp /root/check_mysql /data/service/zabbix/share/zabbix/externalscripts/check_mysql
+chown zabbix.zabbix  /data/service/zabbix/share/zabbix/externalscripts/check_mysql
+chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql
+
+
+
 cat > /data/service/zabbix/etc/zabbix_server.conf <<EOF
 DBHost=${zabbix_server_ip}
 DBName=zabbix
