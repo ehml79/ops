@@ -65,8 +65,8 @@ install_nginx(){
 #
 user ${run_user} ${run_user};
 
-worker_processes 8;
-worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;
+worker_processes auto;
+#worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;
 
 error_log  /data/service/nginx/logs/error.log  notice;
 
