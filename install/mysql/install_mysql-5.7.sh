@@ -30,16 +30,11 @@ function install_mysql(){
     	mkdir -p /data/service/src/ 
     fi
 
-    # 创建mysql密码文件
-    if [ ! -f /data/.secret/mysql.pass ];then
-    	mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
-	mkdir  -p /data/.secret/
-    	echo ${mysql_passwd} > /data/.secret/mysql.pass
-        chmod 600 /data/.secret/mysql.pass
-    fi
     
     # 创建my.cnf 备份用
     if [ ! -f /data/.secert/my.cnf ];then
+    	mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
+	mkdir  -p /data/.secret/
        echo "[client]" > /data/.secret/my.cnf
        echo "user = root" >> /data/.secret/my.cnf
        echo "host = localhost" >> /data/.secret/my.cnf
