@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# 下载 jdk-8u211-linux-x64.tar.gz 放到目录 /data/service/src/ 下，然后执行脚本
 
 mkdir -p /data/service/src
 cd /data/service/src/
