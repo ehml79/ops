@@ -13,19 +13,17 @@ function install_vue(){
     
     mv /data/service/node-v10.14.1-linux-x64/  /data/service/node
     
-    
-    sudo ln -s /data/service/node/bin/node /usr/local/bin/node
-    sudo ln -s /data/service/node/bin/npm /usr/local/bin/npm
-    
+    echo 'export PATH=$PATH:/data/service/node/bin/' >>/etc/profile
     
     # 安装cnpm
     npm install -g cnpm --registry=https://registry.npm.taobao.org
     
-    sudo ln -s /data/service/node/lib/node_modules/cnpm/bin/cnpm /usr/local/bin/cnpm
-    
+    echo 'export PATH=$PATH:/data/service/node/lib/node_modules/cnpm/bin/' >>/etc/profile
+
     cnpm install -g vue-cli
     
-    sudo ln -s /data/service/node/lib/node_modules/vue-cli/bin/vue /usr/local/bin/vue
+    echo 'export PATH=$PATH:/data/service/node/lib/node_modules/vue-cli/bin/' >>/etc/profile
+    
 
 }
 
