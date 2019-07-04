@@ -17,6 +17,7 @@ svnadmin create /data/service/svn/${project_name}
 # 配置conf
 
 cat > /data/service/svn/${project_name}/conf/authz << EOF
+[groups]
 
 developer = dev1,dev2,dev3
 
