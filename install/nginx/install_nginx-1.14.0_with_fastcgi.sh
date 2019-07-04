@@ -134,6 +134,8 @@ http {
 
 }
 EOF
+
+mv /root/sample.conf /data/service/nginx/conf/vhost/
     
 
 cat > /data/service/nginx/conf/fcgi.conf <<EOF
