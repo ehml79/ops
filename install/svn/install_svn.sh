@@ -7,7 +7,7 @@ project_name=zhangshang
 apt update
 apt -y install subversion
 
-mkdir /data/log
+mkdir -p /data/log
 mkdir -p /data/service/svn
 cd /data/service/svn
 
@@ -26,7 +26,7 @@ developer = dev1,dev2,dev3
 EOF
 
 # 配置passwd
-cat >  /data/service/svn/${project_name}/conf/authz << EOF
+cat >  /data/service/svn/${project_name}/conf/passwd << EOF
 dev1 = dev1password
 dev2 = dev2password
 dev3 = dev3password
