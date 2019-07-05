@@ -18,7 +18,7 @@ cd memcached-1.5.12/
 make && make test && sudo make install
 
 
-cat  > /root/memcached_start  << EOF
+cat  > /root/memcached_start.sh  << EOF
 #!/bin/bash
 ulimit -SHn 65535
 /data/service/memcached/bin/memcached -d -m 64 -c 4096 -p 11210 -u www -t 10
