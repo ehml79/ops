@@ -16,7 +16,7 @@ function install_vue(){
     echo 'export PATH=$PATH:/data/service/node/bin/' >>/etc/profile
     
     # 安装cnpm
-    npm install -g cnpm --registry=https://registry.npm.taobao.org
+    /data/service/node/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
     
     echo 'export PATH=$PATH:/data/service/node/lib/node_modules/cnpm/bin/' >>/etc/profile
 
