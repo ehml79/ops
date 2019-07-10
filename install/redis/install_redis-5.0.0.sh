@@ -28,7 +28,9 @@ function install_redis(){
     sed -i 's/^bind.*/bind 127.0.0.1/' /data/service/redis/etc/redis.conf
 
     # 设置密码
-    sed -i "s/^# requirepass foobared.*/requirepass ${redis_passwd}/" /data/service/redis/etc/redis.conf
+    if [ ! -n "${redis_passwd}" ]; then
+        sed -i "s/^# requirepass foobared.*/requirepass ${redis_passwd}/" /data/service/redis/etc/redis.conf
+    fi
 
     # 启动redis
     /data/service/redis/bin/redis-server /data/service/redis/etc/redis.conf
@@ -37,7 +39,7 @@ function install_redis(){
     echo "/data/service/redis/bin/redis-server /data/service/redis/etc/redis.conf" > /root/redis_start.sh
     echo "/data/service/redis/bin/redis-cli -a ${redis_passwd} shutdown" > /root/redis_stop.sh
     
-    export PATH="$PATH:/data/service/redis/bin/"
+    echo 'export PATH="$PATH:/data/service/redis/bin/"' >>/etc/profile
 
 
 
