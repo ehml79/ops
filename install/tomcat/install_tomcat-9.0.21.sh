@@ -22,7 +22,7 @@ EOF
 
 chmod +x /root/tomcat_stop.sh
 
-cat > <<EOF
+cat > /root/tomcat_restart.sh <<EOF
 #!/bin/bash 
 /bin/bash /data/service/tomcat/bin/shutdown.sh && /bin/bash  /data/service/tomcat/bin/startup.sh
 EOF
