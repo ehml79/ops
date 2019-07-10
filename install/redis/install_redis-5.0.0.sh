@@ -28,7 +28,7 @@ function install_redis(){
     sed -i 's/^bind.*/bind 127.0.0.1/' /data/service/redis/etc/redis.conf
 
     # 设置密码
-    if [ ! -n "${redis_passwd}" ]; then
+    if [ -n "${redis_passwd}" ];then
         sed -i "s/^# requirepass foobared.*/requirepass ${redis_passwd}/" /data/service/redis/etc/redis.conf
     fi
 
