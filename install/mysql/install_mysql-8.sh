@@ -1,5 +1,6 @@
 #!/bin/bash
 
+function install_mysql8(){
 
 mysql_version="mysql-8.0.15"
 
@@ -33,6 +34,9 @@ mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_pass
 export PATH=$PATH:/data/service/mysql/bin
 echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
 
+}
+
+
 function config_sshd(){
 
     # navicat SSH 连接时提示
@@ -51,6 +55,8 @@ EOF
 
 
 }
+
+install_mysql8
 
 config_sshd
 
