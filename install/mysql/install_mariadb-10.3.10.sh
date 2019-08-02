@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mariadb_version=mariadb-10.4.7
+
 function install_mariadb(){
 
     # 判断系统
@@ -25,9 +27,9 @@ function install_mariadb(){
     
     
     # 相当慢了....
-    wget -O  /data/service/src/mariadb-10.3.10.tar.gz https://mirrors.tuna.tsinghua.edu.cn/mariadb//mariadb-10.3.10/source/mariadb-10.3.10.tar.gz 
-    cd /data/service/src ; tar xf  mariadb-10.3.10.tar.gz
-    cd mariadb-10.3.10/
+    wget -O  /data/service/src/${mariadb_version}.tar.gz https://mirrors.tuna.tsinghua.edu.cn/mariadb//${mariadb_version}/source/${mariadb_version}.tar.gz 
+    cd /data/service/src ; tar xf  ${mariadb_version}.tar.gz
+    cd ${mariadb_version}/
     mkdir build-mariadb
     cd build-mariadb
     cmake .. -DCMAKE_INSTALL_PREFIX=/data/service/mariadb  \
