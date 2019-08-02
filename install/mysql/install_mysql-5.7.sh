@@ -47,7 +47,8 @@ function install_mysql(){
     
     # 下载包好慢，建议提前下载好
     wget -O /data/service/src/${mysql_version}.tar.gz  https://dev.mysql.com/get/Downloads/MySQL-5.7/${mysql_version}.tar.gz 
-    wget -O /data/service/src/boost_1_70_0.tar.gz https://dl.bintray.com/boostorg/release/1.70.0/source/boost_1_70_0.tar.gz
+    # wget -O /data/service/src/mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz
+    # wget -O /data/service/src/boost_1_70_0.tar.gz https://dl.bintray.com/boostorg/release/1.70.0/source/boost_1_70_0.tar.gz
     wget -O /data/service/src/boost_1_59_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz 
     
     cd /data/service/src/  && tar -xf ${mysql_version}.tar.gz 
