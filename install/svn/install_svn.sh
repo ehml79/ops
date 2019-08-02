@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-project_name=project
+project_name=projectname
+port=5000
 
 
 apt update
@@ -70,7 +71,7 @@ cat > /root/svn_restart.sh <<EOF
 sudo killall svnserve
 
 
-/usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=5000 -r /data/service/svn/${project_name} --log-file /data/log/svn_${project_name}.log
+/usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=${port} -r /data/service/svn/${project_name} --log-file /data/log/svn_${project_name}.log
 EOF
 
 
