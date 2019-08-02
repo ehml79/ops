@@ -255,4 +255,4 @@ EOF
 
 
 install_mysql
-config_sshd
+#config_sshd
