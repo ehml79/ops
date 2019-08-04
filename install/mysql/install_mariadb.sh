@@ -5,11 +5,11 @@ mariadb_version=mariadb-10.4.7
 function install_mariadb(){
 
     # 判断系统
-    if [ -f /etc/os-release ];then
+    if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
         sudo apt -y install   build-essential  cmake  gcc g++ bison libncurses5-dev build-essential libgnutls-dev
     
-    elif [ -f /etc/redhat-release ];then
+    elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         yum -y install install bison bison-devel zlib-devel libcurl-devel \
         libarchive-devel boost-devel gcc gcc-c++ cmake libevent-devel \
