@@ -4,9 +4,9 @@
 
 function install_redis(){
     # 判断系统
-    if [ -f /etc/os-release ];then
+    if [ -f /usr/bin/apt ];then
         apt -y install make  build-essential libjemalloc-dev
-    elif [ -f /etc/redhat-release ];then
+    elif [ -f /usr/bin/yum ];then
 	    yum -y install  gcc gcc-c++
     else
 	    echo 'unknow OS'
