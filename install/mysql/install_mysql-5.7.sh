@@ -13,11 +13,11 @@ function install_mysql(){
     fi
     
     # 判断系统
-    if [ -f /etc/os-release ];then
+    if [ -f /usr/bin/apt ];then
     	echo 'ubuntu'
     	sudo apt update &&
     	sudo apt-get -y install make cmake gcc g++ bison libncurses5-dev build-essential
-    elif [ -f /etc/redhat-release ];then
+    elif [ -f /usr/bin/yum ];then
     	echo 'centOS'
     	yum -y install gcc gcc-c++  ncurses-devel bison libgcrypt perl  cmake
     else
