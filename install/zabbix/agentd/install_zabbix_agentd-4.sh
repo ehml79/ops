@@ -66,13 +66,13 @@ EOF
     chown zabbix.zabbix  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
     chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
 
-    if [ -f /etc/os-release ];then
+    if [ -f /usr/bin/apt ];then
         # ubuntu
         cp /data/service/src/zabbix-4.0.0/misc/init.d/debian/zabbix-agent /etc/init.d/
         chmod +x /etc/init.d/zabbix-agent
         sed -i "s#/usr/local#/data/service/zabbix#g" /etc/init.d/zabbix-agent
         /etc/init.d/zabbix-agent restart
-    elif [ -f /etc/redhat-release ];then
+    elif [ -f /usr/bin/yum ];then
         # centos
         cp /data/service/src/zabbix-4.0.0/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
         chmod +x /etc/init.d/zabbix-agentd
