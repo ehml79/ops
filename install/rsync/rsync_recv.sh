@@ -6,10 +6,10 @@ rsync_passwd=
 function rsync_recv(){
     
     # 判断系统
-    if [ -f /etc/os-release ];then
+    if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
         apt -y install rsync
-    elif [ -f /etc/redhat-release ];then
+    elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         yum -y install rsync
     else
