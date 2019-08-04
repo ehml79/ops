@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mariadb_version=mariadb-10.4.7
+mariadb_password=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 function install_mariadb(){
 
@@ -46,7 +47,7 @@ function install_mariadb(){
     cd /data/service/mariadb/
     scripts/mysql_install_db --user=mysql
     /data/service/mariadb/bin/mysqld_safe --user=mysql &
-    bin/mysqladmin -u root password '123456'
+    bin/mysqladmin -u root password "${mariadb_password}"
     
     cat > /etc/my.cnf << EOF
 [client]
