@@ -29,7 +29,7 @@ function install_php(){
     groupadd ${web_user}
     useradd -s /sbin/nologin -g ${web_user} ${web_user}
     # 判断系统
-    if [ -f /etc/os-release ];then
+    if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
         sudo apt -y install git libpcre3 libpcre3-dev  
         sudo apt -y install zlib1g-dev build-essential libxml2-dev openssl 
@@ -40,7 +40,7 @@ function install_php(){
         sudo apt -y install argon2 libargon2-0 libargon2-0-dev libxml2-dev
         sudo apt -y install m4
         sudo apt -y install autoconf
-    elif [ -f /etc/redhat-release ];then
+    elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         yum install -y git gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  \
 	libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel \
