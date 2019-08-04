@@ -3,6 +3,7 @@
 function install_mysql8(){
 
 mysql_version="mysql-8.0.15"
+mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 sudo apt -y install make cmake gcc g++ bison libncurses5-dev build-essential libssl-dev  libaio1
 
@@ -29,7 +30,7 @@ sed -i 's@/usr/local/mysql@/data/service/mysql@g' /etc/init.d/mysqld
 systemctl enable mysqld
 /etc/init.d/mysqld start
 
-mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';"
+mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
 
 export PATH=$PATH:/data/service/mysql/bin
 echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
