@@ -8,10 +8,10 @@ zabbix_domain=zabbix.example.com
 function install_zabbix_server_4(){
 
     # 判断系统
-    if [ -f /etc/os-release ];then
+    if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
         apt -y install  git libpcre3 libpcre3-dev  zlib1g-dev openssl libssl-dev  build-essential libsnmp-dev libevent-dev
-    elif [ -f /etc/redhat-release ];then
+    elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         yum -y install git pcre-devel openssl-devel  net-snmp-devel libevent-devel 
     else
