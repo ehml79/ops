@@ -94,14 +94,14 @@ EOF
 
 
     # 判断系统
-    if [ -f /etc/os-release ];then
+    if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
         # ubuntu
 	cp /data/service/src/zabbix-4.0.0/misc/init.d/debian/zabbix-agent /etc/init.d/
 	cp /data/service/src/zabbix-4.0.0/misc/init.d/debian/zabbix-server /etc/init.d/
 	sed -i "s#DAEMON=.*#DAEMON=/data/service/zabbix/sbin/\${NAME}#g" /etc/init.d/zabbix-server
 	sed -i "s#DAEMON=.*#DAEMON=/data/service/zabbix/sbin/\${NAME}#g" /etc/init.d/zabbix-agent
-    elif [ -f /etc/redhat-release ];then
+    elif [ -f /usr/bin/yum ];then
         echo 'centOS'
 	# centos
 	cp /data/service/src/zabbix-4.0.0/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
