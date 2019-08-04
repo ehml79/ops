@@ -41,10 +41,10 @@ function centos_disk_partition(){
 
 
 # 判断系统
-if [ -f /etc/os-release ];then
+if [ -f /usr/bin/apt ];then
     echo 'ubuntu'
     ubuntu_disk_partition
-elif [ -f /etc/redhat-release ];then
+elif [ -f /usr/bin/yum ];then
     echo 'centOS'
     centos_disk_partition
 else
