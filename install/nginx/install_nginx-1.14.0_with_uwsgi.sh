@@ -7,10 +7,10 @@ nginx_install_dir=/data/service/nginx
 install_nginx(){
 
     # 判断系统
-    if [ -f /etc/os-release ];then
+    if [ -f /usr/bin/apt ];then
     	echo 'ubuntu'
     	apt -y install  git libpcre3 libpcre3-dev  zlib1g-dev openssl libssl-dev  build-essential  python3-pip 
-    elif [ -f /etc/redhat-release ];then
+    elif [ -f /usr/bin/yum ];then
     	echo 'centOS'
     	yum -y install wget gcc-c++ git pcre-devel openssl-devel 
     else
