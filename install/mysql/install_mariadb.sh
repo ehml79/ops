@@ -52,6 +52,7 @@ function install_mariadb(){
     cat > /etc/my.cnf << EOF
 [client]
 port = 3306
+#password = ${mysql_passwd}
 socket = /tmp/mysql.sock
 default-character-set = utf8mb4
 
@@ -178,4 +179,4 @@ EOF
 
 install_mariadb
 
-config_sshd
+#config_sshd
