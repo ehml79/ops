@@ -2,13 +2,14 @@
 
 # 安装 mysql 5.7
 mysql_version="mysql-5.7.25"
+mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 
 function install_mysql(){
 
     # 检查有没有mysql存在
     if [ -S /tmp/mysql.sock -o -S /var/lib/mysql/mysql.sock ];then
-    	echo "mysql exisit ,exit "
+    	echo "mysql exisit, exit "
     	exit 1
     fi
     
@@ -29,25 +30,13 @@ function install_mysql(){
     if [ ! -f /data/service/src ];then
     	mkdir -p /data/service/src/ 
     fi
-
     
-    # 创建my.cnf 备份用
-    if [ ! -f /data/.secert/my.cnf ];then
-    	mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
-	mkdir  -p /data/.secret/
-       echo "[client]" > /data/.secret/my.cnf
-       echo "user = root" >> /data/.secret/my.cnf
-       echo "host = localhost" >> /data/.secret/my.cnf
-       echo "password = ${mysql_passwd}" >> /data/.secret/my.cnf
-    fi
-
     
     groupadd mysql
     useradd -r -g mysql -s /bin/false mysql
     
     # 下载包好慢，建议提前下载好
     wget -O /data/service/src/${mysql_version}.tar.gz  https://dev.mysql.com/get/Downloads/MySQL-5.7/${mysql_version}.tar.gz 
-    # wget -O /data/service/src/mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz
     # wget -O /data/service/src/boost_1_70_0.tar.gz https://dl.bintray.com/boostorg/release/1.70.0/source/boost_1_70_0.tar.gz
     wget -O /data/service/src/boost_1_59_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz 
     
@@ -67,7 +56,7 @@ function install_mysql(){
     cat > /etc/my.cnf << EOF
 #
 [client]
-password = ${mysql_passwd}
+#password = ${mysql_passwd}
 port    = 3306
 socket  = /tmp/mysql.sock
 
@@ -200,7 +189,7 @@ quick
 max_allowed_packet = 32M
 EOF
 
-    # 有密码的mysql
+    # 初始化有密码的mysql
     # bin/mysqld   --defaults-file=/etc/my.cnf \
     # --user=mysql   \
     # --basedir=/data/service/mysql/ \
@@ -210,7 +199,7 @@ EOF
     chmod 600 /etc/my.cnf
     chown mysql.mysql /data/service/mysql/data/ 
 	
-    # 没有密码的mysql
+    # 初始化没有密码的mysql
     bin/mysqld --initialize-insecure --user=mysql --basedir=/data/service/mysql/  --datadir=/data/service/mysql/data/ 
     bin/mysql_ssl_rsa_setup  
     bin/mysqld_safe   --defaults-file=/etc/my.cnf --user=mysql  & 
@@ -224,12 +213,9 @@ EOF
     echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
     export PATH=$PATH:/data/service/mysql/bin
 
-# 修改密码始终不成功
-#    /data/service/mysql/bin/mysql -uroot -e "update user set password=password('${mysql_passwd}') where user='root' ; flush privileges; "
-    /data/service/mysql/bin/mysql -uroot -p${mysql_passwd} <<EOF
-update mysql.user set authentication_string=password('${mysql_passwd}') where user="root";
-FLUSH PRIVILEGES;
-EOF
+    # 修改密码
+    /data/service/mysql/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
+    sed -i 's@#password@password@g' /etc/my.cnf
 
 }
 
