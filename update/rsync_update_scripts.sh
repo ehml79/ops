@@ -24,7 +24,7 @@ if [ ${line_number}  -gt 2 ];then
     echo "$(date '+%F %T %s') ${0} ${@} 开始更新" >> ${rsync_log}
 
     # sdk 
-    ${relRsync} --exclude="*.apk" --exclude="*.log" /data/svn/repo/sdk/ rsync@192.168.0.3::sdk  | tee -a  ${rsync_log}
+    ${relRsync} --exclude="*.svn" --exclude="*.apk" --exclude="*.log" /data/svn/repo/sdk/ rsync@192.168.0.3::sdk  | tee -a  ${rsync_log}
 
     end_ctime=$(date +%s)
     echo "$(date '+%F %T %s') ${0} ${@} 结束更新 脚本用时:$((${end_ctime}-${start_ctime}))s " >> $rsync_log
