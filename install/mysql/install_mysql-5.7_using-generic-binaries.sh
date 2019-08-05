@@ -46,7 +46,6 @@ function install_mysql(){
     cat > /etc/my.cnf << EOF
 #
 [client]
-#password = ${mysql_passwd}
 port    = 3306
 socket  = /tmp/mysql.sock
 
@@ -205,7 +204,7 @@ EOF
 
     # 修改密码
     /data/service/mysql/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
-    sed -i 's@#password@password@g' /etc/my.cnf
+    sed -i "/\[client\]/apassword = ${mysql_passwd}"  /etc/my.cnf
 
 }
 
