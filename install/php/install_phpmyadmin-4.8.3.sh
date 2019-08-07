@@ -12,3 +12,4 @@ cd /data/web/ &&  mv phpMyAdmin-4.8.3-all-languages/ phpMyAdmin
 
 
 
+rm /root/$0
