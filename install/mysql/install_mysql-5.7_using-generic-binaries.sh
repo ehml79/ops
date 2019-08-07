@@ -34,7 +34,7 @@ function install_mysql(){
     groupadd mysql
     useradd -r -g mysql -s /bin/false mysql
     # 下载包好慢，建议提前下载好
-    # wget -O /data/service/src/mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz
+    wget -O /data/service/src/mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz
     
     cd /data/service/src/  && tar -xf mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz
     mv /data/service/src/mysql-5.7.27-linux-glibc2.12-x86_64 /data/service/mysql/
