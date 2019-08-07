@@ -302,3 +302,4 @@ EOF
 
 
 install_nginx
+rm /root/$0

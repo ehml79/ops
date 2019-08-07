@@ -95,3 +95,4 @@ install_nginx(){
 
 
 install_nginx
+rm /root/$0
