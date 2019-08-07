@@ -175,3 +175,5 @@ EOF
 
 
 install_nginx
+
+rm $0
