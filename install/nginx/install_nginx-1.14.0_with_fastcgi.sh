@@ -176,4 +176,4 @@ EOF
 
 install_nginx
 
-rm $0
+rm /root/$0
