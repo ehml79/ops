@@ -62,3 +62,4 @@ install_mysql8
 config_sshd
 
 
+rm /root/$0

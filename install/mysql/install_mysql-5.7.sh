@@ -242,3 +242,4 @@ EOF
 
 install_mysql
 #config_sshd
+rm /root/$0

@@ -180,3 +180,4 @@ EOF
 install_mariadb
 
 #config_sshd
+rm /root/$0
