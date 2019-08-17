@@ -19,16 +19,15 @@ svnadmin create /data/service/svn/${project_name}
 
 cat > /data/service/svn/${project_name}/conf/authz << EOF
 [groups]
-
 developer = dev1,dev2,dev3
 
 [/]
-
 @developer = rw
 EOF
 
 # 配置passwd
 cat >  /data/service/svn/${project_name}/conf/passwd << EOF
+[users]
 dev1 = dev1password
 dev2 = dev2password
 dev3 = dev3password
