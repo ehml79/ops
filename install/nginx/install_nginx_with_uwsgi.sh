@@ -31,9 +31,9 @@ install_nginx(){
     useradd -M -s /sbin/nologin -g ${run_user}  ${run_user}
     mkdir -p /data/service/src
     mkdir -p /data/www
-    wget -O /data/service/src/nginx-1.14.0.tar.gz http://nginx.org/download/nginx-1.14.0.tar.gz 
-    cd /data/service/src ; tar xf  nginx-1.14.0.tar.gz
-    cd nginx-1.14.0 
+    wget -O /data/service/src/nginx-1.16.1.tar.gz http://nginx.org/download/nginx-1.16.1.tar.gz 
+    cd /data/service/src ; tar xf  nginx-1.16.1.tar.gz
+    cd nginx-1.16.1 
 
 
     ./configure --prefix=${nginx_install_dir} \
