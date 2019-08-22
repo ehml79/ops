@@ -19,13 +19,14 @@ install_nginx(){
     
     # install openssl
 
+    mkdir -p /data/service/src
+
     wget -O /data/service/src/openssl-1.1.1.tar.gz  https://www.openssl.org/source/openssl-1.1.1.tar.gz
     cd /data/service/src
     tar xf  openssl-1.1.1.tar.gz
     
     groupadd ${run_user}
     useradd -M -s /sbin/nologin -g ${run_user}  ${run_user}
-    mkdir -p /data/service/src
     wget -O /data/service/src/nginx-1.16.1.tar.gz  http://nginx.org/download/nginx-1.16.1.tar.gz 
     cd /data/service/src ; tar xf  nginx-1.16.1.tar.gz
     cd nginx-1.16.1 
