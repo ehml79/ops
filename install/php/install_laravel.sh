@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # nginx php mysql composer
+cd /data/www
 
 # 通过 Composer 安装 Laravel 安装器
 composer global require "laravel/installer"
