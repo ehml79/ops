@@ -6,6 +6,7 @@ web_user=www
 function install_openssl(){
     # install openssl
 
+    mkdir -p /data/service/src/
     wget -O /data/service/src/openssl-1.1.1.tar.gz https://www.openssl.org/source/openssl-1.1.1.tar.gz 
     cd /data/service/src
     mv openssl-1.1.1 openssl-1.1.1_`date '+%Y%M%d%H%M%S'`
