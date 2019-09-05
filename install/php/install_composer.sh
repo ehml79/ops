@@ -4,8 +4,6 @@
 
 apt -y install unzip  wget
 
-mkdir -p /data/www
-cd /data/www
 wget https://getcomposer.org/download/1.8.0/composer.phar -O  /usr/bin/composer
 
 chmod +x /usr/bin/composer
