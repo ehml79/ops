@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # nginx php mysql composer
+
+mkdir -p /data/www
+
 cd /data/www
 
 # 通过 Composer 安装 Laravel 安装器
