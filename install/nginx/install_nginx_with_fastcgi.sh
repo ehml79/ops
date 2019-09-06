@@ -19,7 +19,7 @@ install_nginx(){
     
     # install openssl
 
-    mkdir -p /data/service/src
+    [ ! -d /data/service/src ] && mkdir -p /data/service/src
 
     wget -O /data/service/src/openssl-1.1.1.tar.gz  https://www.openssl.org/source/openssl-1.1.1.tar.gz
     cd /data/service/src
@@ -53,7 +53,7 @@ install_nginx(){
     
     make  && make install
 
-    mkdir -p /data/service/nginx/conf/vhost/
+    [ ! -d  /data/service/nginx/conf/vhost/  ] && mkdir -p /data/service/nginx/conf/vhost/
     # 生成nginx.conf 配置文件
 #    sed -i "/worker_processes/i\user  ${run_user};"  /data/service/nginx/conf/nginx.conf
 #    sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  /data/service/nginx/conf/nginx.conf
