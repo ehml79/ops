@@ -1,7 +1,19 @@
 #!/bin/bash
 
-run_user=www
-nginx_install_dir=/data/service/nginx
+install_dir=/data/service
+src_dir=${install_dir}/src
+
+NGINX="nginx-1.16.1"
+OPENSSL="openssl-1.1.1"
+run_user=nginx
+
+
+# Check if user is root
+if [ $(id -u) != "0" ]; then
+    echo "Error: You must be root to run this script!!"
+    exit 1
+fi
+
 
 install_nginx(){
 
@@ -19,20 +31,28 @@ install_nginx(){
     
     # install openssl
 
-    [ ! -d /data/service/src ] && mkdir -p /data/service/src
+    [ ! -d ${src_dir} ] && mkdir -p ${src_dir}
 
-    wget -O /data/service/src/openssl-1.1.1.tar.gz  https://www.openssl.org/source/openssl-1.1.1.tar.gz
-    cd /data/service/src
-    tar xf  openssl-1.1.1.tar.gz
+    cd ${src_dir}
+    if [ ! -f ${OPENSSL}.tar.gz ];then
+        wget -O ${src_dir}/${OPENSSL}.tar.gz  https://www.openssl.org/source/${OPENSSL}.tar.gz
+    fi
+
+    tar xf  ${OPENSSL}.tar.gz
     
     groupadd ${run_user}
     useradd -M -s /sbin/nologin -g ${run_user}  ${run_user}
-    wget -O /data/service/src/nginx-1.16.1.tar.gz  http://nginx.org/download/nginx-1.16.1.tar.gz 
-    cd /data/service/src ; tar xf  nginx-1.16.1.tar.gz
-    cd nginx-1.16.1 
+
+    cd ${src_dir}
+    if [ ! -f ${NGINX} ];then
+        wget -O ${src_dir}/${NGINX}.tar.gz  http://nginx.org/download/${NGINX}.tar.gz 
+    fi
+
+    tar xf  ${NGINX}.tar.gz
+    cd ${NGINX} 
 
 
-    ./configure --prefix=${nginx_install_dir} \
+    ./configure --prefix=${install_dir}/nginx \
     --user=${run_user} \
     --group=${run_user} \
     --with-pcre  \
@@ -46,27 +66,27 @@ install_nginx(){
     --with-http_mp4_module \
     --with-stream \
     --with-stream_ssl_module \
-    --with-openssl=../openssl-1.1.1 \
+    --with-openssl=../${OPENSSL} \
     --with-pcre-jit 
 
 
     
     make  && make install
 
-    [ ! -d  /data/service/nginx/conf/vhost/  ] && mkdir -p /data/service/nginx/conf/vhost/
+    [ ! -d  ${install_dir}/nginx/conf/vhost/  ] && mkdir -p ${install_dir}/nginx/conf/vhost/
     # 生成nginx.conf 配置文件
-#    sed -i "/worker_processes/i\user  ${run_user};"  /data/service/nginx/conf/nginx.conf
-#    sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  /data/service/nginx/conf/nginx.conf
-    cat > /data/service/nginx/conf/nginx.conf << EOF
+#    sed -i "/worker_processes/i\user  ${run_user};"  ${install_dir}/nginx/conf/nginx.conf
+#    sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  ${install_dir/}nginx/conf/nginx.conf
+    cat > ${install_dir}/nginx/conf/nginx.conf << EOF
 #
 user ${run_user} ${run_user};
 
 worker_processes auto;
 #worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;
 
-error_log  /data/service/nginx/logs/error.log  notice;
+error_log  ${install_dir}/nginx/logs/error.log  notice;
 
-pid        /data/service/nginx/logs/nginx.pid;
+pid        ${install_dir}/nginx/logs/nginx.pid;
 
 worker_rlimit_nofile 65535;
 
@@ -84,7 +104,7 @@ http {
                                 '\$status \$body_bytes_sent "\$http_referer" '
                                 '"\$http_user_agent" \$http_x_forwarded_for "\$request_body"';
 
-        access_log  /data/service/nginx/logs/access.log  main;
+        access_log  ${install_dir}/nginx/logs/access.log  main;
 
         charset  utf-8;
         server_names_hash_bucket_size 128;
@@ -136,10 +156,10 @@ http {
 }
 EOF
 
-mv /root/sample.conf /data/service/nginx/conf/vhost/
+mv /root/sample.conf ${install_dir}/nginx/conf/vhost/
     
 
-cat > /data/service/nginx/conf/fcgi.conf <<EOF
+cat > ${install_dir}/nginx/conf/fcgi.conf <<EOF
 fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
 fastcgi_param  SERVER_SOFTWARE    nginx;
 
@@ -166,9 +186,9 @@ fastcgi_param  REDIRECT_STATUS    200;
 EOF
 
 
-    echo 'export PATH=$PATH:/data/service/nginx/sbin' >> /etc/profile
+    echo "export PATH=\$PATH:${install_dir}/nginx/sbin" >> /etc/profile
     . /etc/profile
-    export PATH=$PATH:/data/service/nginx/sbin
+    export PATH=$PATH:\${install_dir}/nginx/sbin
 
 
 }
