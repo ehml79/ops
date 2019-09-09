@@ -186,8 +186,6 @@ EOF
 
 
     echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" >> /etc/profile
-    . /etc/profile
-    export PATH=$PATH:\${INSTALL_DIR}/nginx/sbin
 
 
 }
