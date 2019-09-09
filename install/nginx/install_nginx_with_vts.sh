@@ -10,7 +10,6 @@ NGINX="nginx-1.16.1"
 OPENSSL="openssl-1.1.1"
 RUN_USER=nginx
 
-nginx_install_dir=/data/service/nginx
 
 Install_Nginx(){
 
@@ -41,7 +40,7 @@ Install_Nginx(){
 
     git clone https://github.com/vozlt/nginx-module-vts.git ${SRC_DIR}/nginx-module-vts/
 
-    ./configure --prefix=${nginx_install_dir} \
+    ./configure --prefix=${INSTALL_DIR}/nginx \
     --user=${RUN_USER} \
     --group=${RUN_USER} \
     --with-pcre  \
@@ -69,7 +68,7 @@ Install_Nginx(){
     #sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
     sed -i '/default_type/a\    vhost_traffic_status_filter_by_host on;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
     sed -i '/default_type/a\    vhost_traffic_status_zone;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
-    
+
 
 #cat > ${INSTALL_DIR}/nginx/conf/vhost/status.conf  <<EOF
 #   server {
@@ -91,6 +90,7 @@ Install_Nginx(){
 #       }
 #   }
 #EOF
+    echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" >> /etc/profile
 
     # install nginx-vts-exporter 
     wget -O ${SRC_DIR}/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz https://github.com/hnlq715/nginx-vts-exporter/releases/download/v0.10.3/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz 
@@ -103,5 +103,5 @@ Install_Nginx(){
 
 
 
-install_nginx
-rm /root/$0
+Install_Nginx
+#rm /root/$0
