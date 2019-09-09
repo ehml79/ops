@@ -37,23 +37,24 @@ Install_Nginx(){
 
     cd ${SRC_DIR}
     if [ ! -f ${OPENSSL}.tar.gz ];then
-        wget -O ${SRC_DIR}/${OPENSSL}.tar.gz  https://www.openssl.org/source/${OPENSSL}.tar.gz 
+        wget -O ${SRC_DIR}/${OPENSSL}.tar.gz  https://www.openssl.org/source/${OPENSSL}.tar.gz
     fi
     tar xf  ${OPENSSL}.tar.gz
 
-    # install nginx 
+    # install nginx
     cd ${SRC_DIR}
     [ ! -d /data/www ] && mkdir -p /data/www
     if [ ! -f ${NGINX} ];then
         wget -O ${SRC_DIR}/${NGINX}.tar.gz http://nginx.org/download/${NGINX}.tar.gz 
     fi
+
     tar xf  ${NGINX}.tar.gz
     cd ${NGINX} 
 
     groupadd ${RUN_USER}
     useradd -M -s /sbin/nologin -g ${RUN_USER}  ${RUN_USER}
 
-    ./configure --prefix=${INSTALL_DIR} \
+    ./configure --prefix=${INSTALL_DIR}/nginx \
     --user=${RUN_USER} \
     --group=${RUN_USER} \
     --with-pcre  \
@@ -69,7 +70,6 @@ Install_Nginx(){
     --with-stream_ssl_module \
     --with-openssl=../${OPENSSL} \
     --with-pcre-jit 
-
 
     
     make  && make install
