@@ -1,9 +1,18 @@
 #!/bin/bash
 
-run_user=www
+INSTALL_DIR=/data/service
+SRC_DIR=${INSTALL_DIR}/src
+
+[ ! -d ${INSTALL_DIR} ] && mkdir -p ${INSTALL_DIR}
+[ ! -d ${SRC_DIR} ] && mkdir -p ${SRC_DIR}
+
+NGINX="nginx-1.16.1"
+OPENSSL="openssl-1.1.1"
+RUN_USER=nginx
+
 nginx_install_dir=/data/service/nginx
 
-install_nginx(){
+Install_Nginx(){
 
     # 判断系统
     if [ -f /usr/bin/apt ];then
@@ -18,23 +27,23 @@ install_nginx(){
     fi
     
     # install openssl
-    mkdir -p /data/service/src
+    mkdir -p ${SRC_DIR}
 
-    wget -O /data/service/src/openssl-1.1.1.tar.gz https://www.openssl.org/source/openssl-1.1.1.tar.gz 
-    cd /data/service/src
-    tar xf  openssl-1.1.1.tar.gz
+    wget -O ${SRC_DIR}/${OPENSSL}.tar.gz https://www.openssl.org/source/${OPENSSL}.tar.gz 
+    cd ${SRC_DIR}
+    tar xf  ${OPENSSL}.tar.gz
     
-    groupadd ${run_user}
-    useradd -M -s /sbin/nologin -g ${run_user}  ${run_user}
-    wget -O /data/service/src/nginx-1.16.1.tar.gz http://nginx.org/download/nginx-1.16.1.tar.gz 
-    cd /data/service/src ; tar xf  nginx-1.16.1.tar.gz
-    cd nginx-1.16.1 
+    groupadd ${RUN_USER}
+    useradd -M -s /sbin/nologin -g ${RUN_USER}  ${RUN_USER}
+    wget -O ${SRC_DIR}/${NGINX}.tar.gz http://nginx.org/download/${NGINX}.tar.gz 
+    cd ${SRC_DIR} ; tar xf  ${NGINX}.tar.gz
+    cd ${NGINX} 
 
-    git clone https://github.com/vozlt/nginx-module-vts.git /data/service/src/nginx-module-vts/
+    git clone https://github.com/vozlt/nginx-module-vts.git ${SRC_DIR}/nginx-module-vts/
 
     ./configure --prefix=${nginx_install_dir} \
-    --user=${run_user} \
-    --group=${run_user} \
+    --user=${RUN_USER} \
+    --group=${RUN_USER} \
     --with-pcre  \
     --with-http_ssl_module \
     --with-http_stub_status_module \
@@ -46,26 +55,26 @@ install_nginx(){
     --with-http_mp4_module \
     --with-stream \
     --with-stream_ssl_module \
-    --with-openssl=../openssl-1.1.1 \
+    --with-openssl=../${OPENSSL} \
     --with-pcre-jit \
-    --add-module=/data/service/src/nginx-module-vts
+    --add-module=${SRC_DIR}/nginx-module-vts
 
     
     make  && make install
 
-    mkdir -p /data/service/nginx/conf/vhost/
-#    cp /data/service/src/nginx-module-vts/share/status.template.html /data/service/nginx/html/status.html
-    #sed -i '/#tcp_nopush/a\    vhost_traffic_status_dump /var/log/nginx/vts.db;'  /data/service/nginx/conf/nginx.conf
-    #sed -i '/#tcp_nopush/a\    vhost_traffic_status_zone;'  /data/service/nginx/conf/nginx.conf
-    #sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  /data/service/nginx/conf/nginx.conf
-    sed -i '/default_type/a\    vhost_traffic_status_filter_by_host on;'  /data/service/nginx/conf/nginx.conf
-    sed -i '/default_type/a\    vhost_traffic_status_zone;'  /data/service/nginx/conf/nginx.conf
+    [ ! -d  ${INSTALL_DIR}/nginx/conf/vhost/  ] && mkdir -p ${INSTALL_DIR}/nginx/conf/vhost/
+#    cp ${SRC_DIR}/nginx-module-vts/share/status.template.html ${INSTALL_DIR}/nginx/html/status.html
+    #sed -i '/#tcp_nopush/a\    vhost_traffic_status_dump /var/log/nginx/vts.db;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
+    #sed -i '/#tcp_nopush/a\    vhost_traffic_status_zone;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
+    #sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
+    sed -i '/default_type/a\    vhost_traffic_status_filter_by_host on;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
+    sed -i '/default_type/a\    vhost_traffic_status_zone;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
     
 
-#cat > /data/service/nginx/conf/vhost/status.conf  <<EOF
+#cat > ${INSTALL_DIR}/nginx/conf/vhost/status.conf  <<EOF
 #   server {
 #       server_name example.org;
-#       root /data/service/nginx/html;
+#       root ${INSTALL_DIR}/nginx/html;
 #
 #       # Redirect requests for / to /status.html
 #       location = / {
@@ -84,8 +93,8 @@ install_nginx(){
 #EOF
 
     # install nginx-vts-exporter 
-    wget -O /data/service/src/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz https://github.com/hnlq715/nginx-vts-exporter/releases/download/v0.10.3/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz 
-    cd /data/service/src
+    wget -O ${SRC_DIR}/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz https://github.com/hnlq715/nginx-vts-exporter/releases/download/v0.10.3/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz 
+    cd ${SRC_DIR}
     tar xf nginx-vts-exporter-0.10.3.linux-amd64.tar.gz
 
     
