@@ -10,7 +10,6 @@ NGINX="nginx-1.16.1"
 OPENSSL="openssl-1.1.1"
 RUN_USER=nginx
 
-
 # Check if user is root
 if [ $(id -u) != "0" ]; then
     echo "Error: You must be root to run this script!!"
@@ -43,7 +42,7 @@ Install_Nginx(){
     # install nginx
     cd ${SRC_DIR}
     if [ ! -f ${NGINX} ];then
-        wget -O ${SRC_DIR}/${NGINX}.tar.gz  http://nginx.org/download/${NGINX}.tar.gz 
+        wget -O ${SRC_DIR}/${NGINX}.tar.gz http://nginx.org/download/${NGINX}.tar.gz 
     fi
 
     tar xf  ${NGINX}.tar.gz
