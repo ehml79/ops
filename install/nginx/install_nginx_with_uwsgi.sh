@@ -1,10 +1,23 @@
 #!/bin/bash
 
-run_user=www
-nginx_install_dir=/data/service/nginx
+INSTALL_DIR=/data/service
+SRC_DIR=${INSTALL_DIR}/src
+
+[ ! -d ${INSTALL_DIR} ] && mkdir -p ${INSTALL_DIR}
+[ ! -d ${SRC_DIR} ] && mkdir -p ${SRC_DIR}
+
+NGINX="nginx-1.16.1"
+OPENSSL="openssl-1.1.1"
+RUN_USER=nginx
+
+# Check if user is root
+if [ $(id -u) != "0" ]; then
+    echo "Error: You must be root to run this script!!"
+    exit 1
+fi
 
 
-install_nginx(){
+Install_Nginx(){
 
     # 判断系统
     if [ -f /usr/bin/apt ];then
@@ -19,26 +32,30 @@ install_nginx(){
     fi
     # install uwsgi
     pip3 install uwsgi
-
    
     # install openssl
-    mkdir -p /data/service/src
 
-    wget -O /data/service/src/openssl-1.1.1.tar.gz  https://www.openssl.org/source/openssl-1.1.1.tar.gz 
-    cd /data/service/src
-    tar xf  openssl-1.1.1.tar.gz
-    
-    groupadd ${run_user}
-    useradd -M -s /sbin/nologin -g ${run_user}  ${run_user}
-    mkdir -p /data/www
-    wget -O /data/service/src/nginx-1.16.1.tar.gz http://nginx.org/download/nginx-1.16.1.tar.gz 
-    cd /data/service/src ; tar xf  nginx-1.16.1.tar.gz
-    cd nginx-1.16.1 
+    cd ${SRC_DIR}
+    if [ ! -f ${OPENSSL}.tar.gz ];then
+        wget -O ${SRC_DIR}/${OPENSSL}.tar.gz  https://www.openssl.org/source/${OPENSSL}.tar.gz 
+    fi
+    tar xf  ${OPENSSL}.tar.gz
 
+    # install nginx 
+    cd ${SRC_DIR}
+    [ ! -d /data/www ] && mkdir -p /data/www
+    if [ ! -f ${NGINX} ];then
+        wget -O ${SRC_DIR}/${NGINX}.tar.gz http://nginx.org/download/${NGINX}.tar.gz 
+    fi
+    tar xf  ${NGINX}.tar.gz
+    cd ${NGINX} 
 
-    ./configure --prefix=${nginx_install_dir} \
-    --user=${run_user} \
-    --group=${run_user} \
+    groupadd ${RUN_USER}
+    useradd -M -s /sbin/nologin -g ${RUN_USER}  ${RUN_USER}
+
+    ./configure --prefix=${INSTALL_DIR} \
+    --user=${RUN_USER} \
+    --group=${RUN_USER} \
     --with-pcre  \
     --with-http_ssl_module \
     --with-http_stub_status_module \
@@ -50,27 +67,27 @@ install_nginx(){
     --with-http_mp4_module \
     --with-stream \
     --with-stream_ssl_module \
-    --with-openssl=../openssl-1.1.1 \
+    --with-openssl=../${OPENSSL} \
     --with-pcre-jit 
 
 
     
     make  && make install
 
-    mkdir -p /data/service/nginx/conf/vhost/
+    [ ! -d  ${INSTALL_DIR}/nginx/conf/vhost/  ] && mkdir -p ${INSTALL_DIR}/nginx/conf/vhost/
     # 生成nginx.conf 配置文件
-#    sed -i "/worker_processes/i\user  ${run_user};"  /data/service/nginx/conf/nginx.conf
-#    sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  /data/service/nginx/conf/nginx.conf
-    cat > /data/service/nginx/conf/nginx.conf << EOF
+#    sed -i "/worker_processes/i\user  ${RUN_USER};"  ${INSTALL_DIR}/nginx/conf/nginx.conf
+#    sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
+    cat > ${INSTALL_DIR}/nginx/conf/nginx.conf << EOF
 #
-user ${run_user} ${run_user};
+user ${RUN_USER} ${RUN_USER};
 
 worker_processes auto;
 #worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;
 
-error_log  /data/service/nginx/logs/error.log  notice;
+error_log  ${INSTALL_DIR}/nginx/logs/error.log  notice;
 
-pid        /data/service/nginx/logs/nginx.pid;
+pid        ${INSTALL_DIR}/nginx/logs/nginx.pid;
 
 worker_rlimit_nofile 65535;
 
@@ -88,7 +105,7 @@ http {
                                 '\$status \$body_bytes_sent "\$http_referer" '
                                 '"\$http_user_agent" \$http_x_forwarded_for "\$request_body"';
 
-        access_log  /data/service/nginx/logs/access.log  main;
+        access_log  ${INSTALL_DIR}/nginx/logs/access.log  main;
 
         charset  utf-8;
         server_names_hash_bucket_size 128;
@@ -141,10 +158,10 @@ http {
 EOF
 
 # 生成 uwsgi 配置文件
-    cat > /data/service/nginx/conf/uwsgi.ini <<EOF
+    cat > ${INSTALL_DIR}/nginx/conf/uwsgi.ini <<EOF
 [uwsgi]
-uid = ${run_user}
-gid = ${run_user}
+uid = ${RUN_USER}
+gid = ${RUN_USER}
 # 指定项目目录，在配置多站点时，不要启用
 chdir = /data/www
 # 加载demosite/wsgi.py这个模块，在配置多站点时，不要启用
@@ -190,16 +207,16 @@ post-buffering=4096
 
 EOF
  
-cat > /data/service/nginx/conf/vhost/uwsgi_sample.conf <<EOF
+cat > ${INSTALL_DIR}/nginx/conf/vhost/uwsgi_sample.conf <<EOF
         server{
                 listen       80;
                 server_name example.com;
                 index index.html index.php index.htm;
                 root  /data/www/example.com;
 
-                access_log  /data/service/nginx/logs/access_example.com.log main;
+                access_log  ${INSTALL_DIR}/nginx/logs/access_example.com.log main;
 
-                if (-d $request_filename){
+                if (-d \$request_filename){
                         rewrite ^/(.*)([^/])\$ http://\$host/\$1\$2/ permanent;
                 }
 
@@ -227,7 +244,7 @@ EOF
 
 
 #  uwsgi 默认配置文件
-cat > /data/service/nginx/conf/vhost/uwsgi_sample.conf <<EOF
+cat > ${INSTALL_DIR}/nginx/conf/vhost/uwsgi_sample.conf <<EOF
 #
 server {
         listen       80;
@@ -245,7 +262,7 @@ server {
 EOF
 
 
-cat > /data/service/nginx/conf/fcgi.conf <<EOF
+cat > ${INSTALL_DIR}/nginx/conf/fcgi.conf <<EOF
 fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
 fastcgi_param  SERVER_SOFTWARE    nginx;
 
@@ -272,9 +289,7 @@ fastcgi_param  REDIRECT_STATUS    200;
 EOF
 
 
-    echo 'export PATH=$PATH:/data/service/nginx/sbin' >> /etc/profile
-    . /etc/profile
-    export PATH=$PATH:/data/service/nginx/sbin
+    echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" >> /etc/profile
 
 # 生成启动脚本
 cat > /root/uwsgi_restart.sh <<EOF
@@ -291,9 +306,9 @@ if [ -n "\${pid_num}" ];then
 fi
 
 #
-#uwsgi --ini /data/service/nginx/conf/uwsgi.ini
+#uwsgi --ini ${INSTALL_DIR}/nginx/conf/uwsgi.ini
 # development
-uwsgi --py-auto-reload=1 --ini /data/service/nginx/conf/uwsgi.ini
+uwsgi --py-auto-reload=1 --ini ${INSTALL_DIR}/nginx/conf/uwsgi.ini
 EOF
 
 
@@ -301,5 +316,5 @@ EOF
 
 
 
-install_nginx
+Install_Nginx
 rm /root/$0
