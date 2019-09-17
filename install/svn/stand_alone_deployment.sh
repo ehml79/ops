@@ -112,7 +112,7 @@ cat  > /data/sh/update/rsync_update_scripts.sh << EOF
 
 chown -R nginx.nginx /data/svn && chmod -R 775 /data/svn
 
-svn --username "server"  --password  "${svn_passwd}" up  /data/svn/
+svn --username "server"  --password  "${svn_passwd}"   up  /data/svn/
 
 rsync -vzrtopg  --exclude="*.svn" --exclude="*.apk" --exclude="*.log" /data/svn/ /data/www/
 EOF
