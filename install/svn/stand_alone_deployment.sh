@@ -5,6 +5,7 @@
 project_name=proj
 port=3389
 svn_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
+domain_name=''
 
 
 apt update
