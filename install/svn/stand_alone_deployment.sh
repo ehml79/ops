@@ -141,3 +141,5 @@ server
 }
 
 EOF
+
+nginx -s reload
