@@ -2,10 +2,11 @@
 
 # 单机svn更新脚本
 
+domain_name=''
+
 project_name=proj
 port=3389
 svn_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
-domain_name=''
 
 # 安装svn
 apt update
@@ -111,7 +112,7 @@ cat  > /data/sh/update/rsync_update_scripts.sh << EOF
 
 chown -R nginx.nginx /data/svn && chmod -R 775 /data/svn
 
-svn  --username "server"  --password  "${svn_passwd}" up  /data/svn/
+svn --username "server"  --password  "${svn_passwd}" up  /data/svn/
 
 rsync -vzrtopg  --exclude="*.svn" --exclude="*.apk" --exclude="*.log" /data/svn/ /data/www/
 EOF
