@@ -96,9 +96,47 @@ mkdir -p /data/sh/update
 cat  > /data/sh/update/rsync_update_scripts.sh << EOF
 #!/bin/bash
 
-chown -R www.www /data/svn && chmod -R 775 /data/svn
+chown -R nginx.nginx /data/svn && chmod -R 775 /data/svn
 
 svn up /data/svn/
 
 rsync -vzrtopg  --exclude="*.svn" --exclude="*.apk" --exclude="*.log" /data/svn/ /data/www/
+EOF
+
+
+
+# nginx conf
+cat > /data/service/nginx/conf/vhost/${domain_name}.conf <<EOF
+#
+server
+{
+        listen       80;
+        server_name  ${domain_name};
+        index index.php index.html index.htm;
+        root  /data/www/web_pc;
+        charset utf-8;
+
+        location ~/.svn/ {
+                return 404;
+        }
+
+        location / {
+        if (!-e \$request_filename) {
+                rewrite  ^(.*)$  /index.php?s=\$1  last;
+                break;
+        }
+                index index.html index.htm index.php;
+        }
+
+        location ~ .*\.php$
+        {
+                fastcgi_pass  127.0.0.1:9000;
+                fastcgi_index index.php;
+                include fcgi.conf;
+                access_log  /data/service/nginx/logs/${domain_name}.access.log;
+                error_log  /data/service/nginx/logs/${domain_name}.err.log;
+        }
+
+}
+
 EOF
