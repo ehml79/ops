@@ -7,12 +7,13 @@ port=3389
 svn_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 domain_name=''
 
-
+# 安装svn
 apt update
 apt -y install subversion expect
 
 mkdir -p /data/log
 mkdir -p /data/service/svn
+mkdir -p /data/svn
 cd /data/service/svn
 
 svnadmin create /data/service/svn/${project_name}
@@ -56,7 +57,6 @@ EOF
 chmod +x /data/service/svn/${project_name}/hooks/post-commit  
 
 # 启动脚本
-
 cat > /root/svn_restart.sh <<EOF
 #!/bin/bash
 
@@ -65,31 +65,43 @@ sudo killall svnserve
 /usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=${port} -r /data/service/svn/${project_name} --log-file /data/log/svn_${project_name}.log
 EOF
 
+/bin/bash  /root/svn_restart.sh 
+
+# check out svn
+cd /data/svn 
+svn  --username "server"  --password  "${svn_passwd}"  --non-interactive co  svn://127.0.0.1:${port}/
+
+
 
 # 生成key
 expect <<EOF
 spawn ssh-keygen -t rsa
+
 expect {
-"*id_rsa):" {
-send "\n";
-exp_continue
-}
-"*(y/n)?" {
-send "y\n"
-exp_continue
-}
-"*passphrase):" {
-send "\n"
-exp_continue
-}
-"*again:" {
-send "\n"
-}
+    "*id_rsa):" {
+        send "\n";
+        exp_continue
+        }
+
+    "*(y/n)?" {
+        send "y\n"
+        exp_continue
+        }
+
+    "*passphrase):" {
+        send "\n"
+        exp_continue
+    }
+
+    "*again:" {
+        send "\n"
+    }
 }
 expect eof
 EOF
 
 cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
+
 
 # 更新脚本
 mkdir -p /data/sh/update
@@ -99,11 +111,12 @@ cat  > /data/sh/update/rsync_update_scripts.sh << EOF
 
 chown -R nginx.nginx /data/svn && chmod -R 775 /data/svn
 
-svn up /data/svn/
+svn  --username "server"  --password  "${svn_passwd}" up  /data/svn/
 
 rsync -vzrtopg  --exclude="*.svn" --exclude="*.apk" --exclude="*.log" /data/svn/ /data/www/
 EOF
 
+/bin/bash /data/sh/update/rsync_update_scripts.sh
 
 
 # nginx conf
