@@ -1,9 +1,10 @@
 #!/bin/bash
 
 
-project_name=projectname
+project_name=proj
 port=5000
 
+svn_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 apt update
 apt -y install subversion
@@ -19,7 +20,7 @@ svnadmin create /data/service/svn/${project_name}
 
 cat > /data/service/svn/${project_name}/conf/authz << EOF
 [groups]
-developer = dev1,dev2,dev3
+developer = server
 
 [/]
 @developer = rw
@@ -28,9 +29,7 @@ EOF
 # 配置passwd
 cat >  /data/service/svn/${project_name}/conf/passwd << EOF
 [users]
-dev1 = dev1password
-dev2 = dev2password
-dev3 = dev3password
+server = ${svn_passwd}
 EOF
 
 # 配置 svnserve.conf
