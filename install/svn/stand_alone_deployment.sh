@@ -3,6 +3,7 @@
 # 单机svn更新脚本
 
 domain_name=''
+RUN_USER=nginx
 
 project_name=proj
 port=3389
@@ -110,7 +111,7 @@ mkdir -p /data/sh/update
 cat  > /data/sh/update/rsync_update_scripts.sh << EOF
 #!/bin/bash
 
-chown -R nginx.nginx /data/svn && chmod -R 775 /data/svn
+chown -R ${RUN_USER}.${RUN_USER} /data/svn && chmod -R 775 /data/svn
 
 svn --username "server"  --password  "${svn_passwd}"   up  /data/svn/
 
