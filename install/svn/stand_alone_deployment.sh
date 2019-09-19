@@ -2,12 +2,12 @@
 
 # 单机svn更新脚本
 
-domain_name=''
+DOMAIN_NAME=''
 RUN_USER=nginx
 
-project_name=proj
-port=3389
-svn_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
+PROJECT_NAME=proj
+SVN_PORT=3389
+SVN_PASSWD=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 # 安装svn
 apt update
@@ -18,10 +18,10 @@ mkdir -p /data/service/svn
 mkdir -p /data/svn
 cd /data/service/svn
 
-svnadmin create /data/service/svn/${project_name}
+svnadmin create /data/service/svn/${PROJECT_NAME}
 
 # 配置svn conf
-cat > /data/service/svn/${project_name}/conf/authz << EOF
+cat > /data/service/svn/${PROJECT_NAME}/conf/authz << EOF
 [groups]
 developer = server
 
@@ -30,20 +30,20 @@ developer = server
 EOF
 
 # 配置passwd
-cat >  /data/service/svn/${project_name}/conf/passwd << EOF
+cat >  /data/service/svn/${PROJECT_NAME}/conf/passwd << EOF
 [users]
-server = ${svn_passwd}
+server = ${SVN_PASSWD}
 EOF
 
 # 配置 svnserve.conf
-sed -i 's/.*anon-access = .*/anon-access = none/g' /data/service/svn/${project_name}/conf/svnserve.conf
-sed -i 's/.*auth-access =.*/auth-access = write/g' /data/service/svn/${project_name}/conf/svnserve.conf
-sed -i 's/.*password-db = .*/password-db = passwd/g' /data/service/svn/${project_name}/conf/svnserve.conf
-sed -i 's/.*authz-db =.*/authz-db = authz/'g  /data/service/svn/${project_name}/conf/svnserve.conf
+sed -i 's/.*anon-access = .*/anon-access = none/g' /data/service/svn/${PROJECT_NAME}/conf/svnserve.conf
+sed -i 's/.*auth-access =.*/auth-access = write/g' /data/service/svn/${PROJECT_NAME}/conf/svnserve.conf
+sed -i 's/.*password-db = .*/password-db = passwd/g' /data/service/svn/${PROJECT_NAME}/conf/svnserve.conf
+sed -i 's/.*authz-db =.*/authz-db = authz/'g  /data/service/svn/${PROJECT_NAME}/conf/svnserve.conf
 
 
 # 配置hooks
-cat > /data/service/svn/${project_name}/hooks/post-commit << EOF
+cat > /data/service/svn/${PROJECT_NAME}/hooks/post-commit << EOF
 #!/bin/sh
 
 REPOS="\$1"
@@ -56,7 +56,7 @@ TXN_NAME="\$3"
 echo `date '+%F %H:%M:%S'` \$1 \$2 \$3 \$REPOS \$REV >> /data/log/post-commit.log
 EOF
 
-chmod +x /data/service/svn/${project_name}/hooks/post-commit  
+chmod +x /data/service/svn/${PROJECT_NAME}/hooks/post-commit  
 
 # 启动脚本
 cat > /root/svn_restart.sh <<EOF
@@ -64,14 +64,14 @@ cat > /root/svn_restart.sh <<EOF
 
 sudo killall svnserve
 
-/usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=${port} -r /data/service/svn/${project_name} --log-file /data/log/svn_${project_name}.log
+/usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=${SVN_PORT} -r /data/service/svn/${PROJECT_NAME} --log-file /data/log/svn_${PROJECT_NAME}.log
 EOF
 
 /bin/bash  /root/svn_restart.sh 
 
 # check out svn
 cd /data/svn 
-svn  --username "server"  --password  "${svn_passwd}"  --non-interactive co  svn://127.0.0.1:${port}/
+svn  --username "server"  --password  "${SVN_PASSWD}"  --non-interactive co  svn://127.0.0.1:${SVN_PORT}/
 
 
 
@@ -113,7 +113,7 @@ cat  > /data/sh/update/rsync_update_scripts.sh << EOF
 
 chown -R ${RUN_USER}.${RUN_USER} /data/svn && chmod -R 775 /data/svn
 
-svn --username "server"  --password  "${svn_passwd}"   up  /data/svn/
+svn --username "server"  --password  "${SVN_PASSWD}"   up  /data/svn/
 
 rsync -vzrtopg  --exclude="*.svn" --exclude="*.apk" --exclude="*.log" /data/svn/ /data/www/
 EOF
@@ -122,12 +122,12 @@ EOF
 
 
 # nginx conf
-cat > /data/service/nginx/conf/vhost/${domain_name}.conf <<EOF
+cat > /data/service/nginx/conf/vhost/${DOMAIN_NAME}.conf <<EOF
 #
 server
 {
         listen       80;
-        server_name  ${domain_name};
+        server_name  ${DOMAIN_NAME};
         index index.php index.html index.htm;
         root  /data/www/web_pc;
         charset utf-8;
@@ -149,8 +149,8 @@ server
                 fastcgi_pass  127.0.0.1:9000;
                 fastcgi_index index.php;
                 include fcgi.conf;
-                access_log  /data/service/nginx/logs/${domain_name}.access.log;
-                error_log  /data/service/nginx/logs/${domain_name}.err.log;
+                access_log  /data/service/nginx/logs/${DOMAIN_NAME}.access.log;
+                error_log  /data/service/nginx/logs/${DOMAIN_NAME}.err.log;
         }
 
 }
