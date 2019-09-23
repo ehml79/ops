@@ -9,9 +9,6 @@ from email.utils import formataddr
 
 def main(receiver,title,body):
 
-    sender = '发件人'
-    sender_passwd = "发件人密码，一般为授权码"
-    receiver = '收件人'
 
     smtp_server = "smtp.qq.com"
     smtp_port = 465
@@ -47,5 +44,11 @@ def main(receiver,title,body):
 
 
 if __name__ == '__main__':
+
+    # 配置变量
+    sender = '发件人'
+    sender_passwd = "发件人密码，一般为授权码"
+    receiver = '收件人'
+
     main(argv[1],argv[2],argv[3])
 
