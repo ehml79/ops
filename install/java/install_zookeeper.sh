@@ -2,6 +2,10 @@
 
 # install jdk
 
+server1=192.168.1.1
+server2=192.168.1.2
+server3=192.168.1.3
+
 mkdir -p /data/service/src
 cd /data/service/src/
 
@@ -18,15 +22,14 @@ cat >/data/service/zookeeper/conf/zoo.cfg <<EOF
 tickTime=2000
 initLimit=10
 syncLimit=5
-dataDir=/tmp/zookeeper
 clientPort=2181
 dataDir=/data/service/zookeeper/data
 maxClientCnxns=0
 minSessionTimeout=4000
 maxSessionTimeout=10000
-server.1=127.0.0.1:2888:3888
-server.2=127.0.0.1:2888:3888
-server.3=127.0.0.1:2888:3888
+server.1=${server1}:2888:3888
+server.2=${server2}:2888:3888
+server.3=${server3}:2888:3888
 EOF
 
 echo 1 > /data/service/zookeeper/data/myid
