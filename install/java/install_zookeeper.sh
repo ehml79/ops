@@ -21,12 +21,15 @@ syncLimit=5
 dataDir=/tmp/zookeeper
 clientPort=2181
 dataDir=/data/service/zookeeper/data
-dataLogDir=/data/service/zookeeper/log
 maxClientCnxns=0
 minSessionTimeout=4000
 maxSessionTimeout=10000
 server.1=127.0.0.1:2888:3888
+server.2=127.0.0.1:2888:3888
+server.3=127.0.0.1:2888:3888
 EOF
+
+echo 1 > /data/service/zookeeper/data/myid
 
 # start
 /data/service/zookeeper/bin/zkServer.sh start
