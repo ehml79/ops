@@ -6,14 +6,16 @@ server1=192.168.1.1
 server2=192.168.1.2
 server3=192.168.1.3
 
+zookeeper_version="apache-zookeeper-3.5.5"
+
 mkdir -p /data/service/src
 cd /data/service/src/
 
-wget -O /data/service/src/apache-zookeeper-3.5.5-bin.tar.gz  https://archive.apache.org/dist/zookeeper/zookeeper-3.5.5/apache-zookeeper-3.5.5-bin.tar.gz
+wget -O /data/service/src/${zookeeper_version}-bin.tar.gz  https://archive.apache.org/dist/zookeeper/zookeeper-3.5.5/${zookeeper_version}-bin.tar.gz
 
-tar xf apache-zookeeper-3.5.5-bin.tar.gz -C /data/service/
+tar xf ${zookeeper_version}-bin.tar.gz -C /data/service/
 
-mv /data/service/apache-zookeeper-3.5.5-bin/ /data/service/zookeeper
+mv /data/service/${zookeeper_version}-bin/ /data/service/zookeeper
 
 # conf
 mkdir -p  /data/service/zookeeper/{data,log}
