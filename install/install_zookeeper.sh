@@ -21,7 +21,7 @@ tar xf ${zookeeper_version}-bin.tar.gz -C /data/service/
 mv /data/service/${zookeeper_version}-bin/ ${ZK_PATH}
 
 # conf
-mkdir -p  ${ZK_PATH}/{data,log}
+mkdir -p  ${ZK_PATH}/data
 
 cat >${ZK_PATH}/conf/zoo.cfg <<EOF
 tickTime=2000
