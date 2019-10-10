@@ -24,7 +24,7 @@ network:
             addresses: [${addresses}/24]
             gateway4: ${gateway}
             nameservers:
-                    addresses: [114.114.114.114, 8.8.8.8] 
+                    addresses: [223.5.5.5, 223.6.6.6] 
     version: 2
 EOF
 
