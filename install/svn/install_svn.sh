@@ -9,7 +9,7 @@ svn_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 apt update
 apt -y install subversion
 
-mkdir -p /data/log
+mkdir -p /data/logs
 mkdir -p /data/service/svn
 cd /data/service/svn
 
@@ -69,7 +69,7 @@ cat > /root/svn_restart.sh <<EOF
 sudo killall svnserve
 
 
-/usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=${port} -r /data/service/svn/${project_name} --log-file /data/log/svn_${project_name}.log
+/usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=${port} -r /data/service/svn/${project_name} --log-file /data/logs/svn_${project_name}.log
 EOF
 
 
