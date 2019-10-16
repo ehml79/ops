@@ -4,7 +4,7 @@ GRAFANA_GROUP=grafana
 
 GRAFANA_HOME=/data/service/grafana
 
-LOG_DIR=/data/service/grafana/data/log
+LOG_DIR=/data/service/grafana/data/logs
 
 DATA_DIR=/data/service/grafana/data
 
