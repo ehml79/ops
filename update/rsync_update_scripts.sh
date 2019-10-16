@@ -3,7 +3,7 @@
 # rsync 配合 svn更新
 chown -R www.www /data/svn && chmod -R 775 /data/svn
 
-rsync_log=/data/log/rsync_update_scripts.log
+rsync_log=/data/logs/rsync_update_scripts.log
 #speed='--bwlimit=5000'
 progress='--progress'
 delete='--delete'
