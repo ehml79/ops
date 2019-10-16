@@ -13,7 +13,7 @@ SVN_PASSWD=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 apt update
 apt -y install subversion expect
 
-mkdir -p /data/log
+mkdir -p /data/logs
 mkdir -p /data/service/svn
 mkdir -p /data/svn
 cd /data/service/svn
@@ -53,7 +53,7 @@ TXN_NAME="\$3"
 #"\$REPOS"/hooks/mailer.py commit "\$REPOS" \$REV "\$REPOS"/mailer.conf
 
 /usr/bin/ssh -o ConnectTimeout=3 -o ConnectionAttempts=5 -o PasswordAuthentication=no -o StrictHostKeyChecking=no  root@127.0.0.1 "/bin/bash  /data/sh/update/rsync_update_scripts.sh"
-echo `date '+%F %H:%M:%S'` \$1 \$2 \$3 \$REPOS \$REV >> /data/log/post-commit.log
+echo `date '+%F %H:%M:%S'` \$1 \$2 \$3 \$REPOS \$REV >> /data/logs/post-commit.log
 EOF
 
 chmod +x /data/service/svn/${PROJECT_NAME}/hooks/post-commit  
@@ -64,7 +64,7 @@ cat > /root/svn_restart.sh <<EOF
 
 sudo killall svnserve
 
-/usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=${SVN_PORT} -r /data/service/svn/${PROJECT_NAME} --log-file /data/log/svn_${PROJECT_NAME}.log
+/usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=${SVN_PORT} -r /data/service/svn/${PROJECT_NAME} --log-file /data/logs/svn_${PROJECT_NAME}.log
 EOF
 
 /bin/bash  /root/svn_restart.sh 
