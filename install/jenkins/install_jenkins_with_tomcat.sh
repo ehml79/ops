@@ -10,7 +10,7 @@ mv  /data/service/src/jenkins.war  /data/service/tomcat/webapps
 
 
 # 启动jenkins
-mkdir -p /data/log
+mkdir -p /data/logs
 echo "#!/bin/bash"
-echo "nohup java -jar /data/service/jenkins.war --httpPort=8080 > /data/log/jenkins.log 2>&1 &" > /root/jenkins_start.sh
+echo "nohup java -jar /data/service/jenkins.war --httpPort=8080 > /data/logs/jenkins.log 2>&1 &" > /root/jenkins_start.sh
 
