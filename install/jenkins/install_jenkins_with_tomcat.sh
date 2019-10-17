@@ -1,6 +1,10 @@
 #!/bin/bash
 
 # install java
+
+apt -y  install openjdk-8-jdk-headless openjdk-8-jre-headless
+
+
 # install tomcat
 
 wget -O /data/service/src/jenkins.war http://mirrors.jenkins.io/war-stable/latest/jenkins.war 
