@@ -8,7 +8,6 @@ function install_node(){
 
     mkdir -p /data/service/src
     
-    
     wget -O /data/service/src/${node_version}-linux-x64.tar.gz  https://npm.taobao.org/mirrors/node/v10.14.1/${node_version}-linux-x64.tar.gz 
     tar xf /data/service/src/${node_version}-linux-x64.tar.gz -C /data/service/
     
