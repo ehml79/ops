@@ -12,7 +12,7 @@ wget -O /data/service/jenkins.war http://mirrors.jenkins.io/war-stable/latest/je
 # 启动jenkins
 mkdir -p /data/logs
 echo '#!/bin/bash'  > /root/jenkins_start.sh
-echo "nohup java -jar /data/service/jenkins.war --httpPort=8080 > /data/logs/jenkins.log 2>&1 &" >> /root/jenkins_start.sh
+echo "nohup java -jar /data/service/jenkins.war --httpPort=80 > /data/logs/jenkins.log 2>&1 &" >> /root/jenkins_start.sh
 
 
 rm  -fr /root/$0
