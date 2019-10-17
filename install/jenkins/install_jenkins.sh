@@ -4,16 +4,10 @@
 
 apt -y  install openjdk-8-jdk-headless openjdk-8-jre-headless
 
-
 # install tomcat
 
 mkdir -p /data/service/src
-wget -O /data/service/src/jenkins.war http://mirrors.jenkins.io/war-stable/latest/jenkins.war 
-
-#mv  /data/service/src/jenkins.war  /data/service/tomcat/webapps
-# 启动tomcat
-# 访问url
-
+wget -O /data/service/jenkins.war http://mirrors.jenkins.io/war-stable/latest/jenkins.war 
 
 # 启动jenkins
 mkdir -p /data/logs
