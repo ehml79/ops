@@ -3,6 +3,13 @@
 # MySQL 5.7
 # Ubuntu 18.04 (bionic)
 
+if [ -f ${1} ];then
+    echo Error : bash ${0} RDS_BACKUP_FILE.tar.gz
+    exit 0
+fi
+
+
+
 TEMP_DIR=/data/temp
 
 mkdir -p ${TEMP_DIR}
@@ -42,3 +49,10 @@ chown -R mysql:mysql  ${TEMP_DIR}
 /etc/init.d/mysql.server stop
 
 /data/service/mysql/bin/mysqld_safe --defaults-file=${TEMP_DIR}/backup-my.cnf --user=mysql --datadir=${TEMP_DIR} &
+
+# 导出sql
+EACH_DATABASE=$(mysql -e "show databases" | grep -v Database | grep -v information_schema | grep -v mysql | grep -v performance_schema | grep -v sys)
+for DB_NAME in ${EACH_DATABASE} 
+do
+    /data/service/mysql/bin/mysqldump ${DB_NAME} > /root/${DB_NAME}.sql
+done
