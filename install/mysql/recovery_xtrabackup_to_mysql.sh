@@ -3,13 +3,6 @@
 # MySQL 5.7
 # Ubuntu 18.04 (bionic)
 
-if [ -f ${1} ];then
-    echo Error : bash ${0} RDS_BACKUP_FILE.tar.gz
-    exit 0
-fi
-
-
-
 TEMP_DIR=/data/temp
 
 mkdir -p ${TEMP_DIR}
