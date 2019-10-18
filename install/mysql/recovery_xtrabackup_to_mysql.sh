@@ -44,7 +44,7 @@ chown -R mysql:mysql  ${TEMP_DIR}
 /data/service/mysql/bin/mysqld_safe --defaults-file=${TEMP_DIR}/backup-my.cnf --user=mysql --datadir=${TEMP_DIR} &
 
 # 导出sql
-EACH_DATABASE=$(mysql -e "show databases" | grep -v Database | grep -v information_schema | grep -v mysql | grep -v performance_schema | grep -v sys)
+EACH_DATABASE=$(/data/service/mysql/bin/mysql -e "show databases" | grep -v Database | grep -v information_schema | grep -v mysql | grep -v performance_schema | grep -v sys)
 for DB_NAME in ${EACH_DATABASE} 
 do
     /data/service/mysql/bin/mysqldump ${DB_NAME} > /root/${DB_NAME}.sql
