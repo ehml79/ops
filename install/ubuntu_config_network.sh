@@ -5,13 +5,15 @@
 addresses=192.168.217.128
 gateway=192.168.217.2
 
+config_file="/etc/netplan/50-cloud-init.yaml"
+
 # backup
-if [ -f /etc/netplan/50-cloud-init.yaml ];then
-	mv /etc/netplan/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml.$(date '+%F-%H-%M-%S')
+if [ -f ${config_file} ];then
+    mv ${config_file} ${config_file}.$(date '+%F-%H-%M-%S')
 fi
 
 
-cat > /etc/netplan/50-cloud-init.yaml <<EOF
+cat > ${config_file} <<EOF
 # This file is generated from information provided by
 # the datasource.  Changes to it will not persist across an instance.
 # To disable cloud-init's network configuration capabilities, write a file
