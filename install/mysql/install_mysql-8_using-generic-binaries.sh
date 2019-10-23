@@ -19,53 +19,6 @@ function install_mysql8(){
     tar xf ${mysql_version}-linux-glibc2.12-x86_64.tar.xz 
     mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql
 
- 
-    cat > /etc/my.cnf << EOF
-[client]
-password = 123456
-user = root
-port = 3306
-socket = /tmp/mysql.sock
-
-[mysqld]
-user = mysql
-server-id = 1
-port = 3306
-basedir = /data/service/mysql
-datadir = /data/service/mysql/data
-socket = /tmp/mysql.sock
-bind-address = 0.0.0.0
-skip-grant-tables
-skip-external-locking
-skip_name_resolve = 1
-transaction_isolation = READ-COMMITTED
-character-set-server = utf8mb4
-collation-server = utf8mb4_general_ci
-init_connect='SET NAMES utf8mb4'
-lower_case_table_names = 0
-max_connections = 65535
-max_connect_errors = 6000
-explicit_defaults_for_timestamp = true
-max_allowed_packet = 128M
-interactive_timeout = 1800
-wait_timeout = 1800
-tmp_table_size = 246M
-max_heap_table_size = 246M
-
-#log
-log_error = error.log
-slow_query_log = 1
-slow_query_log_file = slow.log
-log_queries_not_using_indexes = 1
-log_throttle_queries_not_using_indexes = 5
-log_slow_slave_statements = 1
-long_query_time = 8
-min_examined_row_limit = 100
-binlog_expire_logs_seconds = 604800
-
-EOF
-
-    chmod 600 /etc/my.cnf
 
     cd /data/service/mysql
     bin/mysqld --initialize-insecure --user=mysql  --basedir=/data/service/mysql --datadir=/data/service/mysql/data/     --log-bin
