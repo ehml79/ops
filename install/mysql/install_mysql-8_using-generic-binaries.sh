@@ -20,6 +20,15 @@ function install_mysql8(){
     mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql
 
 
+cat > /etc/my.cnf <<EOF
+[client]
+user = root
+port = 3306
+socket = /tmp/mysql.sock
+EOF
+
+    chmod 600 /etc/my.cnf
+
     cd /data/service/mysql
     bin/mysqld --initialize-insecure --user=mysql  --basedir=/data/service/mysql --datadir=/data/service/mysql/data/     --log-bin
     
@@ -38,7 +47,7 @@ function install_mysql8(){
     # 修改密码
     /data/service/mysql/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
     # /data/service/mysql/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
-    # sed -i "/\[client\]/apassword = ${mysql_passwd}"  /etc/my.cnf
+    sed -i "/\[client\]/apassword = ${mysql_passwd}"  /etc/my.cnf
 
 }
 
