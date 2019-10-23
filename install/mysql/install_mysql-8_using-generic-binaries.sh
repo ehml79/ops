@@ -18,6 +18,56 @@ function install_mysql8(){
     cd /data/service/src
     tar xf ${mysql_version}-linux-glibc2.12-x86_64.tar.xz 
     mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql
+
+ 
+    cat > /etc/my.cnf << EOF
+[client]
+user = root
+password = 123456
+port = 3306
+socket = /tmp/mysql.sock
+
+[mysqld]
+user = mysql
+server-id = 1
+port = 3306
+basedir = /data/service/mysql
+datadir = /data/service/mysql/data
+socket = /tmp/mysql.sock
+bind-address = 0.0.0.0
+#skip-grant-tables
+skip-external-locking
+skip_name_resolve = 1
+transaction_isolation = READ-COMMITTED
+character-set-server = utf8mb4
+collation-server = utf8mb4_general_ci
+init_connect='SET NAMES utf8mb4'
+lower_case_table_names = 1
+max_connections = 65535
+max_connect_errors = 6000
+explicit_defaults_for_timestamp = true
+max_allowed_packet = 128M
+interactive_timeout = 1800
+wait_timeout = 1800
+tmp_table_size = 246M
+max_heap_table_size = 246M
+query_cache_size = 0
+query_cache_type = 0
+
+[log]
+log_error = error.log
+slow_query_log = 1
+slow_query_log_file = slow.log
+log_queries_not_using_indexes = 1
+log_throttle_queries_not_using_indexes = 5
+log_slow_slave_statements = 1
+long_query_time = 8
+min_examined_row_limit = 100
+expire_logs_days = 5
+EOF
+
+    chmod 600 /etc/my.cnf
+
     cd /data/service/mysql
     bin/mysqld --initialize-insecure --user=mysql  --basedir=/data/service/mysql --datadir=/data/service/mysql/data/
     
@@ -30,10 +80,13 @@ function install_mysql8(){
     systemctl enable mysqld
     /etc/init.d/mysqld start
     
-    /data/service/mysql/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
-    
     export PATH=$PATH:/data/service/mysql/bin
     echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
+    
+    # 修改密码
+    /data/service/mysql/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
+    # /data/service/mysql/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
+    sed -i "/\[client\]/apassword = ${mysql_passwd}"  /etc/my.cnf
 
 }
 
