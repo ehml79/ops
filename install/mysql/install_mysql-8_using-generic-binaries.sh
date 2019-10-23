@@ -52,7 +52,7 @@ wait_timeout = 1800
 tmp_table_size = 246M
 max_heap_table_size = 246M
 
-[log]
+#log
 log_error = error.log
 slow_query_log = 1
 slow_query_log_file = slow.log
@@ -61,13 +61,14 @@ log_throttle_queries_not_using_indexes = 5
 log_slow_slave_statements = 1
 long_query_time = 8
 min_examined_row_limit = 100
-expire_logs_days = 5
+binlog_expire_logs_seconds = 604800
+
 EOF
 
     chmod 600 /etc/my.cnf
 
     cd /data/service/mysql
-    bin/mysqld --initialize-insecure --user=mysql  --basedir=/data/service/mysql --datadir=/data/service/mysql/data/
+    bin/mysqld --initialize-insecure --user=mysql  --basedir=/data/service/mysql --datadir=/data/service/mysql/data/     --log-bin
     
     # bin/mysqld_safe --user=mysql &
     # killall mysqld
