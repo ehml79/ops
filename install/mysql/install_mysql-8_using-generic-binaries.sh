@@ -22,8 +22,8 @@ function install_mysql8(){
  
     cat > /etc/my.cnf << EOF
 [client]
-user = root
 password = 123456
+user = root
 port = 3306
 socket = /tmp/mysql.sock
 
@@ -35,14 +35,14 @@ basedir = /data/service/mysql
 datadir = /data/service/mysql/data
 socket = /tmp/mysql.sock
 bind-address = 0.0.0.0
-#skip-grant-tables
+skip-grant-tables
 skip-external-locking
 skip_name_resolve = 1
 transaction_isolation = READ-COMMITTED
 character-set-server = utf8mb4
 collation-server = utf8mb4_general_ci
 init_connect='SET NAMES utf8mb4'
-lower_case_table_names = 1
+lower_case_table_names = 0
 max_connections = 65535
 max_connect_errors = 6000
 explicit_defaults_for_timestamp = true
@@ -51,8 +51,6 @@ interactive_timeout = 1800
 wait_timeout = 1800
 tmp_table_size = 246M
 max_heap_table_size = 246M
-query_cache_size = 0
-query_cache_type = 0
 
 [log]
 log_error = error.log
