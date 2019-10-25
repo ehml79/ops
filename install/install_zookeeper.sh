@@ -12,10 +12,10 @@ zookeeper_version="apache-zookeeper-3.5.5"
 ZK_PATH=/data/service/zookeeper
 
 mkdir -p /data/service/src
-cd /data/service/src/
 
 wget -O /data/service/src/${zookeeper_version}-bin.tar.gz  https://archive.apache.org/dist/zookeeper/zookeeper-3.5.5/${zookeeper_version}-bin.tar.gz
 
+cd /data/service/src/
 tar xf ${zookeeper_version}-bin.tar.gz -C /data/service/
 
 mv /data/service/${zookeeper_version}-bin/ ${ZK_PATH}
