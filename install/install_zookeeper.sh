@@ -39,6 +39,7 @@ EOF
 
 echo ${node} > ${ZK_PATH}/data/myid
 
+echo "export PATH=\$PATH:${ZK_PATH}/bin" >> /etc/profile
 
 cat > /root/zookeeper.sh <<EOF
 #!/bin/bash
