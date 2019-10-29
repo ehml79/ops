@@ -6,7 +6,7 @@ your_authorized_keys=
 
 sudo apt-get install git
 
-sudo adduser git
+sudo adduser --disabled-password git 
 
 mkdir -p /data/service/git
 
