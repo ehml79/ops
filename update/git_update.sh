@@ -1,13 +1,13 @@
 #!/bin/bash
 
+REPO_DIR="/data/www/emall"
 
 mkdir -p /data/logs
 echo `date '+%F %T'` >> /data/logs/$0.log
 
+cd  ${REPO_DIR}
 
-cd  /data/www/emall
-
-git fetch --all
-git reset --hard origin/master
-git pull
+git fetch --all >> /data/logs/$0.log 2>&1
+git reset --hard origin/master  >> /data/logs/$0.log 2>&1
+git pull >> /data/logs/$0.log 2>&1
 
