@@ -5,6 +5,8 @@
 
 DOMAIN_NAME="https://gitlab.example.com"
 
+# 信任 GitLab 的 GPG 公钥
+curl https://packages.gitlab.com/gpg.key 2> /dev/null | sudo apt-key add - &>/dev/null
 
 # 配置清华源
 cat > /etc/apt/sources.list.d/gitlab_gitlab-ce.list <<EOF
@@ -24,6 +26,7 @@ sudo apt-get install -y curl openssh-server ca-certificates
 sudo apt-get install -y postfix
 # 选择“Internet Site”并按Enter键。
 
+sudo apt-get install gitlab-ce
 
 # config
 
