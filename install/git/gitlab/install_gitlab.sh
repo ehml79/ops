@@ -4,6 +4,7 @@
 # https://about.gitlab.com/install/#ubuntu
 
 DOMAIN_NAME="https://gitlab.example.com"
+NGINX_USER="nginx"
 
 # 信任 GitLab 的 GPG 公钥
 curl https://packages.gitlab.com/gpg.key 2> /dev/null | sudo apt-key add - &>/dev/null
@@ -29,6 +30,9 @@ sudo apt-get install -y postfix
 sudo apt-get install gitlab-ce
 
 # config
+# 配置域名
+sed -i "/^external_url/s/gitlab.example.com/${DOMAIN_NAME}/" /etc/gitlab/gitlab.rb
 
-sed -i "s@# external_url.*@external_url '${DOMAIN_NAME}'@g" /etc/gitlab/gitlab.rb
-
+# 使用外部nginx
+sed -i "s/^# nginx\['enable'\] =.*/nginx\['enable'\] = false/"  /etc/gitlab/gitlab.rb
+sed -i "s/# web_server\['external_users'\] = .*/web_server\['external_users'\] = ${NGINX_USER}/"  /etc/gitlab/gitlab.rb
