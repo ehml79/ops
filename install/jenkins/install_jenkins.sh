@@ -36,7 +36,8 @@ EOF
 
 
 # 使用清华源更新插件
-#wget -O /root/.jenkins/updates/default.json https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+sed -i 's/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g'  /root/.jenkins/updates/default.json
+sed -i 's/http:\/\/www.google.com/https:\/\/www.baidu.com/g'  /root/.jenkins/updates/default.json
 
 nginx -s reload
 
