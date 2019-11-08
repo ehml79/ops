@@ -2,7 +2,7 @@
 
 # install java
 
-apt -y  install openjdk-8-jdk-headless openjdk-8-jre-headless
+apt -y  install openjdk-11-jdk-headless openjdk-11-jre-headless
 
 # install tomcat
 
