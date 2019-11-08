@@ -35,6 +35,9 @@ server {
 EOF
 
 
+# 使用清华源更新插件
+#wget -O /root/.jenkins/updates/default.json https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+
 nginx -s reload
 
 rm  -fr /root/$0
