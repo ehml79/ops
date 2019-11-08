@@ -26,7 +26,7 @@ mkdir -p /data/service/elasticsearch/{data,logs}
 
 chown -R elasticsearch:elasticsearch /data/service/elasticsearch
 
-# 更改jvm大小,为服务器的内存一半
+# 更改jvm大小
 sed -i "s/-Xms1g/-Xms${JVM_SIZE}/" /data/service/elasticsearch/config/jvm.options
 sed -i "s/-Xmx1g/-Xmx${JVM_SIZE}/" /data/service/elasticsearch/config/jvm.options
 
