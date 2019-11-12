@@ -24,7 +24,7 @@ sudo apt-get install gitlab-ce
 cp /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.rb.`date +%F`
 
 # 配置域名
-sed -i "s@^external_url .*@external_url 'https://${DOMAIN_NAME}'@" /etc/gitlab/gitlab.rb
+sed -i "s@^external_url .*@external_url 'https://localhost'@" /etc/gitlab/gitlab.rb
 
 gitlab-ctl reconfigure
 
@@ -35,7 +35,7 @@ sed -i "s/listen \*:80;/listen \*:82;/" /var/opt/gitlab/nginx/conf/gitlab-http.c
 cat > /data/service/nginx/conf/${DOMAIN_NAME}.conf <<EOF
 server {
     listen       80;
-    server_name  ${DOMAIN_NAME};
+    server_name  localhost;
 
     location / {
         proxy_pass http://127.0.0.1:82;
