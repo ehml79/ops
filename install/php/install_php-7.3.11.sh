@@ -114,9 +114,9 @@ function install_php(){
     make && make install
 
     cp /data/service/php73/etc/php-fpm.conf.default  /data/service/php73/etc/php-fpm.conf
-    cp /data/service/src/php-7.2.11/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm72
+    cp /data/service/src/php-7.2.11/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm73
 
-    chmod +x /etc/init.d/php-fpm72
+    chmod +x /etc/init.d/php-fpm73
     cp /data/service/src/php-7.2.11/php.ini-production /data/service/php73/etc/php.ini
 
     #  配置 /data/service/php73/etc/php-fpm.conf
@@ -221,8 +221,8 @@ function install_php(){
     # echo "cgi.fix_pathinfo=0"  >> /data/service/php73/etc/php.ini
 
     # 启动 php
-    /etc/init.d/php-fpm72 start
-    /etc/init.d/php-fpm72 restart
+    /etc/init.d/php-fpm73 start
+    /etc/init.d/php-fpm73 restart
 
 }
 
