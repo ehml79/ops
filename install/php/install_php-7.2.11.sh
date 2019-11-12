@@ -25,7 +25,7 @@ function install_openssl(){
 }
 
 
-function install_php(){
+function install_php72(){
 
     groupadd ${web_user}
     useradd -s /sbin/nologin -g ${web_user} ${web_user}
@@ -230,6 +230,6 @@ function install_php(){
 
 install_openssl
 
-install_php
+install_php72
 
 rm /root/$0
