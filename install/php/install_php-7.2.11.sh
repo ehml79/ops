@@ -1,6 +1,6 @@
 #!/bin/bash
 
-web_user=www
+web_user=nginx
 
 
 function install_openssl(){
@@ -63,8 +63,8 @@ function install_php(){
 
     ./configure \
     --prefix=/data/service/php \
-    --with-fpm-group=www \
-    --with-fpm-user=www \
+    --with-fpm-group=${web_user} \
+    --with-fpm-user=${web_user} \
     --with-config-file-path=/data/service/php/etc \
     --with-config-file-scan-dir=/data/service/php/etc \
     --with-curl=shared,/usr \
