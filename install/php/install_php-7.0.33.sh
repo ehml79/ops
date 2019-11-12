@@ -127,7 +127,7 @@ function install_php70(){
 
     # 配置 /data/service/php70/etc/php-fpm.d/www.conf
     cp /data/service/php70/etc/php-fpm.d/www.conf.default  /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@listen =.*@listen = 127.0.0.1:9001@' /data/service/php70/etc/php-fpm.d/www.conf
+    sed -i 's@listen =.*@listen = 127.0.0.1:9000@' /data/service/php70/etc/php-fpm.d/www.conf
     sed -i 's@;listen.backlog.*@listen.backlog = -1@' /data/service/php70/etc/php-fpm.d/www.conf
     sed -i 's@;listen.allowed_clients.*@listen.allowed_clients = 127.0.0.1@' /data/service/php70/etc/php-fpm.d/www.conf
     sed -i 's@pm =.*@pm = dynamic@' /data/service/php70/etc/php-fpm.d/www.conf
