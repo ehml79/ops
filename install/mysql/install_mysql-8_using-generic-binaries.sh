@@ -152,7 +152,10 @@ EOF
     chmod 600 /etc/my.cnf
 
     cd /data/service/mysql
-    bin/mysqld --initialize-insecure --user=mysql  --basedir=/data/service/mysql --datadir=/data/service/mysql/data/     --log-bin
+    bin/mysqld --initialize-insecure --user=mysql  \
+    --basedir=/data/service/mysql8018 \
+    --datadir=/data/service/mysql8018/data/     \
+    --log-bin
     
     # bin/mysqld_safe --user=mysql &
     # killall mysqld
