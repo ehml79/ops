@@ -2,6 +2,8 @@
 
 # nginx php mysql composer
 
+web_user=nginx
+
 mkdir -p /data/www
 
 cd /data/www
@@ -12,4 +14,4 @@ composer global require "laravel/installer"
 # 通过 Composer Create-Project
 composer create-project --prefer-dist laravel/laravel blog
 
-chown -R www.www /data/www
+chown -R ${web_user}.${web_user} /data/www
