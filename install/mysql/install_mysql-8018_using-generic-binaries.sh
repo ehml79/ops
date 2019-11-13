@@ -20,16 +20,18 @@ function install_mysql8(){
     mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql
 
 
-cat > /etc/my.cnf <<EOF
+cat > /etc/my8018.cnf <<EOF
 [client]
 user = root
 port = 3306
-socket = /tmp/mysql.sock
+socket = /tmp/mysql8018.sock
 
 
 [mysqld]
 port    = 3306
-socket  = /tmp/mysql.sock
+mysqlx_port = 33060
+socket  = /tmp/mysql8018.sock
+mysqlx_socket=/tmp/mysqlx8018.sock
 basedir = /data/service/mysql
 datadir = /data/service/mysql/data
 user    = mysql
