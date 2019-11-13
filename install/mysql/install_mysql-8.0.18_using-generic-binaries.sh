@@ -20,7 +20,7 @@ function install_mysql8(){
     mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql
 
 
-cat > /etc/my8018.cnf <<EOF
+cat > /data/service/mysql8018/data/my.cnf <<EOF
 [client]
 user = root
 port = 3306
@@ -151,7 +151,8 @@ quick
 max_allowed_packet = 32M
 EOF
 
-    chmod 600 /etc/my.cnf
+    ln -s /data/service/mysql8018/data/my.cnf /etc/my.cnf
+    chmod 600 /data/service/mysql8018/data/my.cnf 
 
     cd /data/service/mysql
     bin/mysqld --initialize-insecure --user=mysql  \

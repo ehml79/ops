@@ -20,9 +20,8 @@ function install_mysql8012(){
     mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql8012
 
 
-cat > /etc/my8012.cnf <<EOF
+cat > /data/service/mysql8012/data/my.cnf <<EOF
 [client]
-password =  123456
 user = root
 port = 3307
 socket = /tmp/mysql8012.sock
@@ -40,7 +39,7 @@ default_authentication_plugin=mysql_native_password
 basedir = /data/service/mysql8012
 datadir = /data/service/mysql8012/data
 character-set-server=utf8
-default-storage-engine=MyIsam
+#default-storage-engine=MyIsam
 max_connections=100
 collation-server=utf8_unicode_ci
 init_connect='SET NAMES utf8'
@@ -67,8 +66,8 @@ thread_cache_size=16
 tmp_table_size=64M
 wait_timeout=120
 EOF
-
-    chmod 600 /etc/my8012.cnf
+    ln -s /data/service/mysql8012/data/my.cnf /etc/my.cnf
+    chmod 600 /data/service/mysql8012/data/my.cnf
 
     cd /data/service/mysql8012
     bin/mysqld --initialize-insecure --user=mysql  \
@@ -91,7 +90,7 @@ EOF
     # 修改密码
     /data/service/mysql8012/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
     # /data/service/mysql8012/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
-    sed -i "/\[client\]/apassword = ${mysql_passwd}"  /etc/my8012.cnf
+    sed -i "/\[client\]/apassword = ${mysql_passwd}"  /data/service/mysql8012/data/my.cnf 
 
 }
 
