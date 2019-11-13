@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function install_mysql8(){
+function install_mysql(){
 
     mysql_version="mysql-8.0.18"
     mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
@@ -20,18 +20,18 @@ function install_mysql8(){
     mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql
 
 
-cat > /data/service/mysql8018/data/my.cnf <<EOF
+cat > /etc/my.cnf <<EOF
 [client]
 user = root
 port = 3306
-socket = /tmp/mysql8018.sock
+socket = /tmp/mysql.sock
 
 
 [mysqld]
 port    = 3306
 mysqlx_port = 33060
-socket  = /tmp/mysql8018.sock
-mysqlx_socket=/tmp/mysqlx8018.sock
+socket  = /tmp/mysql.sock
+mysqlx_socket=/tmp/mysqlx.sock
 basedir = /data/service/mysql
 datadir = /data/service/mysql/data
 user    = mysql
@@ -151,13 +151,12 @@ quick
 max_allowed_packet = 32M
 EOF
 
-    ln -s /data/service/mysql8018/data/my.cnf /etc/my.cnf
-    chmod 600 /data/service/mysql8018/data/my.cnf 
+    chmod 600 /etc/my.cnf 
 
     cd /data/service/mysql
     bin/mysqld --initialize-insecure --user=mysql  \
-    --basedir=/data/service/mysql8018 \
-    --datadir=/data/service/mysql8018/data/     \
+    --basedir=/data/service/mysql \
+    --datadir=/data/service/mysql/data/     \
     --log-bin
     
     # bin/mysqld_safe --user=mysql &
@@ -199,7 +198,7 @@ EOF
 
 }
 
-install_mysql8
+install_mysql
 
 # config_sshd
 
