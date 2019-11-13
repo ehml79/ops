@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function install_mysql8012(){
+function install_mysql(){
 
     mysql_version="mysql-8.0.12"
     mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
@@ -17,27 +17,27 @@ function install_mysql8012(){
     
     cd /data/service/src
     tar xf ${mysql_version}-linux-glibc2.12-x86_64.tar.xz 
-    mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql8012
+    mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql
 
 
-cat > /data/service/mysql8012/data/my.cnf <<EOF
+cat > /etc/my.cnf <<EOF
 [client]
 user = root
-port = 3307
-socket = /tmp/mysql8012.sock
-default-character-set=utf8
+port = 3306
+socket = /tmp/mysql.sock
+#default-character-set=utf8
 
 [mysql]
-default-character-set=utf8
+#default-character-set=utf8
 
 [mysqld]
-socket = /tmp/mysql8012.sock
-port=3307
-mysqlx_port = 33070
-mysqlx_socket=/tmp/mysqlx8012.sock
+socket = /tmp/mysql.sock
+port=3306
+mysqlx_port = 33060
+mysqlx_socket=/tmp/mysqlx.sock
 default_authentication_plugin=mysql_native_password
-basedir = /data/service/mysql8012
-datadir = /data/service/mysql8012/data
+basedir = /data/service/mysql
+datadir = /data/service/mysql/data
 character-set-server=utf8
 #default-storage-engine=MyIsam
 max_connections=100
@@ -66,31 +66,30 @@ thread_cache_size=16
 tmp_table_size=64M
 wait_timeout=120
 EOF
-    ln -s /data/service/mysql8012/data/my.cnf /etc/my.cnf
-    chmod 600 /data/service/mysql8012/data/my.cnf
+    chmod 600 /etc/my.cnf
 
-    cd /data/service/mysql8012
+    cd /data/service/mysql
     bin/mysqld --initialize-insecure --user=mysql  \
-    --basedir=/data/service/mysql8012 \
-    --datadir=/data/service/mysql8012/data/     \
+    --basedir=/data/service/mysql \
+    --datadir=/data/service/mysql/data/     \
     --log-bin
     
     # bin/mysqld_safe --user=mysql &
     # killall mysqld
     
     
-    cp support-files/mysql.server /etc/init.d/mysql8012
-    sed -i 's@/usr/local/mysql@/data/service/mysql8012@g' /etc/init.d/mysql8012
-    systemctl enable mysql8012
-    /etc/init.d/mysql8012 start
+    cp support-files/mysql.server /etc/init.d/mysql
+    sed -i 's@/usr/local/mysql@/data/service/mysql@g' /etc/init.d/mysql
+    systemctl enable mysql
+    /etc/init.d/mysql start
     
-    export PATH=$PATH:/data/service/mysql8012/bin
-    echo 'export PATH=$PATH:/data/service/mysql8012/bin' >> /etc/profile
+    export PATH=$PATH:/data/service/mysql/bin
+    echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
     
     # 修改密码
-    /data/service/mysql8012/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
-    # /data/service/mysql8012/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
-    sed -i "/\[client\]/apassword = ${mysql_passwd}"  /data/service/mysql8012/data/my.cnf 
+    /data/service/mysql/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
+    # /data/service/mysql/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
+    sed -i "/\[client\]/apassword = ${mysql_passwd}"  /data/service/mysql/data/my.cnf 
 
 }
 
@@ -114,7 +113,7 @@ EOF
 
 }
 
-install_mysql8012
+install_mysql
 
 # config_sshd
 
