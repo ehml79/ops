@@ -151,7 +151,7 @@ quick
 max_allowed_packet = 32M
 EOF
 
-    chmod 600 /etc/my.cnf 
+    chmod 600 /etc/my.cnf
 
     cd /data/service/mysql
     bin/mysqld --initialize-insecure --user=mysql  \
