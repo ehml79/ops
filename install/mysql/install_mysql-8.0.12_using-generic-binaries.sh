@@ -66,6 +66,7 @@ thread_cache_size=16
 tmp_table_size=64M
 wait_timeout=120
 EOF
+
     chmod 600 /etc/my.cnf
 
     cd /data/service/mysql
@@ -78,10 +79,10 @@ EOF
     # killall mysqld
     
     
-    cp support-files/mysql.server /etc/init.d/mysql
-    sed -i 's@/usr/local/mysql@/data/service/mysql@g' /etc/init.d/mysql
-    systemctl enable mysql
-    /etc/init.d/mysql start
+    cp support-files/mysql.server /etc/init.d/mysqld
+    sed -i 's@/usr/local/mysql@/data/service/mysql@g' /etc/init.d/mysqld
+    systemctl enable mysqld
+    /etc/init.d/mysqld start
     
     export PATH=$PATH:/data/service/mysql/bin
     echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
@@ -89,7 +90,7 @@ EOF
     # 修改密码
     /data/service/mysql/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
     # /data/service/mysql/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
-    sed -i "/\[client\]/apassword = ${mysql_passwd}"  /data/service/mysql/data/my.cnf 
+    sed -i "/\[client\]/apassword = ${mysql_passwd}"  /etc/my.cnf
 
 }
 
