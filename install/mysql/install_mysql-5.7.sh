@@ -52,6 +52,8 @@ function install_mysql(){
     make && make install
     
     cd /data/service/mysql/
+
+    chown mysql.mysql /data/service/mysql/data/ 
     
     cat > /etc/my.cnf << EOF
 #
@@ -196,7 +198,6 @@ EOF
     # --initialize
 
     chmod 600 /etc/my.cnf
-    chown mysql.mysql /data/service/mysql/data/ 
 	
     # 初始化没有密码的mysql
     bin/mysqld --initialize-insecure --user=mysql --basedir=/data/service/mysql/  --datadir=/data/service/mysql/data/ 
@@ -204,17 +205,17 @@ EOF
     bin/mysqld_safe   --defaults-file=/etc/my.cnf --user=mysql  & 
 
     
-    cp support-files/mysql.server /etc/init.d/mysql.server
-    systemctl enable mysql.server
-    /etc/init.d/mysql.server stop
-    /etc/init.d/mysql.server start
+    cp support-files/mysql.server /etc/init.d/mysqld
+    sed -i 's@/usr/local/mysql@/data/service/mysql@g' /etc/init.d/mysqld
+    systemctl enable mysqld
+    /etc/init.d/mysqld stop
+    /etc/init.d/mysqld start
 
     echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
     export PATH=$PATH:/data/service/mysql/bin
 
     # 修改密码
     /data/service/mysql/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
-    sed -i 's@#password@password@g' /etc/my.cnf
     sed -i "/\[client\]/apassword = ${mysql_passwd}" /etc/my.cnf
 
 }
