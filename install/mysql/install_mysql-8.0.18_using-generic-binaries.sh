@@ -159,6 +159,7 @@ EOF
     --datadir=/data/service/mysql/data/     \
     --log-bin
     
+    bin/mysql_ssl_rsa_setup
     # bin/mysqld_safe --user=mysql &
     # killall mysqld
     
