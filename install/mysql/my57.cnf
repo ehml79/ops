@@ -1,5 +1,5 @@
 [client]
-password = BwwRsef0FLt5d6qak6Nw
+password = password
 port    = 3306
 socket  = /data/service/mysql/mysql.sock
 #socket      = /tmp/mysql.sock
