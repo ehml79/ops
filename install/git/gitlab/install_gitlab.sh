@@ -31,11 +31,12 @@ gitlab-ctl reconfigure
 # 更改gitlab默认nginx 80 端口，防止端口冲突
 sed -i "s/listen \*:80;/listen \*:82;/" /var/opt/gitlab/nginx/conf/gitlab-http.conf
 
+echo "127.0.0.1 ${DOMAIN_NAME}" >> /etc/hosts 
 
 cat > /data/service/nginx/conf/${DOMAIN_NAME}.conf <<EOF
 server {
     listen       80;
-    server_name  localhost;
+    server_name  ${DOMAIN_NAME};
 
     location / {
         proxy_pass http://127.0.0.1:82;
