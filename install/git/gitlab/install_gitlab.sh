@@ -28,7 +28,7 @@ sed -i "s@^external_url .*@external_url 'https://localhost'@" /etc/gitlab/gitlab
 
 gitlab-ctl reconfigure
 
-# 更改gitlab默认nginx 80 端口，防止端口冲突
+# 有nginx的情况下,更改gitlab默认nginx 80 端口，防止端口冲突
 sed -i "s/listen \*:80;/listen \*:82;/" /var/opt/gitlab/nginx/conf/gitlab-http.conf
 
 echo "127.0.0.1 ${DOMAIN_NAME}" >> /etc/hosts 
