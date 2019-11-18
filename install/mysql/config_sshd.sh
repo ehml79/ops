@@ -2,6 +2,7 @@
 
 # 用处不大
 
+
 function config_sshd(){
 
     # navicat SSH 连接时提示
