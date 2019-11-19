@@ -7,7 +7,7 @@ start_ctime=$(date +%s)
 date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 backup_database_dir=/data/backup/database
-backup_dir=/data/backup/database/${date}/${ctime}
+backup_dir=${backup_database_dir}/${date}/${ctime}
 backup_log=/data/backup/log/backup_mysql_db.log
 mycnf="--defaults-extra-file=/etc/my.cnf"
 umysqldump="/data/service/mysql/bin/mysqldump"
@@ -59,7 +59,7 @@ ${umysql} ${mycnf}  -uroot  -A -N  -e  "show databases" | while read line
 }
 # 压缩备份
 function compress(){
-    cd /data/backup/database/${date}
+    cd ${backup_database_dir}/${date}
     tar -czf ${ctime}.tar.gz ${ctime}
     # 数据大小
     backup_size=$(du -sh ${ctime} | awk '{print $1}')
