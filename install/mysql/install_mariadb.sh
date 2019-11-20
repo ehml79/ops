@@ -146,9 +146,9 @@ read_buffer = 4M
 write_buffer = 4M
 EOF
     
-    cp /data/service/mariadb/support-files/mysql.server /etc/init.d/
-    systemctl enable mysql.server
-    /etc/init.d/mysql.server start
+    cp /data/service/mariadb/support-files/mysql.server /etc/init.d/mysqld
+    systemctl enable mysqld
+    /etc/init.d/mysqld start
 
 }
 
