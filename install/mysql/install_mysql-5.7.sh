@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 安装 mysql 5.7
-mysql_version="mysql-5.7.25"
+mysql_version="mysql-5.7.28"
 mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 
