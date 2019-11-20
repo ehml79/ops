@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 安装 mysql 5.7
-mysql_version="mysql-5.7.25"
+mysql_version="mysql-5.7.28"
 mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 
@@ -37,8 +37,8 @@ function install_mysql(){
     # 下载包好慢，建议提前下载好
     wget -O /data/service/src/${mysql_version}-linux-glibc2.12-x86_64.tar.gz https://dev.mysql.com/get/Downloads/MySQL-5.7/${mysql_version}-linux-glibc2.12-x86_64.tar.gz
     
-    cd /data/service/src/  && tar -xf mysql-5.7.27-linux-glibc2.12-x86_64.tar.gz
-    mv /data/service/src/mysql-5.7.27-linux-glibc2.12-x86_64 /data/service/mysql/
+    cd /data/service/src/  && tar -xf ${mysql_version}-linux-glibc2.12-x86_64.tar.gz
+    mv /data/service/src/${mysql_version}-linux-glibc2.12-x86_64 /data/service/mysql/
     cd /data/service/mysql/
     mkdir /data/service/mysql/data
     chown mysql:mysql /data/service/mysql/data
@@ -212,4 +212,4 @@ EOF
 
 
 install_mysql
-rm /root/$0
+#rm /root/$0
