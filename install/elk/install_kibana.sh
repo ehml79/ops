@@ -23,6 +23,9 @@ elasticsearch.password: "pass"
 EOF
 
 
+mkdir /data/service/kibana/logs/
+
+
 
 echo '#!/bin/bash' > /root/kibana_start.sh
 echo "nohup /data/service/kibana/bin/kibana --allow-root >> /data/service/kibana/logs/kibana.log 2>&1 & " >> /root/kibana_start.sh
