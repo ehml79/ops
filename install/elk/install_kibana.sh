@@ -16,7 +16,7 @@ mv /data/service/kibana/config/kibana.yml /data/service/kibana/config/kibana.yml
 cat > /data/service/kibana/config/kibana.yml  <<EOF
 server.port: 5601
 server.host: "0.0.0.0"
-elasticsearch.hosts: ["http://192.168.217.128:9200"]
+elasticsearch.hosts: ["http://localhost:9200"]
 kibana.index: ".kibana"
 elasticsearch.username: "kibana"
 elasticsearch.password: "pass"
