@@ -42,9 +42,6 @@ bootstrap.memory_lock: true
 network.host: 0.0.0.0
 http.port: 9200
 discovery.seed_hosts: ["${NODE1}:9300", "${NODE2}:9300", "${NODE3}:9300"]
-# 单机
-# cluster.initial_master_nodes: ["${NODE1}"]
-# 集群
 cluster.initial_master_nodes: ["${NODE1}:9300", "${NODE2}:9300", "${NODE3}:9300"]
 EOF
 
