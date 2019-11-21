@@ -40,7 +40,7 @@ bootstrap.memory_lock: true
 network.host: 0.0.0.0
 http.port: 9200
 discovery.seed_hosts: ["127.0.0.1", "[::1]"]
-cluster.initial_master_nodes: ["localhost:9300"]
+cluster.initial_master_nodes: ["node-${NODE}"]
 EOF
 
 
