@@ -15,7 +15,7 @@ function install_openssl(){
     ln -s /data/service/openssl/lib/libssl.so.1.1 /usr/lib/libssl.so.1.1
     ln -s /data/service/openssl/lib/libcrypto.so.1.1 /usr/lib/libcrypto.so.1.1
 
-    echo 'export PATH=$PATH:/data/service/openssl/bin/' >>/etc/profile
+    echo 'export PATH=$PATH:/data/service/openssl/bin/' > /etc/profile.d/openssl.sh
 
 
 }
