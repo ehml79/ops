@@ -211,7 +211,7 @@ EOF
     /etc/init.d/mysqld stop
     /etc/init.d/mysqld start
 
-    echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
+    echo 'export PATH=$PATH:/data/service/mysql/bin' > /etc/profile.d/mysql.sh
     export PATH=$PATH:/data/service/mysql/bin
 
     # 修改密码
