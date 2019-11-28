@@ -13,18 +13,18 @@ function install_node(){
     mv /data/service/node-${node_version}-linux-x64/  /data/service/node
     
     export PATH=$PATH:/data/service/node/bin/
-    echo 'export PATH=$PATH:/data/service/node/bin/' >>/etc/profile
+    echo 'export PATH=$PATH:/data/service/node/bin/' > /etc/profile.d/node.sh
     
     # 安装cnpm
     /data/service/node/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
     
     export PATH=$PATH:/data/service/node/lib/node_modules/cnpm/bin/
-    echo 'export PATH=$PATH:/data/service/node/lib/node_modules/cnpm/bin/' >>/etc/profile
+    echo 'export PATH=$PATH:/data/service/node/lib/node_modules/cnpm/bin/' >>/etc/profile.d/node.sh
 
     cnpm install -g vue-cli
     
     export PATH=$PATH:/data/service/node/lib/node_modules/vue-cli/bin/
-    echo 'export PATH=$PATH:/data/service/node/lib/node_modules/vue-cli/bin/' >>/etc/profile
+    echo 'export PATH=$PATH:/data/service/node/lib/node_modules/vue-cli/bin/' >>/etc/profile.d/node.sh
 }
 
 
