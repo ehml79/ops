@@ -86,7 +86,7 @@ EOF
     /etc/init.d/mysqld start
     
     export PATH=$PATH:/data/service/mysql/bin
-    echo 'export PATH=$PATH:/data/service/mysql/bin' >> /etc/profile
+    echo 'export PATH=$PATH:/data/service/mysql/bin' > /etc/profile.d/mysql.sh
     
     # 修改密码
     /data/service/mysql/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
