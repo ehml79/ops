@@ -184,7 +184,7 @@ fastcgi_param  REDIRECT_STATUS    200;
 EOF
 
 
-    echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" >> /etc/profile
+    echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" > /etc/profile.d/nginx.sh
 
 
 }

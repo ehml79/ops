@@ -289,7 +289,7 @@ fastcgi_param  REDIRECT_STATUS    200;
 EOF
 
 
-    echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" >> /etc/profile
+    echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" > /etc/profile.d/nginx.sh
 
 # 生成启动脚本
 cat > /root/uwsgi_restart.sh <<EOF
