@@ -10,4 +10,4 @@ cd protobuf-3.9.1
 ./configure --prefix=/data/service/protobuf
 make && make install
 
-echo "export PATH=\$PATH:/data/service/protobuf/bin/" >> /etc/profile
+echo "export PATH=\$PATH:/data/service/protobuf/bin/" > /etc/profile.d/protobuf.sh
