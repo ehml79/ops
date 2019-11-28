@@ -90,7 +90,7 @@ Install_Nginx(){
 #       }
 #   }
 #EOF
-    echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" >> /etc/profile
+    echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" > /etc/profile.d/nginx.sh
 
     # install nginx-vts-exporter 
     wget -O ${SRC_DIR}/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz https://github.com/hnlq715/nginx-vts-exporter/releases/download/v0.10.3/nginx-vts-exporter-0.10.3.linux-amd64.tar.gz 
