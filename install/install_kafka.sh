@@ -30,7 +30,7 @@ sed -i "s@broker.id=.*@broker.id=${BROKER_ID}@" /data/service/kafka/config/serve
 sed -i "s@log.dirs=.*@log.dirs=/data/service/kafka/logs/kafka-logs@"  /data/service/kafka/config/server.properties
 sed -i "s@zookeeper.connect=.*@zookeeper.connect=${zookeeper_server1}:2181,${zookeeper_server2}:2181,${zookeeper_server3}:2181@" /data/service/kafka/config/server.properties
 
-echo "export PATH=\$PATH:/data/service/kafka/bin" >> /etc/profile
+echo "export PATH=\$PATH:/data/service/kafka/bin" > /etc/profile.d/kafka.sh
 
 
 # 启动
