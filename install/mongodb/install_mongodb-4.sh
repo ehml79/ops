@@ -12,7 +12,7 @@ function install_mongodb(){
     
     /data/service/mongodb/bin/mongod --dbpath=/data/service/mongodb/data/  --logpath=/data/service/mongodb/mongodb.log -logappend --bind_ip 0.0.0.0 -port=27017   --fork 
     
-    echo 'export PATH=$PATH:/data/service/mongodb/bin/' >>/etc/profile
+    echo 'export PATH=$PATH:/data/service/mongodb/bin/' > /etc/profile.d/mongodb.sh
     export PATH=$PATH:/data/service/mongodb/bin/
 }
 
