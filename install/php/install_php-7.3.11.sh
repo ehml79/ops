@@ -19,7 +19,7 @@ function install_openssl(){
     ln -s /data/service/openssl/lib/libssl.so.1.1 /usr/lib/libssl.so.1.1
     ln -s /data/service/openssl/lib/libcrypto.so.1.1 /usr/lib/libcrypto.so.1.1
 
-    echo 'export PATH=$PATH:/data/service/openssl/bin/' >>/etc/profile
+    echo 'export PATH=$PATH:/data/service/openssl/bin/' > /etc/profile.d/openssl.sh
 
 
 }
@@ -170,8 +170,8 @@ function install_php73(){
 
 
 
-    echo 'export PATH=$PATH:/data/service/php73/bin/' >>/etc/profile
-    echo 'export PATH=$PATH:/data/service/php73/sbin/' >>/etc/profile
+    echo 'export PATH=$PATH:/data/service/php73/bin/' >/etc/profile.d/php.sh
+    echo 'export PATH=$PATH:/data/service/php73/sbin/' >>/etc/profile.d/php.sh
 
     # mcrypt
     wget -O /data/service/src/mcrypt-1.0.1.tgz http://pecl.php.net/get/mcrypt-1.0.1.tgz 
