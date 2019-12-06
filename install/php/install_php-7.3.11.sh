@@ -40,7 +40,7 @@ function install_php73(){
         sudo apt -y install libfreetype6-dev  libmcrypt-dev  libsodium-dev 
         sudo apt -y install argon2 libargon2-0 libargon2-0-dev libxml2-dev
         sudo apt -y install m4
-        sudo apt -y install autoconf
+        sudo apt -y install autoconf libzip-dev
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         yum install -y git gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  \
@@ -55,14 +55,14 @@ function install_php73(){
         exit 1
     fi
 
-    wget -O /data/service/src/php-7.3.11.tar.gz  https://www.php.net/distributions/php-7.3.11.tar.gz
+    #wget -O /data/service/src/php-7.3.11.tar.gz  https://www.php.net/distributions/php-7.3.11.tar.gz
     
     cd /data/service/src/
-    tar xf php-7.2.11.tar.gz
-    cd php-7.2.11
+    tar xf php-7.3.11.tar.gz
+    cd php-7.3.11
 
     ./configure \
-    --prefix=/data/service/php73\
+    --prefix=/data/service/php73 \
     --with-fpm-group=${web_user} \
     --with-fpm-user=${web_user} \
     --with-config-file-path=/data/service/php73/etc \
@@ -114,10 +114,10 @@ function install_php73(){
     make && make install
 
     cp /data/service/php73/etc/php-fpm.conf.default  /data/service/php73/etc/php-fpm.conf
-    cp /data/service/src/php-7.2.11/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm73
+    cp /data/service/src/php-7.3.11/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm73
 
     chmod +x /etc/init.d/php-fpm73
-    cp /data/service/src/php-7.2.11/php.ini-production /data/service/php73/etc/php.ini
+    cp /data/service/src/php-7.3.11/php.ini-production /data/service/php73/etc/php.ini
 
     #  配置 /data/service/php73/etc/php-fpm.conf
     sed -i 's@;pid = run/php-fpm.pid@pid = run/php-fpm.pid@' /data/service/php73/etc/php-fpm.conf
@@ -128,6 +128,8 @@ function install_php73(){
 
     # 配置 /data/service/php73/etc/php-fpm.d/www.conf
     cp /data/service/php73/etc/php-fpm.d/www.conf.default  /data/service/php73/etc/php-fpm.d/www.conf
+    sed -i "s@user =.*@user = ${web_user}@" /data/service/php73/etc/php-fpm.d/www.conf
+    sed -i "s@group =.*@group = ${web_user}@" /data/service/php73/etc/php-fpm.d/www.conf
     sed -i 's@listen =.*@listen = 127.0.0.1:9003@' /data/service/php73/etc/php-fpm.d/www.conf
     sed -i 's@;listen.backlog.*@listen.backlog = -1@' /data/service/php73/etc/php-fpm.d/www.conf
     sed -i 's@;listen.allowed_clients.*@listen.allowed_clients = 127.0.0.1@' /data/service/php73/etc/php-fpm.d/www.conf
@@ -206,7 +208,7 @@ function install_php73(){
     echo 'extension = "redis.so"' >> /data/service/php73/etc/php.ini
 
     # openssl
-#    cd /data/service/src/php-7.2.11/ext/openssl
+#    cd /data/service/src/php-7.3.11/ext/openssl
 #    cp config0.m4 config.m4
 #    /data/service/php73/bin/phpize
 #    ./configure --with-openssl -with-php-config=/data/service/php73/bin/php-config
@@ -232,4 +234,4 @@ install_openssl
 
 install_php73
 
-rm /root/$0
+#rm /root/$0
