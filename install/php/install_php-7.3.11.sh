@@ -130,7 +130,7 @@ function install_php73(){
     cp /data/service/php73/etc/php-fpm.d/www.conf.default  /data/service/php73/etc/php-fpm.d/www.conf
     sed -i "s@user =.*@user = ${web_user}@" /data/service/php73/etc/php-fpm.d/www.conf
     sed -i "s@group =.*@group = ${web_user}@" /data/service/php73/etc/php-fpm.d/www.conf
-    sed -i 's@listen =.*@listen = 127.0.0.1:9003@' /data/service/php73/etc/php-fpm.d/www.conf
+    sed -i 's@listen =.*@listen = 127.0.0.1:9000@' /data/service/php73/etc/php-fpm.d/www.conf
     sed -i 's@;listen.backlog.*@listen.backlog = -1@' /data/service/php73/etc/php-fpm.d/www.conf
     sed -i 's@;listen.allowed_clients.*@listen.allowed_clients = 127.0.0.1@' /data/service/php73/etc/php-fpm.d/www.conf
     sed -i 's@pm =.*@pm = dynamic@' /data/service/php73/etc/php-fpm.d/www.conf
