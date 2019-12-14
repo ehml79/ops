@@ -206,7 +206,8 @@ EOF
 
     
     cp support-files/mysql.server /etc/init.d/mysqld
-    sed -i 's@/usr/local/mysql@/data/service/mysql@g' /etc/init.d/mysqld
+    sed -i "s@^basedir=.*@basedir=/data/service/mysql@" /etc/init.d/mysqld
+    sed -i "s@^datadir=.*@datadir=/data/service/mysql/data@" /etc/init.d/mysqld
     systemctl enable mysqld
     /etc/init.d/mysqld stop
     /etc/init.d/mysqld start
