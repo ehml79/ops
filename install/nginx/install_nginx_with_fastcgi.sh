@@ -93,6 +93,16 @@ events {
         worker_connections 65535;
 }
 
+# tcp
+
+#stream {
+#                proxy_connect_timeout 300s;
+#                proxy_timeout 300s;
+#                tcp_nodelay on;
+#                include stream/*.conf;
+#}
+
+
 http {
 
         include       mime.types;
