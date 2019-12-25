@@ -25,7 +25,7 @@ function install_openssl(){
 }
 
 
-function install_php70(){
+function install_php(){
 
     groupadd ${web_user}
     useradd -s /sbin/nologin -g ${web_user} ${web_user}
@@ -62,11 +62,11 @@ function install_php70(){
     cd php-7.0.33
 
     ./configure \
-    --prefix=/data/service/php70 \
+    --prefix=/data/service/php \
     --with-fpm-group=${web_user} \
     --with-fpm-user=${web_user} \
-    --with-config-file-path=/data/service/php70/etc \
-    --with-config-file-scan-dir=/data/service/php70/etc \
+    --with-config-file-path=/data/service/php/etc \
+    --with-config-file-scan-dir=/data/service/php/etc \
     --with-curl=shared,/usr \
     --with-freetype-dir=/usr/local/freetype \
     --with-libxml-dir=/usr \
@@ -112,75 +112,75 @@ function install_php70(){
 
     make && make install
 
-    cp /data/service/php70/etc/php-fpm.conf.default  /data/service/php70/etc/php-fpm.conf
-    cp /data/service/src/php-7.0.33/sapi/fpm/init.d.php-fpm /etc/init.d/php70-fpm
+    cp /data/service/php/etc/php-fpm.conf.default  /data/service/php/etc/php-fpm.conf
+    cp /data/service/src/php-7.0.33/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 
-    chmod +x /etc/init.d/php70-fpm
-    cp /data/service/src/php-7.0.33/php.ini-production /data/service/php70/etc/php.ini
+    chmod +x /etc/init.d/php-fpm
+    cp /data/service/src/php-7.0.33/php.ini-production /data/service/php/etc/php.ini
 
-    #  配置 /data/service/php70/etc/php-fpm.conf
-    sed -i 's@;pid = run/php-fpm.pid@pid = run/php-fpm.pid@' /data/service/php70/etc/php-fpm.conf
-    sed -i 's@;emergency_restart_threshold.*@emergency_restart_threshold = 10@' /data/service/php70/etc/php-fpm.conf
-    sed -i 's@;emergency_restart_interval.*@emergency_restart_interval = 1m@' /data/service/php70/etc/php-fpm.conf
-    sed -i 's@;process_control_timeout.*@process_control_timeout = 5s@' /data/service/php70/etc/php-fpm.conf
-    sed -i 's@;daemonize.*@daemonize = yes@' /data/service/php70/etc/php-fpm.conf
+    #  配置 /data/service/php/etc/php-fpm.conf
+    sed -i 's@;pid = run/php-fpm.pid@pid = run/php-fpm.pid@' /data/service/php/etc/php-fpm.conf
+    sed -i 's@;emergency_restart_threshold.*@emergency_restart_threshold = 10@' /data/service/php/etc/php-fpm.conf
+    sed -i 's@;emergency_restart_interval.*@emergency_restart_interval = 1m@' /data/service/php/etc/php-fpm.conf
+    sed -i 's@;process_control_timeout.*@process_control_timeout = 5s@' /data/service/php/etc/php-fpm.conf
+    sed -i 's@;daemonize.*@daemonize = yes@' /data/service/php/etc/php-fpm.conf
 
-    # 配置 /data/service/php70/etc/php-fpm.d/www.conf
-    cp /data/service/php70/etc/php-fpm.d/www.conf.default  /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@listen =.*@listen = 127.0.0.1:9000@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;listen.backlog.*@listen.backlog = -1@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;listen.allowed_clients.*@listen.allowed_clients = 127.0.0.1@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@pm =.*@pm = dynamic@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@pm.max_children.*@pm.max_children = 256@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@pm.start_servers.*@pm.start_servers = 20@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@pm.min_spare_servers.*@pm.min_spare_servers = 5@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@pm.max_spare_servers.*@pm.max_spare_servers = 35@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;pm.max_requests.*@pm.max_requests = 1024@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;pm.status_path.*@pm.status_path = /status@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;ping.path.*@ping.path = /ping@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;ping.response.*@ping.response = pong@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;request_slowlog_timeout.*@request_slowlog_timeout= 10@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;slowlog.*@slowlog = log/$pool.log.slow@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;rlimit_files.*@rlimit_files = 65535@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;rlimit_core.*@rlimit_core = 0@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;catch_workers_output.*@catch_workers_output = yes@' /data/service/php70/etc/php-fpm.d/www.conf
+    # 配置 /data/service/php/etc/php-fpm.d/www.conf
+    cp /data/service/php/etc/php-fpm.d/www.conf.default  /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@listen =.*@listen = 127.0.0.1:9000@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;listen.backlog.*@listen.backlog = -1@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;listen.allowed_clients.*@listen.allowed_clients = 127.0.0.1@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@pm =.*@pm = dynamic@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@pm.max_children.*@pm.max_children = 256@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@pm.start_servers.*@pm.start_servers = 20@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@pm.min_spare_servers.*@pm.min_spare_servers = 5@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@pm.max_spare_servers.*@pm.max_spare_servers = 35@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;pm.max_requests.*@pm.max_requests = 1024@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;pm.status_path.*@pm.status_path = /status@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;ping.path.*@ping.path = /ping@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;ping.response.*@ping.response = pong@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;request_slowlog_timeout.*@request_slowlog_timeout= 10@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;slowlog.*@slowlog = log/$pool.log.slow@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;rlimit_files.*@rlimit_files = 65535@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;rlimit_core.*@rlimit_core = 0@' /data/service/php/etc/php-fpm.d/www.conf
+    sed -i 's@;catch_workers_output.*@catch_workers_output = yes@' /data/service/php/etc/php-fpm.d/www.conf
     # .do 访问
-    sed -i 's@;security.limit_extensions.*@security.limit_extensions = .php .php3 .php4 .php5 .php7 .do@' /data/service/php70/etc/php-fpm.d/www.conf
+    sed -i 's@;security.limit_extensions.*@security.limit_extensions = .php .php3 .php4 .php5 .php7 .do@' /data/service/php/etc/php-fpm.d/www.conf
     
-    # 配置 /data/service/php70/etc/php.ini
-    mkdir -p /data/service/php70/log/
-    sed -i 's@; output_buffering@output_buffering = on@' /data/service/php70/etc/php.ini
-    sed -i 's@; output_buffering.*@output_buffering = on@' /data/service/php70/etc/php.ini
-    sed -i 's@short_open_tag.*@short_open_tag = On@' /data/service/php70/etc/php.ini
-    sed -i 's@expose_php.*@expose_php = Off@' /data/service/php70/etc/php.ini
-    sed -i 's@memory_limit.*@memory_limit = 2048M@' /data/service/php70/etc/php.ini
-    sed -i 's@error_reporting.*@error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT@' /data/service/php70/etc/php.ini
-    sed -i 's@;track_errors =.*@track_errors = Off@' /data/service/php70/etc/php.ini
-    sed -i 's@;date.timezone.*@date.timezone = Asia/Shanghai@' /data/service/php70/etc/php.ini
-    sed -i 's@mail.add_x_header.*@mail.add_x_header = On@' /data/service/php70/etc/php.ini
-    sed -i 's@;cgi.fix_pathinfo.*@cgi.fix_pathinfo=0@' /data/service/php70/etc/php.ini
+    # 配置 /data/service/php/etc/php.ini
+    mkdir -p /data/service/php/log/
+    sed -i 's@; output_buffering@output_buffering = on@' /data/service/php/etc/php.ini
+    sed -i 's@; output_buffering.*@output_buffering = on@' /data/service/php/etc/php.ini
+    sed -i 's@short_open_tag.*@short_open_tag = On@' /data/service/php/etc/php.ini
+    sed -i 's@expose_php.*@expose_php = Off@' /data/service/php/etc/php.ini
+    sed -i 's@memory_limit.*@memory_limit = 2048M@' /data/service/php/etc/php.ini
+    sed -i 's@error_reporting.*@error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT@' /data/service/php/etc/php.ini
+    sed -i 's@;track_errors =.*@track_errors = Off@' /data/service/php/etc/php.ini
+    sed -i 's@;date.timezone.*@date.timezone = Asia/Shanghai@' /data/service/php/etc/php.ini
+    sed -i 's@mail.add_x_header.*@mail.add_x_header = On@' /data/service/php/etc/php.ini
+    sed -i 's@;cgi.fix_pathinfo.*@cgi.fix_pathinfo=0@' /data/service/php/etc/php.ini
 
-    # sed -i 's@; max_input_vars.*@; max_input_vars = 1000@' /data/service/php70/etc/php.ini
-    sed -i 's@; extension_dir.*@extension_dir = "/data/service/php70/lib/php/extensions/no-debug-non-zts-20170718/"@' /data/service/php70/etc/php.ini
-    # sed -i 's@; Development Value.*@; Development Value: On@' /data/service/php70/etc/php.ini
+    # sed -i 's@; max_input_vars.*@; max_input_vars = 1000@' /data/service/php/etc/php.ini
+    sed -i 's@; extension_dir.*@extension_dir = "/data/service/php/lib/php/extensions/no-debug-non-zts-201718/"@' /data/service/php/etc/php.ini
+    # sed -i 's@; Development Value.*@; Development Value: On@' /data/service/php/etc/php.ini
     # php 调试模式
-    sed -i 's@; display_errors =.*@display_errors = On@' /data/service/php70/etc/php.ini
+    sed -i 's@; display_errors =.*@display_errors = On@' /data/service/php/etc/php.ini
 
 
 
 
-    echo 'export PATH=$PATH:/data/service/php70/bin/' >/etc/profile.d/php.sh
-    echo 'export PATH=$PATH:/data/service/php70/sbin/' >>/etc/profile.d/php.sh
+    echo 'export PATH=$PATH:/data/service/php/bin/' >/etc/profile.d/php.sh
+    echo 'export PATH=$PATH:/data/service/php/sbin/' >>/etc/profile.d/php.sh
 
     # mcrypt
     wget -O /data/service/src/mcrypt-1.0.1.tgz http://pecl.php.net/get/mcrypt-1.0.1.tgz 
     cd /data/service/src/
     tar xf mcrypt-1.0.1.tgz 
     cd mcrypt-1.0.1
-    /data/service/php70/bin/phpize
-    ./configure --with-php-config=/data/service/php70/bin/php-config
+    /data/service/php/bin/phpize
+    ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
-    echo "extension=mcrypt.so" >> /data/service/php70/etc/php.ini
+    echo "extension=mcrypt.so" >> /data/service/php/etc/php.ini
 
 
     # igbinary
@@ -188,10 +188,10 @@ function install_php70(){
     cd /data/service/src/ 
     tar xf igbinary-2.0.8.tgz   
     cd igbinary-2.0.8
-    /data/service/php70/bin/phpize
-    ./configure --with-php-config=/data/service/php70/bin/php-config
+    /data/service/php/bin/phpize
+    ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
-    echo 'extension = "igbinary.so"' >> /data/service/php70/etc/php.ini
+    echo 'extension = "igbinary.so"' >> /data/service/php/etc/php.ini
  
 
     # redis
@@ -199,35 +199,35 @@ function install_php70(){
     cd /data/service/src/
     tar xf redis-4.2.0.tgz
     cd redis-4.2.0
-    /data/service/php70/bin/phpize
-    ./configure --with-php-config=/data/service/php70/bin/php-config
+    /data/service/php/bin/phpize
+    ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
-    echo 'extension = "redis.so"' >> /data/service/php70/etc/php.ini
+    echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
 
     # openssl
 #    cd /data/service/src/php-7.0.33/ext/openssl
 #    cp config0.m4 config.m4
-#    /data/service/php70/bin/phpize
-#    ./configure --with-openssl -with-php-config=/data/service/php70/bin/php-config
+#    /data/service/php/bin/phpize
+#    ./configure --with-openssl -with-php-config=/data/service/php/bin/php-config
 #    make
 #    make install
-#    echo 'extension = "openssl.so"' >> /data/service/php70/etc/php.ini
+#    echo 'extension = "openssl.so"' >> /data/service/php/etc/php.ini
 
 
 
 
     # 配置扩展
-    #echo "security.limit_extensions = .php .php3 .php4 .php5 .do .html" >> /data/service/php70/etc/php.ini
+    #echo "security.limit_extensions = .php .php3 .php4 .php5 .do .html" >> /data/service/php/etc/php.ini
 
     # 启动 php
-    /etc/init.d/php70-fpm start
-    /etc/init.d/php70-fpm restart
+    /etc/init.d/php-fpm start
+    /etc/init.d/php-fpm restart
 
 }
 
 
 install_openssl
 
-install_php70
+install_php
 
 rm /root/$0
