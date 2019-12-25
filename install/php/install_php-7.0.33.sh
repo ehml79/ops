@@ -129,7 +129,7 @@ function install_php70(){
     cp /data/service/php70/etc/php-fpm.d/www.conf.default  /data/service/php70/etc/php-fpm.d/www.conf
     sed -i 's@listen =.*@listen = 127.0.0.1:9000@' /data/service/php70/etc/php-fpm.d/www.conf
     sed -i 's@;listen.backlog.*@listen.backlog = -1@' /data/service/php70/etc/php-fpm.d/www.conf
-    sed -i 's@;listen.allowed_clients.*@listen.allowed_clients = 0.0.0.0@' /data/service/php70/etc/php-fpm.d/www.conf
+    sed -i 's@;listen.allowed_clients.*@listen.allowed_clients = 127.0.0.1@' /data/service/php70/etc/php-fpm.d/www.conf
     sed -i 's@pm =.*@pm = dynamic@' /data/service/php70/etc/php-fpm.d/www.conf
     sed -i 's@pm.max_children.*@pm.max_children = 256@' /data/service/php70/etc/php-fpm.d/www.conf
     sed -i 's@pm.start_servers.*@pm.start_servers = 20@' /data/service/php70/etc/php-fpm.d/www.conf
