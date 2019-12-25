@@ -115,7 +115,7 @@ chown -R ${RUN_USER}.${RUN_USER} /data/svn && chmod -R 775 /data/svn
 
 svn --username "server"  --password  "${SVN_PASSWD}"   up  /data/svn/
 
-rsync -vzrtopg  --exclude="*.svn" --exclude="*.apk" --exclude="*.log" /data/svn/ /data/www/
+rsync -vzrtopg  --exclude="*.svn" --exclude="*.apk" --exclude="*.log" /data/svn/ /data/web/
 EOF
 
 /bin/bash /data/sh/update/rsync_update_scripts.sh
@@ -129,7 +129,7 @@ server
         listen       80;
         server_name  ${DOMAIN_NAME};
         index index.php index.html index.htm;
-        root  /data/www/web_pc;
+        root  /data/web/web_pc;
         charset utf-8;
 
         location ~/.svn/ {
