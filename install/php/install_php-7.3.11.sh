@@ -161,7 +161,7 @@ function install_php73(){
     sed -i 's@;track_errors =.*@track_errors = Off@' /data/service/php73/etc/php.ini
     sed -i 's@;date.timezone.*@date.timezone = Asia/Shanghai@' /data/service/php73/etc/php.ini
     sed -i 's@mail.add_x_header.*@mail.add_x_header = On@' /data/service/php73/etc/php.ini
-    sed -i 's@;cgi.fix_pathinfo.*@cgi.fix_pathinfo=1@' /data/service/php73/etc/php.ini
+    sed -i 's@;cgi.fix_pathinfo.*@cgi.fix_pathinfo=0@' /data/service/php73/etc/php.ini
 
     # sed -i 's@; max_input_vars.*@; max_input_vars = 1000@' /data/service/php73/etc/php.ini
     sed -i 's@; extension_dir.*@extension_dir = "/data/service/php73/lib/php/extensions/no-debug-non-zts-20170718/"@' /data/service/php73/etc/php.ini
@@ -221,7 +221,6 @@ function install_php73(){
 
     # 配置扩展
     #echo "security.limit_extensions = .php .php3 .php4 .php5 .do .html" >> /data/service/php73/etc/php.ini
-    # echo "cgi.fix_pathinfo=0"  >> /data/service/php73/etc/php.ini
 
     # 启动 php
     /etc/init.d/php-fpm73 start
