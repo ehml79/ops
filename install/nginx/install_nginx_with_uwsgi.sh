@@ -43,7 +43,7 @@ Install_Nginx(){
 
     # install nginx
     cd ${SRC_DIR}
-    [ ! -d /data/www ] && mkdir -p /data/www
+    [ ! -d /data/web ] && mkdir -p /data/web
     if [ ! -f ${NGINX} ];then
         wget -O ${SRC_DIR}/${NGINX}.tar.gz http://nginx.org/download/${NGINX}.tar.gz 
     fi
@@ -163,7 +163,7 @@ EOF
 uid = ${RUN_USER}
 gid = ${RUN_USER}
 # 指定项目目录，在配置多站点时，不要启用
-chdir = /data/www
+chdir = /data/web
 # 加载demosite/wsgi.py这个模块，在配置多站点时，不要启用
 module = test
 master = true
@@ -212,7 +212,7 @@ cat > ${INSTALL_DIR}/nginx/conf/vhost/uwsgi_sample.conf <<EOF
                 listen       80;
                 server_name example.com;
                 index index.html index.php index.htm;
-                root  /data/www/example.com;
+                root  /data/web/example.com;
 
                 access_log  ${INSTALL_DIR}/nginx/logs/access_example.com.log main;
 
@@ -255,7 +255,7 @@ server {
             include  uwsgi_params;
             uwsgi_pass  127.0.0.1:9090;
             uwsgi_param UWSGI_SCRIPT demosite.wsgi;    #指定加载的模块
-            uwsgi_param UWSGI_CHDIR /data/www;  #指定项目目录
+            uwsgi_param UWSGI_CHDIR /data/web;  #指定项目目录
         }
     }
 
