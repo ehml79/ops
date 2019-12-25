@@ -2,6 +2,7 @@
 
 
 zabbix_server_ip=127.0.0.1
+zabbix_user=
 zabbix_db_password=
 zabbix_domain=zabbix.example.com
 
