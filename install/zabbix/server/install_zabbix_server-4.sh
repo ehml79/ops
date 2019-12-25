@@ -10,7 +10,7 @@ function install_zabbix_server_4(){
     # 判断系统
     if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
-        apt -y install  git libpcre3 libpcre3-dev  zlib1g-dev openssl libssl-dev  build-essential libsnmp-dev libevent-dev
+        apt -y install  git libpcre3 libpcre3-dev  zlib1g-dev openssl libssl-dev  build-essential libsnmp-dev libevent-dev  libmysqlclient-dev
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         yum -y install git pcre-devel openssl-devel  net-snmp-devel libevent-devel 
@@ -29,7 +29,7 @@ function install_zabbix_server_4(){
     cd zabbix-4.0.0
     ./configure --prefix=/data/service/zabbix  \
     --enable-server --enable-agent \
-    --with-mysql=/data/service/mysql/bin/mysql_config \
+    --with-mysql \
     -enable-ipv6 \
     --with-net-snmp --with-libcurl \
     --with-libxml2
@@ -117,7 +117,7 @@ EOF
 
     mkdir -p /data/web/zabbix
     cp -r /data/service/src/zabbix-4.0.0/frontends/php/* /data/web/zabbix/
-    chown -R www:www /data/web/zabbix/
+    chown -R nginx:nginx /data/web/zabbix/
     
     echo "/data/service/mysql/lib/" >>  /etc/ld.so.conf
     ldconfig
