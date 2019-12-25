@@ -71,8 +71,8 @@ chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql
 
 cat > /data/service/zabbix/etc/zabbix_server.conf <<EOF
 DBHost=${zabbix_server_ip}
-DBName=zabbix
-DBUser=zabbix
+DBName=${zabbix_user}
+DBUser=${zabbix_user}
 DBPassword=${zabbix_db_password} 
 ListenIP=0.0.0.0
 StartPollersUnreachable=10
