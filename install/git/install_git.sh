@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
+projetc_name=repo
 your_authorized_keys=
-
 
 sudo apt-get install git
 
@@ -12,9 +12,9 @@ mkdir -p /data/service/git
 
 cd /data/service/git
 
-sudo git init --bare repo.git
+sudo git init --bare ${projetc_name}.git
 
-sudo chown -R git:git repo.git
+sudo chown -R git:git ${projetc_name}.git
 
 
 # 更改 git shell
