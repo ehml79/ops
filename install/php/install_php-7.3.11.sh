@@ -207,6 +207,18 @@ function install_php(){
     make && sudo make install
     echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
 
+    # yar
+    wget -O /data/service/src/yar-2.0.6.tgz http://pecl.php.net/get/yar-2.0.6.tgz
+    cd /data/service/src/    
+    tar xf yar-2.0.6.tgz
+    cd yar-2.0.6
+    /data/service/php/bin/phpize
+    ./configure --with-php-config=/data/service/php/bin/php-config
+    make && sudo make install
+    echo 'extension = "yar.so"' >> /data/service/php/etc/php.ini
+
+
+
     # openssl
 #    cd /data/service/src/php-7.3.11/ext/openssl
 #    cp config0.m4 config.m4
