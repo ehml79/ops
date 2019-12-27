@@ -208,6 +208,7 @@ function install_php(){
     echo 'extension = "redis.so"' >> /data/service/php/etc/php.ini
 
     # yar
+    ln -s /usr/include/x86_64-linux-gnu/curl   /usr/include
     wget -O /data/service/src/yar-2.0.6.tgz http://pecl.php.net/get/yar-2.0.6.tgz
     cd /data/service/src/    
     tar xf yar-2.0.6.tgz
