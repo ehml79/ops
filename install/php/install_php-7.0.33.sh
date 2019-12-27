@@ -161,7 +161,7 @@ function install_php(){
     sed -i 's@;cgi.fix_pathinfo.*@cgi.fix_pathinfo=0@' /data/service/php/etc/php.ini
 
     # sed -i 's@; max_input_vars.*@; max_input_vars = 1000@' /data/service/php/etc/php.ini
-    sed -i 's@; extension_dir.*@extension_dir = "/data/service/php/lib/php/extensions/no-debug-non-zts-201718/"@' /data/service/php/etc/php.ini
+    # sed -i 's@; extension_dir.*@extension_dir = "/data/service/php/lib/php/extensions/no-debug-non-zts-201718/"@' /data/service/php/etc/php.ini
     # sed -i 's@; Development Value.*@; Development Value: On@' /data/service/php/etc/php.ini
     # php 调试模式
     sed -i 's@; display_errors =.*@display_errors = On@' /data/service/php/etc/php.ini
