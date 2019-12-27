@@ -83,7 +83,6 @@ external-locking = FALSE
 max_allowed_packet = 32M
 sort_buffer_size = 1M
 join_buffer_size = 1M
-thread_cache_size = 300
 #thread_concurrency = 8
 query_cache_size = 512M
 query_cache_limit = 2M
