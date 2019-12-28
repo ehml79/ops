@@ -133,7 +133,7 @@ slow_query_log = ON
 long_query_time = 1
 
 [mysql]
-prompt=(\\u@\\h) [\\d]>\\_
+prompt="MySQL [\\d]> "
 no-auto-rehash
 
 [myisamchk]
