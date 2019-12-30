@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-zabbix_server_ip=1.1.1.1
+zabbix_server_ip=192.168.0.218
 zabbix_db_host=localhost
 zabbix_db_user=root
 zabbix_db_password=
@@ -42,6 +42,28 @@ Hostname=Zabbix server
 Include=/data/service/zabbix/etc/zabbix_agentd.conf.d/*.conf
 EOF
 
+
+    if [ -f /usr/bin/apt ];then
+        # ubuntu
+        cp /data/service/src/zabbix-4.0.0/misc/init.d/debian/zabbix-agent /etc/init.d/
+        chmod +x /etc/init.d/zabbix-agent
+        sed -i "s#/usr/local#/data/service/zabbix#g" /etc/init.d/zabbix-agent
+        /etc/init.d/zabbix-agent restart
+    elif [ -f /usr/bin/yum ];then
+        # centos
+        cp /data/service/src/zabbix-4.0.0/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
+        chmod +x /etc/init.d/zabbix-agentd
+        sed -i "s#/usr/local#/data/service/zabbix/#g" /etc/init.d/zabbix_agentd
+        /etc/init.d/zabbix_agentd restart
+    else
+        echo 'unknow OS'
+        exit 1
+
+    fi
+}
+
+function check_mysql(){
+
 mkdir -p /data/.secret/
 cat > /data/.secret/zabbix-my.cnf <<EOF
 [client]
@@ -65,24 +87,8 @@ EOF
     chown zabbix.zabbix  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
     chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
 
-    if [ -f /usr/bin/apt ];then
-        # ubuntu
-        cp /data/service/src/zabbix-4.0.0/misc/init.d/debian/zabbix-agent /etc/init.d/
-        chmod +x /etc/init.d/zabbix-agent
-        sed -i "s#/usr/local#/data/service/zabbix#g" /etc/init.d/zabbix-agent
-        /etc/init.d/zabbix-agent restart
-    elif [ -f /usr/bin/yum ];then
-        # centos
-        cp /data/service/src/zabbix-4.0.0/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
-        chmod +x /etc/init.d/zabbix-agentd
-        sed -i "s#/usr/local#/data/service/zabbix/#g" /etc/init.d/zabbix_agentd
-        /etc/init.d/zabbix_agentd restart
-    else
-        echo 'unknow OS'
-        exit 1
-
-    fi
 }
 
 
 install_zabbix_agentd_4
+#check_mysql
