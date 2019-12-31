@@ -22,10 +22,11 @@ function rsync_send(){
 
     
     mkdir -p /etc/rsyncd
+    mkdir -p /data/logs/rsync
     
     echo "${rsync_user}:${rsync_passwd}" > /etc/rsyncd/rsyncd.secrets
     chmod 600 /etc/rsyncd/rsyncd.secrets
-    
+
 cat >  /etc/rsyncd/rsyncd.conf << EOF
 uid = root
 gid = root
@@ -39,9 +40,9 @@ hosts allow = ${rsync_hosts_allow}
 hosts deny = *
 list = false
 auth users = rsync
-pid file = /var/run/rsyncd.pid
-lock file = /var/run/rsync.lock
-log file = /var/log/rsyncd.log
+pid file = /data/logs/rsync/rsyncd.pid
+lock file = /data/logs/rsync/rsync.lock
+log file = /data/logs/rsync/rsyncd.log
 secrets file = /etc/rsyncd/rsyncd.secrets
 
 [backup]
