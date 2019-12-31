@@ -8,7 +8,7 @@ date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 backup_database_dir=/data/backup/database
 backup_dir=${backup_database_dir}/${date}/${ctime}
-backup_log=/data/backup/log/backup_mysql_db.log
+backup_log_dir=/data/logs/backup/backup_mysql_db.log
 mycnf="--defaults-extra-file=/etc/my.cnf"
 umysqldump="/data/service/mysql/bin/mysqldump"
 umysql="/data/service/mysql/bin/mysql"
@@ -23,8 +23,8 @@ if [ ! -e ${backup_dir} ];then
 fi
 
 # 建立备份日志目录
-if [ ! -e /data/backup/log ];then
-    mkdir -p /data/backup/log
+if [ ! -e ${backup_log_dir} ];then
+    mkdir -p ${backup_log_dir}
 fi
 
 # 删除旧备份
