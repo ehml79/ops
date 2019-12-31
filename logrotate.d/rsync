@@ -1,4 +1,4 @@
-/data/backup/log/rsync.log {
+/data/logs/backup/rsync.log {
     daily
     rotate 7
     create 0644 root root
