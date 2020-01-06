@@ -71,7 +71,7 @@ Install_Nginx(){
     
     make  && make install
 
-    [ ! -d  ${INSTALL_DIR}/nginx/conf/vhost/  ] && mkdir -p ${INSTALL_DIR}/nginx/conf/vhost/
+    [ ! -d  ${INSTALL_DIR}/nginx/conf/vhost/  ] && mkdir -p ${INSTALL_DIR}/nginx/conf/{vhost,tcp,cert}
     # 生成nginx.conf 配置文件
 #    sed -i "/worker_processes/i\user  ${RUN_USER};"  ${INSTALL_DIR}/nginx/conf/nginx.conf
 #    sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  ${INSTALL_DIR/}nginx/conf/nginx.conf
