@@ -1,15 +1,20 @@
 #!/bin/bash
 
 
-while true
-do
-    #git clone -b dev  git@172.16.1.145:root/test.git
-    
-    cd /root/test
-    
-    git fetch --all 
-    git reset --hard origin/dev  pull
-    git pull
-    
-    rsync /root/test/ /data/www/emall/
-done
+CODE_DIR=/data/gittemp/sample
+WEB_DIR=/data/web/sample
+
+cd /data/gittemp
+
+# git clone -b master git@192.168.0.1:/data/service/git/sample.git
+
+cd ${CODE_DIR}
+
+#git checkout dev
+git fetch --all
+git reset --hard origin/master
+git pull
+
+rsync -av --exclude="*.git" ${CODE_DIR}/ ${WEB_DIR}/
+chown -R nginx.nginx ${CODE_DIR}/ ${WEB_DIR}/
+chmod -R 755 ${CODE_DIR}/ ${WEB_DIR}/
