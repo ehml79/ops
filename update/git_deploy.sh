@@ -16,5 +16,5 @@ git reset --hard origin/master
 git pull
 
 rsync -av --exclude="*.git" ${CODE_DIR}/ ${WEB_DIR}/
-chown -R nginx.nginx ${CODE_DIR}/ ${WEB_DIR}/
-chmod -R 755 ${CODE_DIR}/ ${WEB_DIR}/
+#chown -R nginx.nginx ${CODE_DIR}/ ${WEB_DIR}/
+#chmod -R 755 ${CODE_DIR}/ ${WEB_DIR}/
