@@ -31,6 +31,7 @@ Install_Nginx(){
     	echo 'unknow OS'
     	exit 1
     fi
+    
     # install uwsgi
     pip3 install uwsgi
    
@@ -166,7 +167,10 @@ http {
 }
 EOF
 
-mv /root/sample.conf ${INSTALL_DIR}/nginx/conf/vhost/
+mv /root/fastcgi_sample.conf ${INSTALL_DIR}/nginx/conf/vhost/
+mv /root/uwsgi_sample.conf ${INSTALL_DIR}/nginx/conf/vhost/
+
+
 # 生成 uwsgi 配置文件
     cat > ${INSTALL_DIR}/nginx/conf/uwsgi.ini <<EOF
 [uwsgi]
@@ -216,61 +220,6 @@ thunder-lock=true
 post-buffering=4096
 
 EOF
- 
-cat > ${INSTALL_DIR}/nginx/conf/vhost/uwsgi_sample.conf <<EOF
-        server{
-                listen       80;
-                server_name example.com;
-                index index.html index.php index.htm;
-                root  /data/web/example.com;
-
-                access_log  ${INSTALL_DIR}/nginx/logs/access_example.com.log main;
-
-                if (-d \$request_filename){
-                        rewrite ^/(.*)([^/])\$ http://\$host/\$1\$2/ permanent;
-                }
-
-                # error_page   500 502 503 504 404 403 http://localhost;
-
-                location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
-                        expires 30d;
-                }
-
-                location ~ .*\.(js|css)?$ {
-                        expires 6h;
-                }
-
-
-                location ~ .*\.(php)?$
-                {
-                        fastcgi_pass  127.0.0.1:9000;
-                        #fastcgi_pass  unix:/tmp/uwsgi.sock;
-
-                        fastcgi_index index.php;
-                        include fcgi.conf;
-                }
-        }
-EOF
-
-
-#  uwsgi 默认配置文件
-cat > ${INSTALL_DIR}/nginx/conf/vhost/uwsgi_sample.conf <<EOF
-#
-server {
-        listen       80;
-        server_name  192.168.172.128;
-        index  index.html index.htm;
-        client_max_body_size 35m;
-        location / {
-            include  uwsgi_params;
-            uwsgi_pass  127.0.0.1:9090;
-            uwsgi_param UWSGI_SCRIPT demosite.wsgi;    #指定加载的模块
-            uwsgi_param UWSGI_CHDIR /data/web;  #指定项目目录
-        }
-    }
-
-EOF
-
 
 cat > ${INSTALL_DIR}/nginx/conf/fcgi.conf <<EOF
 fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
@@ -320,9 +269,7 @@ fi
 uwsgi --py-auto-reload=1 --ini ${INSTALL_DIR}/nginx/conf/uwsgi.ini
 EOF
 
-
 }
-
 
 
 Install_Nginx
