@@ -1,14 +1,15 @@
 #!/bin/bash
 
+NGINX="nginx-1.16.1"
+OPENSSL="openssl-1.1.1"
+RUN_USER=nginx
+
 INSTALL_DIR=/data/service
 SRC_DIR=${INSTALL_DIR}/src
 
 [ ! -d ${INSTALL_DIR} ] && mkdir -p ${INSTALL_DIR}
 [ ! -d ${SRC_DIR} ] && mkdir -p ${SRC_DIR}
 
-NGINX="nginx-1.16.1"
-OPENSSL="openssl-1.1.1"
-RUN_USER=nginx
 
 # Check if user is root
 if [ $(id -u) != "0" ]; then
