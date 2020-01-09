@@ -25,7 +25,7 @@ Install_Nginx(){
     	apt -y install  git libpcre3 libpcre3-dev  zlib1g-dev openssl libssl-dev  build-essential  python3-pip 
     elif [ -f /usr/bin/yum ];then
     	echo 'centOS'
-    	yum -y install wget gcc-c++ git pcre-devel openssl-devel 
+    	yum -y install wget gcc-c++ git pcre-devel openssl-devel
     else
     	echo 'unknow OS'
     	exit 1
@@ -74,10 +74,8 @@ Install_Nginx(){
     
     make  && make install
 
-    [ ! -d  ${INSTALL_DIR}/nginx/conf/vhost/  ] && mkdir -p ${INSTALL_DIR}/nginx/conf/vhost/
+    [ ! -d  ${INSTALL_DIR}/nginx/conf/vhost/  ] && mkdir -p ${INSTALL_DIR}/nginx/conf/{vhost,tcp,cert}
     # 生成nginx.conf 配置文件
-#    sed -i "/worker_processes/i\user  ${RUN_USER};"  ${INSTALL_DIR}/nginx/conf/nginx.conf
-#    sed -i '/#tcp_nopush/a\    include vhost/*.conf;'  ${INSTALL_DIR}/nginx/conf/nginx.conf
     cat > ${INSTALL_DIR}/nginx/conf/nginx.conf << EOF
 #
 user ${RUN_USER} ${RUN_USER};
@@ -95,6 +93,16 @@ events {
         use epoll;
         worker_connections 65535;
 }
+
+# tcp
+
+#stream {
+#                proxy_connect_timeout 300s;
+#                proxy_timeout 300s;
+#                tcp_nodelay on;
+#                include stream/*.conf;
+#}
+
 
 http {
 
@@ -157,6 +165,7 @@ http {
 }
 EOF
 
+mv /root/sample.conf ${INSTALL_DIR}/nginx/conf/vhost/
 # 生成 uwsgi 配置文件
     cat > ${INSTALL_DIR}/nginx/conf/uwsgi.ini <<EOF
 [uwsgi]
@@ -290,7 +299,6 @@ EOF
 
 
     echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" > /etc/profile.d/nginx.sh
-
 # 生成启动脚本
 cat > /root/uwsgi_restart.sh <<EOF
 
