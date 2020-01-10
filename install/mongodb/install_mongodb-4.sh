@@ -10,7 +10,7 @@ function install_mongodb(){
     if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
         # Ubuntu 18.04
-        sudo apt-get install libcurl4 libgssapi-krb5-2 libkrb5-dbg libldap-2.4-2 libpcap0.8 libsasl2-2 snmp openssl
+        sudo apt-get -y install libcurl4 libgssapi-krb5-2 libkrb5-dbg libldap-2.4-2 libpcap0.8 libsasl2-2 snmp openssl
         wget -O  /data/service/src/mongodb-linux-x86_64-ubuntu1804-4.2.2.tgz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.2.2.tgz
         cd /data/service/src
         tar xf mongodb-linux-x86_64-ubuntu1804-4.2.2.tgz
@@ -18,7 +18,7 @@ function install_mongodb(){
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         # centOS 7
-        sudo yum install cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl libpcap lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl rpm-libs tcp_wrappers-libs
+        sudo yum -y install cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl libpcap lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl rpm-libs tcp_wrappers-libs
         wget -O  /data/service/src/mongodb-linux-s390x-rhel72-4.2.2.tgz https://fastdl.mongodb.org/linux/mongodb-linux-s390x-rhel72-4.2.2.tgz
         cd /data/service/src
         tar xf mongodb-linux-s390x-rhel72-4.2.2.tgz
