@@ -11,4 +11,3 @@ tar xf pmm-client-1.16.0.tar.gz
 cd pmm-client-1.16.0/
 
 
-rm /root/$0

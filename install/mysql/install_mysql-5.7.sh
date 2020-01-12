@@ -223,4 +223,3 @@ EOF
 
 
 install_mysql
-rm /root/$0

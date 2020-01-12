@@ -104,4 +104,3 @@ Install_Nginx(){
 
 
 Install_Nginx
-#rm /root/$0

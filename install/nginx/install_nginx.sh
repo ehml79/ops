@@ -1,7 +1,6 @@
 #!/bin/bash
 
 NGINX="nginx-1.16.1"
-OPENSSL="openssl-1.1.1"
 RUN_USER=nginx
 
 INSTALL_DIR=/data/service
@@ -18,7 +17,7 @@ if [ $(id -u) != "0" ]; then
 fi
 
 
-Install_Nginx(){
+install_nginx(){
 
     # 判断系统
     if [ -f /usr/bin/apt ];then
@@ -35,13 +34,6 @@ Install_Nginx(){
     # install uwsgi
     pip3 install uwsgi
    
-    # install openssl
-
-    cd ${SRC_DIR}
-    if [ ! -f ${OPENSSL}.tar.gz ];then
-        wget -O ${SRC_DIR}/${OPENSSL}.tar.gz  https://www.openssl.org/source/${OPENSSL}.tar.gz
-    fi
-    tar xf  ${OPENSSL}.tar.gz
 
     # install nginx
     cd ${SRC_DIR}
@@ -59,19 +51,41 @@ Install_Nginx(){
     ./configure --prefix=${INSTALL_DIR}/nginx \
     --user=${RUN_USER} \
     --group=${RUN_USER} \
-    --with-pcre  \
+    --with-threads \
+    --with-file-aio \
     --with-http_ssl_module \
-    --with-http_stub_status_module \
     --with-http_v2_module \
-    --with-http_gzip_static_module \
-    --with-http_sub_module \
     --with-http_realip_module \
+    --with-http_addition_module \
+    --with-http_xslt_module \
+    --with-http_xslt_module=dynamic \
+    --with-http_image_filter_module \
+    --with-http_image_filter_module=dynamic \
+    --with-http_geoip_module \
+    --with-http_geoip_module=dynamic \
+    --with-http_sub_module \
+    --with-http_dav_module \
     --with-http_flv_module \
     --with-http_mp4_module \
+    --with-http_gunzip_module \
+    --with-http_gzip_static_module \
+    --with-http_auth_request_module \
+    --with-http_random_index_module \
+    --with-http_secure_link_module \
+    --with-http_degradation_module \
+    --with-http_slice_module \
+    --with-http_stub_status_module \
     --with-stream \
+    --with-stream=dynamic \
     --with-stream_ssl_module \
-    --with-openssl=../${OPENSSL} \
-    --with-pcre-jit 
+    --with-stream_realip_module \
+    --with-stream_geoip_module \
+    --with-stream_geoip_module=dynamic \
+    --with-stream_ssl_preread_module \
+    --with-google_perftools_module \
+    --with-compat \
+    --with-pcre \
+    --with-libatomic
 
     
     make  && make install
@@ -273,4 +287,4 @@ EOF
 
 
 Install_Nginx
-rm /root/$0
+

@@ -246,4 +246,3 @@ install_openssl
 
 install_php
 
-#rm /root/$0

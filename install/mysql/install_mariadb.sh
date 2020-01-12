@@ -156,4 +156,3 @@ EOF
 
 install_mariadb
 
-rm /root/$0

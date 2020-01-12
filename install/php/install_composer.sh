@@ -45,4 +45,3 @@ cat >/root/.config/composer/composer.json <<EOF
 }
 EOF
 
-rm -fr /root/$0
