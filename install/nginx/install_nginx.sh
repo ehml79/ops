@@ -31,21 +31,16 @@ install_nginx(){
         libgd-dev \
         libgeoip-dev \
         libgoogle-perftools-dev \
-        libatomic-ops-dev
+        libatomic-ops-dev \
+        libxml2-dev \
+	libxslt1-dev
     elif [ -f /usr/bin/yum ];then
     	echo 'centOS'
     	yum -y install wget \
         gcc-c++ \
         git \
         pcre-devel \
-        openssl-devel \
-        curl \
-        curl-devel \
-        libtermcap-devel \
-        ncurses-devel \
-        libevent-devel \
-        readline-devel \
-        libuuid-devel
+        openssl-devel
     else
     	echo 'unknow OS'
     	exit 1
@@ -55,7 +50,8 @@ install_nginx(){
     cd ${SRC_DIR}
     [ ! -d /data/web ] && mkdir -p /data/web
     if [ ! -f ${NGINX} ];then
-        wget -O ${SRC_DIR}/${NGINX}.tar.gz http://nginx.org/download/${NGINX}.tar.gz 
+        #wget -O ${SRC_DIR}/${NGINX}.tar.gz http://nginx.org/download/${NGINX}.tar.gz 
+	pass
     fi
 
     tar xf  ${NGINX}.tar.gz
@@ -115,19 +111,17 @@ install_nginx(){
 }
 
 config_uwsgi(){
-
-# install uwsgi
-pip3 install uwsgi
-
-mv -f /root/uwsgi.ini  ${INSTALL_DIR}/nginx/conf/uwsgi.ini 
-
-# 生成启动脚本
-/root/uwsgi_restart.sh
-
-mv -f /root/uwsgi_sample.conf ${INSTALL_DIR}/nginx/conf/vhost/
-
+    
+    # install uwsgi
+    pip3 install uwsgi
+    
+    mv -f /root/uwsgi.ini  ${INSTALL_DIR}/nginx/conf/uwsgi.ini 
+    mv -f /root/uwsgi_sample.conf ${INSTALL_DIR}/nginx/conf/vhost/
+    
+    # 生成启动脚本
+    /bin/bash /root/uwsgi_restart.sh
 }
 
-config_uwsgi
+#config_uwsgi
 install_nginx
 
