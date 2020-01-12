@@ -38,7 +38,14 @@ install_nginx(){
         gcc-c++ \
         git \
         pcre-devel \
-        openssl-devel
+        openssl-devel \
+        curl \
+        curl-devel \
+        libtermcap-devel \
+        ncurses-devel \
+        libevent-devel \
+        readline-devel \
+        libuuid-devel
     else
     	echo 'unknow OS'
     	exit 1
