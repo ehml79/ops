@@ -152,7 +152,6 @@ function install_php(){
     
     # 配置 /data/service/php/etc/php.ini
     mkdir -p /data/service/php/log/
-    sed -i 's@; output_buffering@output_buffering = on@' /data/service/php/etc/php.ini
     sed -i 's@; output_buffering.*@output_buffering = on@' /data/service/php/etc/php.ini
     sed -i 's@short_open_tag.*@short_open_tag = On@' /data/service/php/etc/php.ini
     sed -i 's@expose_php.*@expose_php = Off@' /data/service/php/etc/php.ini
