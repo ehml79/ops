@@ -273,5 +273,5 @@ function install_extension(){
 }
 
 
-#install_php
+install_php
 install_extension
