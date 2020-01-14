@@ -42,7 +42,7 @@ function install_zabbix_agentd(){
     --enable-agent2
 
     make install
-    cp /data/service/zabbix/etc/zabbix_agentd.conf /data/service/zabbix/etc/zabbix_agentd.conf_$(date +%F)
+    cp /data/service/zabbix/etc/zabbix_agentd.conf /data/service/zabbix/etc/zabbix_agentd.conf.$(date +%F)
 
 cat >  /data/service/zabbix/etc/zabbix_agentd.conf <<EOF
 LogFile=/tmp/zabbix_agentd.log

@@ -45,8 +45,8 @@ function install_zabbix_server(){
     --with-libxml2
     
     make install
-    cp /data/service/zabbix/etc/zabbix_agentd.conf /data/service/zabbix/etc/zabbix_agentd.conf.bak
-    cp /data/service/zabbix/etc/zabbix_server.conf /data/service/zabbix/etc/zabbix_server.conf.bak
+    cp /data/service/zabbix/etc/zabbix_agentd.conf /data/service/zabbix/etc/zabbix_agentd.conf.$(date +%F)
+    cp /data/service/zabbix/etc/zabbix_server.conf /data/service/zabbix/etc/zabbix_server.conf.$(date +%F)
 
 
 cat > /data/service/zabbix/etc/zabbix_agentd.conf <<EOF
