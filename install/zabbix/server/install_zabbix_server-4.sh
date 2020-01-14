@@ -166,7 +166,7 @@ EOF
     sed -i 's/post_max_size.*/post_max_size = 	16M/' /data/service/php/etc/php.ini
     sed -i 's/max_execution_time.*/max_execution_time = 300/' /data/service/php/etc/php.ini
     sed -i 's/max_input_time.*/max_input_time = 300/' /data/service/php/etc/php.ini
-    sed -i 's@;date.timezone.*@date.timezone = Asia/Shanghai@'  /data/service/php/etc/php.ini
+    #sed -i 's@;date.timezone.*@date.timezone = Asia/Shanghai@'  /data/service/php/etc/php.ini
 
     /etc/init.d/php-fpm restart
 
