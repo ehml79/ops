@@ -197,4 +197,4 @@ EOF
 
 
 install_zabbix_server
-check_mysql
+#check_mysql
