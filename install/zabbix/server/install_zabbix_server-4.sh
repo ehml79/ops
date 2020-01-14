@@ -186,10 +186,14 @@ EOF
     # 导入数据库
     cd /data/service/src/${zabbix_version}/database/mysql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS zabbix default CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "create user 'zabbix'@'%' ; "
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "ALTER USER 'zabbix'@'%' IDENTIFIED  BY '${zabbix_db_password}'; "
+
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/schema.sql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/images.sql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/data.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to 'zabbix'@'localhost' identified by '${zabbix_db_password}';"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to 'zabbix'@'%';"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "FLUSH   PRIVILEGES; "
 
 
 }
