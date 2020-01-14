@@ -2,6 +2,7 @@
 
 zabbix_version=zabbix-4.4.4
 zabbix_server_ip=192.168.0.218
+
 zabbix_db_host=localhost
 zabbix_db_user=zabbix
 zabbix_db_password=
@@ -23,7 +24,6 @@ function install_zabbix_agentd_4(){
 
 
     mkdir -p /data/service/src/
-    mkdir -p /data/logs
     # ubuntu
     groupadd zabbix
     useradd -g zabbix zabbix
@@ -36,7 +36,7 @@ function install_zabbix_agentd_4(){
     cp /data/service/zabbix/etc/zabbix_agentd.conf /data/service/zabbix/etc/zabbix_agentd.conf_$(date +%F)
 
 cat >  /data/service/zabbix/etc/zabbix_agentd.conf <<EOF
-LogFile=/data/logs/zabbix_agentd.log
+LogFile=/tmp/zabbix_agentd.log
 Server=${zabbix_server_ip}
 ServerActive=${zabbix_server_ip}
 Hostname=Zabbix server

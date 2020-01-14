@@ -23,7 +23,6 @@ function install_zabbix_server_4(){
     groupadd zabbix
     useradd -g zabbix zabbix
     mkdir -p /data/service/src/ 
-    mkdir -p /data/logs
     wget -O /data/service/src/${zabbix_version}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz
     
     cd /data/service/src
@@ -42,7 +41,7 @@ function install_zabbix_server_4(){
 
 
 cat > /data/service/zabbix/etc/zabbix_agentd.conf <<EOF
-LogFile=/data/logs/zabbix_agentd.log
+LogFile=/tmp/zabbix_agentd.log
 Server=127.0.0.1
 ServerActive=127.0.0.1
 Hostname=Zabbix server
