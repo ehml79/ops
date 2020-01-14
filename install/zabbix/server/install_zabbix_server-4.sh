@@ -6,7 +6,7 @@ zabbix_user=zabbix
 zabbix_db_password=
 zabbix_domain=zabbix.example.com
 
-function install_zabbix_server_4(){
+function install_zabbix_server(){
 
     # 判断系统
     if [ -f /usr/bin/apt ];then
@@ -20,15 +20,13 @@ function install_zabbix_server_4(){
         exit 1
     fi
 
+	mkdir -p /data/service/src
+  	mkdir 770 -p /data/service/zabbix
+	chown zabbix:zabbix /data/service/zabbix
+
     addgroup --system --quiet zabbix
     adduser --quiet --system --disabled-login --ingroup zabbix --home /data/service/zabbix --no-create-home zabbix
     
-    mkdir -p /data/service/src/ 
-
-	mkdir 770 -p /data/service/zabbix
-	chown zabbix:zabbix /data/service/zabbix
-
-
     wget -O /data/service/src/${zabbix_version}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz
     
     cd /data/service/src
@@ -188,13 +186,6 @@ UserParameter=mysql.slave_status[*], /data/service/mysql/bin/mysql --defaults-fi
 EOF
 
 
-# mysql监控脚本
-mkdir -p /data/service/zabbix/share/zabbix/externalscripts/ 
-cp /root/check_mysql /data/service/zabbix/share/zabbix/externalscripts/check_mysql
-chown zabbix.zabbix  /data/service/zabbix/share/zabbix/externalscripts/check_mysql
-chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql
-
-
     # 导入数据库
     cd /data/service/src/${zabbix_version}/database/mysql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS zabbix default CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
@@ -203,16 +194,10 @@ chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/data.sql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to 'zabbix'@'localhost' identified by '${zabbix_db_password}';"
 
-    mkdir -p /data/service/zabbix/share/zabbix/externalscripts/
-    cp /root/check_mysql /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
-
-    chown zabbix.zabbix  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
-    chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
-
 
 }
 
 
 
-install_zabbix_server_4
+install_zabbix_server
 check_mysql

@@ -8,7 +8,7 @@ zabbix_db_user=zabbix
 zabbix_db_password=
 
 
-function install_zabbix_agentd_4(){
+function install_zabbix_agentd(){
 
     # 判断系统
     if [ -f /usr/bin/apt ];then
@@ -23,14 +23,15 @@ function install_zabbix_agentd_4(){
     fi
 
 
-    mkdir -p /data/service/{src,zabbix}
-    
+    mkdir -p /data/service/src
     mkdir 770 -p /data/service/zabbix
     chown zabbix:zabbix /data/service/zabbix
 
     addgroup --system --quiet zabbix
-    adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix
+    adduser --quiet --system --disabled-login --ingroup zabbix --home /data/service/zabbix --no-create-home zabbix
+    
     wget -O /data/service/src/${zabbix_version}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz 
+    
     cd /data/service/src
     tar xf ${zabbix_version}.tar.gz
     cd ${zabbix_version}/
@@ -56,13 +57,13 @@ EOF
         # ubuntu
         cp /data/service/src/${zabbix_version}/misc/init.d/debian/zabbix-agent /etc/init.d/
         chmod +x /etc/init.d/zabbix-agent
-        sed -i "s#/usr/local#/data/service/zabbix#g" /etc/init.d/zabbix-agent
+        sed -i "s#DAEMON=.*#DAEMON=/data/service/zabbix/sbin/\${NAME}#g" /etc/init.d/zabbix-agent
         /etc/init.d/zabbix-agent restart
     elif [ -f /usr/bin/yum ];then
         # centos
         cp /data/service/src/${zabbix_version}/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
         chmod +x /etc/init.d/zabbix-agentd
-        sed -i "s#/usr/local#/data/service/zabbix/#g" /etc/init.d/zabbix_agentd
+        sed -i "s#BASEDIR=/usr/local#BASEDIR=/data/service/zabbix/#g" /etc/init.d/zabbix_agentd
         /etc/init.d/zabbix_agentd restart
     else
         echo 'unknow OS'
@@ -103,5 +104,5 @@ EOF
 }
 
 
-install_zabbix_agentd_4
+install_zabbix_agentd
 #check_mysql
