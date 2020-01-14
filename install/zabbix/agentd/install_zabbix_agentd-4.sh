@@ -23,15 +23,23 @@ function install_zabbix_agentd_4(){
     fi
 
 
-    mkdir -p /data/service/src/
-    # ubuntu
-    groupadd zabbix
-    useradd -g zabbix zabbix
+    mkdir -p /data/service/{src,zabbix}
+    
+    mkdir 770 -p /data/service/zabbix
+    chown zabbix:zabbix /data/service/zabbix
+
+    addgroup --system --quiet zabbix
+    adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix
     wget -O /data/service/src/${zabbix_version}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz 
     cd /data/service/src
     tar xf ${zabbix_version}.tar.gz
     cd ${zabbix_version}/
-    ./configure --prefix=/data/service/zabbix --enable-agent
+    
+    ./configure \
+    --prefix=/data/service/zabbix \
+    --enable-agent \
+    --enable-agent2
+
     make install
     cp /data/service/zabbix/etc/zabbix_agentd.conf /data/service/zabbix/etc/zabbix_agentd.conf_$(date +%F)
 
@@ -65,21 +73,25 @@ EOF
 
 function check_mysql(){
 
-mkdir -p /data/.secret/
-cat > /data/.secret/zabbix-my.cnf <<EOF
+cat > /data/service/zabbix/etc/zabbix-my.cnf <<EOF
 [client]
 host=${zabbix_db_host}
 user='${zabbix_db_user}'
 password='${zabbix_db_password}'
 EOF
 
-    chmod 600 /data/.secret/zabbix-my.cnf 
-    chown zabbix.zabbix /data/.secret/zabbix-my.cnf 
+    chmod 600 /data/service/zabbix/etc/zabbix-my.cnf
+    chown zabbix.zabbix /data/service/zabbix/etc/zabbix-my.cnf
 
 cat > /data/service/zabbix/etc/zabbix_agentd.conf.d/userparameter_mysql.conf <<EOF
-UserParameter=mysql.ping,/data/service/mysql/bin/mysqladmin  --defaults-file=/data/.secret/zabbix-my.cnf ping 2>/dev/null |grep -c alive
-UserParameter=mysql.status[*],/data/service/zabbix/share/zabbix/externalscripts/check_mysql \$1
-UserParameter=mysql.version,/data/service/mysql/bin/mysql -V
+UserParameter=mysql.ping[*], /data/service/mysql/bin/mysqladmin --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf ping
+UserParameter=mysql.get_status_variables[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -sNX -e "show global status"
+UserParameter=mysql.version[*], /data/service/mysql/bin/mysqladmin --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -s  version
+UserParameter=mysql.db.discovery[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -sN -e "show databases"
+UserParameter=mysql.dbsize[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -sN -e "SELECT SUM(DATA_LENGTH + INDEX_LENGTH) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=''"
+UserParameter=mysql.replication.discovery[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf  -sNX -e "show slave status"
+UserParameter=mysql.slave_status[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -sNX -e "show slave status"
+
 EOF
 
     mkdir -p /data/service/zabbix/share/zabbix/externalscripts/
