@@ -23,6 +23,7 @@ function install_zabbix_agentd_4(){
 
 
     mkdir -p /data/service/src/
+    mkdir -p /data/logs
     # ubuntu
     groupadd zabbix
     useradd -g zabbix zabbix
