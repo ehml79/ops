@@ -95,11 +95,14 @@ UserParameter=mysql.slave_status[*], /data/service/mysql/bin/mysql --defaults-fi
 
 EOF
 
-    mkdir -p /data/service/zabbix/share/zabbix/externalscripts/
-    cp /root/check_mysql /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
+    # 导入数据库
+    cd /data/service/src/${zabbix_version}/database/mysql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS zabbix default CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/schema.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/images.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/data.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to 'zabbix'@'localhost' identified by '${zabbix_db_password}';"
 
-    chown zabbix.zabbix  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
-    chmod +x  /data/service/zabbix/share/zabbix/externalscripts/check_mysql 
 
 }
 

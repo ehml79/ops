@@ -160,9 +160,7 @@ EOF
 }
 
 
-check_mysql(){
-
-
+function check_mysql(){
 
 cat > /data/service/zabbix/etc/zabbix-my.cnf <<EOF
 [client]
@@ -184,7 +182,6 @@ UserParameter=mysql.replication.discovery[*], /data/service/mysql/bin/mysql --de
 UserParameter=mysql.slave_status[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -sNX -e "show slave status"
 
 EOF
-
 
     # 导入数据库
     cd /data/service/src/${zabbix_version}/database/mysql
