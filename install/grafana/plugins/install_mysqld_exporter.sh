@@ -15,7 +15,7 @@ function install_mysqld_exporter(){
     
     # mysql grant
     
-    CREATE USER 'exporter'@'localhost' IDENTIFIED BY "${exporter_password}" WITH MAX_USER_CONNECTIONS 3;
+    CREATE USER 'exporter'@'127.0.0.1' IDENTIFIED BY "${exporter_password}" WITH MAX_USER_CONNECTIONS 3;
     GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'localhost';
     flush privileges;
     
