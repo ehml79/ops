@@ -12,7 +12,7 @@ function ubuntu_disk_partition(){
 	w
 	" | fdisk /dev/vdb
 	mkfs.ext4 /dev/vdb1
-	cp /etc/fstab /etc/fstab.bak
+	cp /etc/fstab /etc/fstab.$(date +%F)
 	mkdir /data
 	echo '/dev/vdb1 /data ext4 barrier=0 0 0' >> /etc/fstab
 	mount /dev/vdb1 /data/
@@ -31,7 +31,7 @@ function centos_disk_partition(){
     w
     " | fdisk /dev/vdb
     mkfs.ext4 /dev/vdb1
-    cp /etc/fstab /etc/fstab.bak
+    cp /etc/fstab /etc/fstab.$(date +%F)
     mkdir /data
     echo '/dev/vdb1 /data ext4 defaults 0 0' >> /etc/fstab
     mount /dev/vdb1 /data/
