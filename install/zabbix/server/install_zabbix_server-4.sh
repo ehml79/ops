@@ -1,8 +1,8 @@
 #!/bin/bash
 
-
+zabbix_version=zabbix-4.4.4
 zabbix_server_ip=127.0.0.1
-zabbix_user=
+zabbix_user=zabbix
 zabbix_db_password=
 zabbix_domain=zabbix.example.com
 
@@ -23,11 +23,11 @@ function install_zabbix_server_4(){
     groupadd zabbix
     useradd -g zabbix zabbix
     mkdir -p /data/service/src/ 
-    wget -O /data/service/src/zabbix-4.0.0.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.0.0/zabbix-4.0.0.tar.gz 
+    wget -O /data/service/src/${zabbix_version}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz
     
     cd /data/service/src
-    tar xf zabbix-4.0.0.tar.gz
-    cd zabbix-4.0.0
+    tar xf ${zabbix_version}.tar.gz
+    cd ${zabbix_version}
     ./configure --prefix=/data/service/zabbix  \
     --enable-server --enable-agent \
     --with-mysql \
@@ -41,7 +41,7 @@ function install_zabbix_server_4(){
 
 
 cat > /data/service/zabbix/etc/zabbix_agentd.conf <<EOF
-LogFile=/tmp/zabbix_agentd.log
+LogFile=/data/logs/zabbix_agentd.log
 Server=127.0.0.1
 ServerActive=127.0.0.1
 Hostname=Zabbix server
@@ -97,15 +97,15 @@ EOF
     if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
         # ubuntu
-	cp /data/service/src/zabbix-4.0.0/misc/init.d/debian/zabbix-agent /etc/init.d/
-	cp /data/service/src/zabbix-4.0.0/misc/init.d/debian/zabbix-server /etc/init.d/
+	cp /data/service/src/${zabbix_version}/misc/init.d/debian/zabbix-agent /etc/init.d/
+	cp /data/service/src/${zabbix_version}/misc/init.d/debian/zabbix-server /etc/init.d/
 	sed -i "s#DAEMON=.*#DAEMON=/data/service/zabbix/sbin/\${NAME}#g" /etc/init.d/zabbix-server
 	sed -i "s#DAEMON=.*#DAEMON=/data/service/zabbix/sbin/\${NAME}#g" /etc/init.d/zabbix-agent
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
 	# centos
-	cp /data/service/src/zabbix-4.0.0/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
-	cp /data/service/src/zabbix-4.0.0/misc/init.d/fedora/core/zabbix_server /etc/init.d/
+	cp /data/service/src/${zabbix_version}/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
+	cp /data/service/src/${zabbix_version}/misc/init.d/fedora/core/zabbix_server /etc/init.d/
 	sed -i "s#BASEDIR=/usr/local#BASEDIR=/data/service/zabbix/#g" /etc/init.d/zabbix_server
 	sed -i "s#BASEDIR=/usr/local#BASEDIR=/data/service/zabbix/#g" /etc/init.d/zabbix_agentd
     else
@@ -116,7 +116,7 @@ EOF
 
 
     mkdir -p /data/web/zabbix
-    cp -r /data/service/src/zabbix-4.0.0/frontends/php/* /data/web/zabbix/
+    cp -r /data/service/src/${zabbix_version}/frontends/php/* /data/web/zabbix/
     chown -R nginx:nginx /data/web/zabbix/
     
     echo "/data/service/mysql/lib/" >>  /etc/ld.so.conf
@@ -124,11 +124,11 @@ EOF
 
 
     # 导入数据库
-    cd /data/service/src/zabbix-4.0.0/database/mysql
+    cd /data/service/src/${zabbix_version}/database/mysql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS zabbix default CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/zabbix-4.0.0/database/mysql/schema.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/zabbix-4.0.0/database/mysql/images.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/zabbix-4.0.0/database/mysql/data.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/schema.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/images.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/data.sql
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to 'zabbix'@'localhost' identified by '${zabbix_db_password}';"
 
 

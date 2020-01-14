@@ -1,9 +1,9 @@
 #!/bin/bash
 
-
+zabbix_version=zabbix-4.4.4
 zabbix_server_ip=192.168.0.218
 zabbix_db_host=localhost
-zabbix_db_user=root
+zabbix_db_user=zabbix
 zabbix_db_password=
 
 
@@ -26,16 +26,16 @@ function install_zabbix_agentd_4(){
     # ubuntu
     groupadd zabbix
     useradd -g zabbix zabbix
-    wget -O /data/service/src/zabbix-4.0.0.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.0.0/zabbix-4.0.0.tar.gz 
+    wget -O /data/service/src/${zabbix_version}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz 
     cd /data/service/src
-    tar xf zabbix-4.0.0.tar.gz
-    cd zabbix-4.0.0/
+    tar xf ${zabbix_version}.tar.gz
+    cd ${zabbix_version}/
     ./configure --prefix=/data/service/zabbix --enable-agent
     make install
     cp /data/service/zabbix/etc/zabbix_agentd.conf /data/service/zabbix/etc/zabbix_agentd.conf_$(date +%F)
 
 cat >  /data/service/zabbix/etc/zabbix_agentd.conf <<EOF
-LogFile=/tmp/zabbix_agentd.log
+LogFile=/data/logs/zabbix_agentd.log
 Server=${zabbix_server_ip}
 ServerActive=${zabbix_server_ip}
 Hostname=Zabbix server
@@ -45,13 +45,13 @@ EOF
 
     if [ -f /usr/bin/apt ];then
         # ubuntu
-        cp /data/service/src/zabbix-4.0.0/misc/init.d/debian/zabbix-agent /etc/init.d/
+        cp /data/service/src/${zabbix_version}/misc/init.d/debian/zabbix-agent /etc/init.d/
         chmod +x /etc/init.d/zabbix-agent
         sed -i "s#/usr/local#/data/service/zabbix#g" /etc/init.d/zabbix-agent
         /etc/init.d/zabbix-agent restart
     elif [ -f /usr/bin/yum ];then
         # centos
-        cp /data/service/src/zabbix-4.0.0/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
+        cp /data/service/src/${zabbix_version}/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
         chmod +x /etc/init.d/zabbix-agentd
         sed -i "s#/usr/local#/data/service/zabbix/#g" /etc/init.d/zabbix_agentd
         /etc/init.d/zabbix_agentd restart
