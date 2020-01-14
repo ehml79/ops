@@ -160,45 +160,6 @@ EOF
 }
 
 
-function check_mysql(){
-
-cat > /data/service/zabbix/etc/zabbix-my.cnf <<EOF
-[client]
-host=${zabbix_db_host}
-user='${zabbix_db_user}'
-password='${zabbix_db_password}'
-EOF
-
-    chmod 600 /data/service/zabbix/etc/zabbix-my.cnf
-    chown zabbix.zabbix /data/service/zabbix/etc/zabbix-my.cnf
-
-cat > /data/service/zabbix/etc/zabbix_agentd.conf.d/userparameter_mysql.conf <<EOF
-UserParameter=mysql.ping[*], /data/service/mysql/bin/mysqladmin --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf ping
-UserParameter=mysql.get_status_variables[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -sNX -e "show global status"
-UserParameter=mysql.version[*], /data/service/mysql/bin/mysqladmin --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -s  version
-UserParameter=mysql.db.discovery[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -sN -e "show databases"
-UserParameter=mysql.dbsize[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -sN -e "SELECT SUM(DATA_LENGTH + INDEX_LENGTH) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=''"
-UserParameter=mysql.replication.discovery[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf  -sNX -e "show slave status"
-UserParameter=mysql.slave_status[*], /data/service/mysql/bin/mysql --defaults-file=/data/service/zabbix/etc/zabbix-my.cnf -sNX -e "show slave status"
-
-EOF
-
-    # 导入数据库
-    cd /data/service/src/${zabbix_version}/database/mysql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS zabbix default CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "create user 'zabbix'@'%' ; "
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "ALTER USER 'zabbix'@'%' IDENTIFIED  BY '${zabbix_db_password}'; "
-
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/schema.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/images.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${zabbix_version}/database/mysql/data.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to 'zabbix'@'%';"
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "FLUSH   PRIVILEGES; "
-
-
-}
-
 
 
 install_zabbix_server
-#check_mysql
