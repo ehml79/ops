@@ -13,7 +13,7 @@ tar -xf /data/service/src/grafana-6.5.2.linux-amd64.tar.gz -C /data/service/
 
 mv /data/service/grafana-6.5.2/ /data/service/grafana
 
-#cp conf/grafana.ini  /data/service/grafana/conf/grafana.ini
+cp conf/default.ini  /data/service/grafana/conf/grafana.ini
 
 mkdir -p /data/service/grafana/default
 
