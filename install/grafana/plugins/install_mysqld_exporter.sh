@@ -1,18 +1,21 @@
 #!/bin/bash
 
+
+exporter_password=
+
 function install_mysqld_exporter(){
 
     mkdir -p /data/service/src/
-    wget -O /data/service/src/mysqld_exporter-0.11.0.linux-amd64.tar.gz  https://github.com/prometheus/mysqld_exporter/releases/download/v0.11.0/mysqld_exporter-0.11.0.linux-amd64.tar.gz 
+    wget -O /data/service/src/mysqld_exporter-0.12.1.linux-amd64.tar.gz  https://github.com/prometheus/mysqld_exporter/releases/download/v0.12.1/mysqld_exporter-0.12.1.linux-amd64.tar.gz 
     
     cd /data/service/src/
     
-    tar xf mysqld_exporter-0.11.0.linux-amd64.tar.gz -C /data/service
-    mv /data/service/mysqld_exporter-0.11.0.linux-amd64/ /data/service/mysqld_exporter
+    tar xf mysqld_exporter-0.12.1.linux-amd64.tar.gz -C /data/service
+    mv /data/service/mysqld_exporter-0.12.1.linux-amd64/ /data/service/mysqld_exporter
     
     # mysql grant
     
-    CREATE USER 'exporter'@'localhost' IDENTIFIED BY 'XXXXXXXX' WITH MAX_USER_CONNECTIONS 3;
+    CREATE USER 'exporter'@'localhost' IDENTIFIED BY "${exporter_password}" WITH MAX_USER_CONNECTIONS 3;
     GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'localhost';
     flush privileges;
     
@@ -20,7 +23,7 @@ function install_mysqld_exporter(){
 cat > /data/.secret/exporter-my.cnf << EOF
 [client]
 user=exporter
-password=password
+password=${exporter_password}
 EOF
 
     chmod 600 /data/.secret/exporter-my.cnf

@@ -6,11 +6,11 @@ your_domain=domain
 
 function install_prometheus(){
     mkdir -p /data/service/src/
-    wget -O /data/service/src/prometheus-2.5.0.linux-amd64.tar.gz  https://github.com/prometheus/prometheus/releases/download/v2.5.0/prometheus-2.5.0.linux-amd64.tar.gz 
+    wget -O /data/service/src/prometheus-2.15.2.linux-amd64.tar.gz  https://github.com/prometheus/prometheus/releases/download/v2.15.2/prometheus-2.15.2.linux-amd64.tar.gz 
     cd /data/service/src/
-    tar xf  prometheus-2.5.0.linux-amd64.tar.gz
+    tar xf  prometheus-2.15.2.linux-amd64.tar.gz
     
-    mv /data/service/src/prometheus-2.5.0.linux-amd64 /data/service/prometheus
+    mv /data/service/src/prometheus-2.15.2.linux-amd64 /data/service/prometheus
     cp /data/service/prometheus/prometheus.yml /data/service/prometheus/prometheus.yml_`date '+%Y%M%d%H%M%S'`
     
     # 启动脚本
