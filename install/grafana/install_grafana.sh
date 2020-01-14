@@ -7,13 +7,13 @@ groupadd grafana
 useradd -r -g grafana -s /bin/false grafana
 mkdir -p /data/service/src/
 
-wget -O /data/service/src/grafana-5.3.4.linux-amd64.tar.gz  https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.4.linux-amd64.tar.gz 
+wget -O /data/service/src/grafana-6.5.2.linux-amd64.tar.gz  https://dl.grafana.com/oss/release/grafana-6.5.2.linux-amd64.tar.gz
 
-tar -xf /data/service/src/grafana-5.3.4.linux-amd64.tar.gz -C /data/service/
+tar -xf /data/service/src/grafana-6.5.2.linux-amd64.tar.gz -C /data/service/
 
-mv /data/service/grafana-5.3.4/ /data/service/grafana
+mv /data/service/grafana-6.5.2/ /data/service/grafana
 
-cp conf/grafana.ini  /data/service/grafana/conf/grafana.ini
+#cp conf/grafana.ini  /data/service/grafana/conf/grafana.ini
 
 mkdir -p /data/service/grafana/default
 
