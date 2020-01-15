@@ -24,8 +24,7 @@ function install_zabbix_agentd(){
     fi
 
 
-    mkdir -p /data/service/src
-    mkdir 770 -p /data/service/zabbix
+    mkdir -p /data/service/{src,zabbix}
     chown zabbix:zabbix /data/service/zabbix
 
     addgroup --system --quiet zabbix
