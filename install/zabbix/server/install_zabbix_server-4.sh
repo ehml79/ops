@@ -1,10 +1,12 @@
 #!/bin/bash
 
-zabbix_version=zabbix-4.4.4
-zabbix_server_ip=127.0.0.1
-zabbix_user=zabbix
-zabbix_db_password=
-zabbix_domain=zabbix.example.com
+ZABBIX_VERSION=zabbix-4.4.4
+ZABBIX_SERVER_IP=127.0.0.1
+ZABBIX_USER=zabbix
+ZABBIX_DB_PASSWORD=
+ZABBIX_DOMAIN=zabbix.example.com
+
+ZABBIX_SERVER_DIR=/data/service/zabbix/server
 
 function install_zabbix_server(){
 
@@ -27,17 +29,15 @@ function install_zabbix_server(){
     addgroup --system --quiet zabbix
     adduser --quiet --system --disabled-login --ingroup zabbix --home /data/service/zabbix --no-create-home zabbix
     
-    wget -O /data/service/src/${zabbix_version}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz
+    wget -O /data/service/src/${ZABBIX_VERSION}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz
     
     cd /data/service/src
-    tar xf ${zabbix_version}.tar.gz
-    cd ${zabbix_version}
+    tar xf ${ZABBIX_VERSION}.tar.gz
+    cd ${ZABBIX_VERSION}
     
     ./configure \
-    --prefix=/data/service/zabbix  \
+    --prefix=${ZABBIX_SERVER_DIR}  \
     --enable-server \
-    --enable-agent \
-    --enable-agent2 \
     --with-mysql \
     -enable-ipv6 \
     --with-net-snmp \
@@ -45,31 +45,21 @@ function install_zabbix_server(){
     --with-libxml2
     
     make install
-    cp /data/service/zabbix/etc/zabbix_agentd.conf /data/service/zabbix/etc/zabbix_agentd.conf.$(date +%F)
-    cp /data/service/zabbix/etc/zabbix_server.conf /data/service/zabbix/etc/zabbix_server.conf.$(date +%F)
-
-
-cat > /data/service/zabbix/etc/zabbix_agentd.conf <<EOF
-LogFile=/tmp/zabbix_agentd.log
-Server=127.0.0.1
-ServerActive=127.0.0.1
-Hostname=Zabbix server
-Include=/data/service/zabbix/etc/zabbix_agentd.conf.d/*.conf
-EOF
+    cp ${ZABBIX_SERVER_DIR}/etc/zabbix_server.conf ${ZABBIX_SERVER_DIR}/etc/zabbix_server.conf.$(date +%F)
 
 
 # 报警脚本
-mkdir -p /data/service/zabbix/share/zabbix/alertscripts
-cp /root/sendmail.py /data/service/zabbix/share/zabbix/alertscripts/
-chown zabbix.zabbix  /data/service/zabbix/share/zabbix/alertscripts/sendmail.py
-chmod +x  /data/service/zabbix/share/zabbix/alertscripts/sendmail.py
+mkdir -p ${ZABBIX_SERVER_DIR}/share/zabbix/alertscripts
+cp /root/sendmail.py ${ZABBIX_SERVER_DIR}/share/zabbix/alertscripts/
+chown zabbix.zabbix  ${ZABBIX_SERVER_DIR}/share/zabbix/alertscripts/sendmail.py
+chmod +x  ${ZABBIX_SERVER_DIR}/share/zabbix/alertscripts/sendmail.py
 
 
-cat > /data/service/zabbix/etc/zabbix_server.conf <<EOF
-DBHost=${zabbix_server_ip}
-DBName=${zabbix_user}
-DBUser=${zabbix_user}
-DBPassword=${zabbix_db_password} 
+cat > ${ZABBIX_SERVER_DIR}/etc/zabbix_server.conf <<EOF
+DBHost=${ZABBIX_SERVER_IP}
+DBName=${ZABBIX_USER}
+DBUser=${ZABBIX_USER}
+DBPassword=${ZABBIX_DB_PASSWORD} 
 ListenIP=0.0.0.0
 StartPollersUnreachable=1
 StartTrappers=5
@@ -81,8 +71,8 @@ HistoryCacheSize=16M
 TrendCacheSize=4M
 ValueCacheSize=8M
 Timeout=3
-AlertScriptsPath=/data/service/zabbix/share/zabbix/alertscripts
-ExternalScripts=/data/service/zabbix/share/zabbix/externalscripts
+AlertScriptsPath=${ZABBIX_SERVER_DIR}/share/zabbix/alertscripts
+ExternalScripts=${ZABBIX_SERVER_DIR}/share/zabbix/externalscripts
 LogSlowQueries=3000
 StartProxyPollers=1
 LogFile=/tmp/zabbix_server.log
@@ -93,17 +83,13 @@ EOF
     if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
         # ubuntu
-	cp /data/service/src/${zabbix_version}/misc/init.d/debian/zabbix-agent /etc/init.d/
-	cp /data/service/src/${zabbix_version}/misc/init.d/debian/zabbix-server /etc/init.d/
-	sed -i "s#DAEMON=.*#DAEMON=/data/service/zabbix/sbin/\${NAME}#g" /etc/init.d/zabbix-server
-	sed -i "s#DAEMON=.*#DAEMON=/data/service/zabbix/sbin/\${NAME}#g" /etc/init.d/zabbix-agent
+	cp /data/service/src/${ZABBIX_VERSION}/misc/init.d/debian/zabbix-server /etc/init.d/
+	sed -i "s#DAEMON=.*#DAEMON=${ZABBIX_SERVER_DIR}/sbin/\${NAME}#g" /etc/init.d/zabbix-server
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
 	# centos
-	cp /data/service/src/${zabbix_version}/misc/init.d/fedora/core/zabbix_agentd /etc/init.d/
-	cp /data/service/src/${zabbix_version}/misc/init.d/fedora/core/zabbix_server /etc/init.d/
-	sed -i "s#BASEDIR=/usr/local#BASEDIR=/data/service/zabbix/#g" /etc/init.d/zabbix_server
-	sed -i "s#BASEDIR=/usr/local#BASEDIR=/data/service/zabbix/#g" /etc/init.d/zabbix_agentd
+	cp /data/service/src/${ZABBIX_VERSION}/misc/init.d/fedora/core/zabbix_server /etc/init.d/
+	sed -i "s#BASEDIR=/usr/local#BASEDIR=${ZABBIX_SERVER_DIR}/#g" /etc/init.d/zabbix_server
     else
         echo 'unknow OS'
         exit 1
@@ -111,7 +97,7 @@ EOF
 
 
     mkdir -p /data/web/zabbix
-    cp -r /data/service/src/${zabbix_version}/frontends/php/* /data/web/zabbix/
+    cp -r /data/service/src/${ZABBIX_VERSION}/frontends/php/* /data/web/zabbix/
     chown -R nginx:nginx /data/web/zabbix/
     
     echo "/data/service/mysql/lib/" >>  /etc/ld.so.conf
@@ -122,7 +108,7 @@ cat > /data/service/nginx/conf/vhost/zabbix.conf <<EOF
 #
     server {
         listen       80;
-        server_name  ${zabbix_domain};
+        server_name  ${ZABBIX_DOMAIN};
 
         location / {
             root   /data/web/zabbix;
