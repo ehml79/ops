@@ -2,6 +2,8 @@
 
 # redis 单机主从
 
+REDIS_VERSION=redis-5.0.7
+
 function install_redis(){
     # 判断系统
     if [ -f /usr/bin/apt ];then
@@ -15,15 +17,15 @@ function install_redis(){
 
     mkdir -p /data/service/src/
     
-#   wget -O /data/service/src/redis-5.0.0.tar.gz http://download.redis.io/releases/redis-5.0.0.tar.gz  
+#   wget -O /data/service/src/${REDIS_VERSION}.tar.gz http://download.redis.io/releases/${REDIS_VERSION}.tar.gz  
     cd /data/service/src
-    tar xf redis-5.0.0.tar.gz
-    cd redis-5.0.0/
+    tar xf ${REDIS_VERSION}.tar.gz
+    cd ${REDIS_VERSION}/
     make 
     make install PREFIX=/data/service/redis 
     mkdir /data/service/redis/etc
-    cp /data/service/src/redis-5.0.0/redis.conf /data/service/redis/etc/redis_6379.conf
-    cp /data/service/src/redis-5.0.0/redis.conf /data/service/redis/etc/redis_6380.conf
+    cp /data/service/src/${REDIS_VERSION}/redis.conf /data/service/redis/etc/redis_6379.conf
+    cp /data/service/src/${REDIS_VERSION}/redis.conf /data/service/redis/etc/redis_6380.conf
      
     sed -i 's/^daemonize.*/daemonize yes/' /data/service/redis/etc/redis_6379.conf
     sed -i 's/^bind.*/bind 127.0.0.1/' /data/service/redis/etc/redis_6379.conf
