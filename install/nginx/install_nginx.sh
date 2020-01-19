@@ -110,18 +110,6 @@ install_nginx(){
 
 }
 
-config_uwsgi(){
-    
-    # install uwsgi
-    pip3 install uwsgi
-    
-    mv -f /root/uwsgi.ini  ${INSTALL_DIR}/nginx/conf/uwsgi.ini 
-    mv -f /root/uwsgi_sample.conf ${INSTALL_DIR}/nginx/conf/vhost/
-    
-    # 生成启动脚本
-    /bin/bash /root/uwsgi_restart.sh
-}
 
-#config_uwsgi
 install_nginx
 
