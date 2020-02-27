@@ -270,6 +270,16 @@ function install_extension(){
     make && sudo make install
     echo 'extension = "redis.so"' > /data/service/php/etc/conf.d/redis.ini
 
+    # mcrypt
+    wget -O /data/service/src/mcrypt-1.0.3.tgz http://pecl.php.net/get/mcrypt-1.0.3.tgz 
+    cd /data/service/src/
+    tar xf mcrypt-1.0.3.tgz 
+    cd mcrypt-1.0.3
+    /data/service/php/bin/phpize
+    ./configure --with-php-config=/data/service/php/bin/php-config
+    make && sudo make install
+    echo "extension=mcrypt.so" > /data/service/php/etc/conf.d/mcrypt.ini
+
 }
 
 
