@@ -6,7 +6,7 @@ DOMAIN_NAME=''
 RUN_USER=nginx
 
 PROJECT_NAME=proj
-SVN_PORT=3389
+SVN_PORT=50000
 SVN_PASSWD=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 # 安装svn
