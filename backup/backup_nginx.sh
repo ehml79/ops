@@ -7,7 +7,7 @@ date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 backup_nginx_conf_dir=/data/backup/nginx_conf
 backup_dir=${backup_nginx_conf_dir}/${date}/${ctime}
-backup_log_dir=/data/logs/backup/backup_nginx.log
+backup_log=/data/backup/log/backup_nginx.log
 nginx_dir=/data/service/nginx
 keep_day=7
 
@@ -20,8 +20,8 @@ if [ ! -e ${backup_dir} ];then
 fi
 
 # 建立备份日志目录
-if [ ! -e ${backup_log_dir} ];then
-    mkdir -p ${backup_log_dir}
+if [ ! -e /data/backup/log ];then
+    mkdir -p /data/backup/log
 fi
 
 # 删除旧备份

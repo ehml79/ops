@@ -7,7 +7,7 @@ date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 backup_code_dir=/data/backup/code
 backup_dir=/data/backup/code/${date}/${ctime}
-backup_log_dir=/data/logs/backup/backup_code_file.log
+backup_log=/data/backup/log/backup_code_file.log
 keep_day=7
 
 # 减锁，执行脚本
@@ -20,8 +20,8 @@ fi
 
 
 # 建立备份日志目录
-if [ ! -e ${backup_log_dir} ];then
-    mkdir -p ${backup_log_dir}
+if [ ! -e /data/backup/log ];then
+    mkdir -p /data/backup/log
 fi
 
 # 删除旧备份
