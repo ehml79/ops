@@ -7,7 +7,7 @@ date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 backup_nginx_conf_dir=/data/backup/nginx_conf
 backup_dir=${backup_nginx_conf_dir}/${date}/${ctime}
-backup_log=/data/log/backup_nginx.log
+backup_log=/data/logs/backup_nginx.log
 nginx_dir=/data/service/nginx
 keep_day=7
 
