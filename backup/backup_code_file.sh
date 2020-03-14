@@ -7,7 +7,7 @@ date=$(date +%F)
 ctime=$(date +%H-%M-%S)
 backup_code_dir=/data/backup/code
 backup_dir=/data/backup/code/${date}/${ctime}
-backup_log=/data/backup/log/backup_code_file.log
+backup_log=/data/log/backup_code_file.log
 keep_day=7
 
 # 减锁，执行脚本
