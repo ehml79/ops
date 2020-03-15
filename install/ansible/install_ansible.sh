@@ -8,4 +8,4 @@ mkdir /etc/ansible
 
 mv {ansible.cfg,hosts} /etc/ansible
 
-mkdir -p /root/ansible/roles/{defaults,handlers,tasks,templates,vars}
+mkdir -p /root/ansible/roles/temp/{defaults,handlers,tasks,templates,vars}
