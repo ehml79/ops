@@ -21,7 +21,7 @@ echo >> ${rsync_log}
 
 for remote_ip in ${ip_list[@]}
 do
-    ${relRsync} --exclude="*.svn" --exclude="*.apk" --exclude="*.log" rsync@${remote_ip}::backup  /data/backup/remote_backup/${remote_ip}  >> ${rsync_log} 2>&1
+    ${relRsync} --exclude="*.git" --exclude="*.svn" --exclude="*.apk" --exclude="*.log" rsync@${remote_ip}::backup  /data/backup/remote_backup/${remote_ip}  >> ${rsync_log} 2>&1
 done
 
 
