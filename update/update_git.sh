@@ -2,7 +2,7 @@
 
 chown -R nginx.nginx /data/gittemp && chmod -R 775 /data/gittemp
 
-rsync_log=/data/logs/rsync_update_scripts.log
+rsync_log=/data/logs/update_git.log
 #speed='--bwlimit=5000'
 progress='--progress'
 delete='--delete'
