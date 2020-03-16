@@ -1,33 +1,36 @@
 #!/bin/bash
 
-chown -R nginx.nginx /data/gittemp && chmod -R 775 /data/gittemp
 
-rsync_log=/data/logs/update_git.log
+#rsync_log=/data/logs/update_git.log
 #speed='--bwlimit=5000'
 progress='--progress'
 delete='--delete'
 
 relRsync="rsync -vzrtopg  ${speed} ${progress} --password-file=/etc/rsyncd/rsyncd.pass"
 
-cd /data/gittemp
+GIT_TEMP=/data/gittemp
 
-for CODE_DIR in  cdn  h5sdk  m  opd  p  pc  samplewww  sdk  web
+
+for CODE_DIR in $(ls ${GIT_TEMP})
 do
   
   # git clone -b master git@git.sample.com:/data/service/git/h5game.git
   
-  cd /data/gittemp/${CODE_DIR}
+  cd ${GIT_TEMP}/${CODE_DIR}
   #git checkout dev
   git fetch --all
   git reset --hard origin/master
   git pull
 
+  chown -R nginx.nginx ${GIT_TEMP} 
+  chmod -R 775 ${GIT_TEMP}
+
   # update cdn
   if [ ${CODE_DIR} == "cdn" ];then
-    ${relRsync} --exclude="*.git" --exclude="*.apk" --exclude="*.log" /data/gittemp/${CODE_DIR} rsync@192.168.0.17::web  | tee -a  ${rsync_log}
+    ${relRsync} --exclude="*.git" --exclude="*.apk" --exclude="*.log" ${GIT_TEMP}/${CODE_DIR} rsync@192.168.0.17::web  | tee -a  ${rsync_log}
   else
     # update sdk
-    ${relRsync} --exclude="*.git" --exclude="*.apk" --exclude="*.log" /data/gittemp/${CODE_DIR} rsync@192.168.0.19::web  | tee -a  ${rsync_log}
+    ${relRsync} --exclude="*.git" --exclude="*.apk" --exclude="*.log" ${GIT_TEMP}/${CODE_DIR} rsync@192.168.0.19::web  | tee -a  ${rsync_log}
   fi
 
 done
