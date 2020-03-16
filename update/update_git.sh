@@ -14,7 +14,7 @@ cd /data/gittemp
 for CODE_DIR in  cdn  h5sdk  m  opd  p  pc  samplewww  sdk  web
 do
   
-  # git clone -b master git@git.yuntkeji.com:/data/service/git/h5game.git
+  # git clone -b master git@git.sample.com:/data/service/git/h5game.git
   
   cd /data/gittemp/${CODE_DIR}
   #git checkout dev
