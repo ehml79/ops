@@ -36,6 +36,7 @@ port=3306
 mysqlx_port = 33060
 mysqlx_socket=/tmp/mysqlx.sock
 default_authentication_plugin=mysql_native_password
+sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
 basedir = /data/service/mysql
 datadir = /data/service/mysql/data
 character-set-server=utf8
