@@ -1,7 +1,9 @@
 #!/bin/bash
 # 批量更改域名
 
-domain=domain.com
+old_domain=olddomain.com
+
+new_domain=domain.com
 
 vhost_dir=/data/service/nginx/conf/vhost
 
@@ -12,3 +14,7 @@ do
 	mv ${vhost_dir}/${old} ${vhost_dir}/${pre}.${domain}.conf
 	echo ${pre}.${domain}.conf
 done
+
+
+
+sed -i "s/${old_domain}/${new_domain}/g"   ${vhost_dir}/*
