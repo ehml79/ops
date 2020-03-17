@@ -21,8 +21,10 @@ function install_mysql(){
 
 
 cat > /etc/my.cnf <<EOF
+#
 [client]
 user = root
+host=localhost
 port = 3306
 socket = /tmp/mysql.sock
 
@@ -40,6 +42,7 @@ user    = mysql
 # 默认就好
 #pid-file = /data/mysql/mysql.pid
 #skip-grant-tables
+sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
 open_files_limit = 65535
 back_log = 600
 max_connections = 65535
@@ -113,7 +116,8 @@ slave-skip-errors = 1032,1062,126,1114,1146,1048,1396
 
 default_storage_engine = InnoDB
 #innodb_additional_mem_pool_size = 16M
-innodb_buffer_pool_size = 512M
+#innodb_buffer_pool_size = 512M
+innodb_buffer_pool_size = 2G
 innodb_log_file_size = 128M
 innodb_lock_wait_timeout = 120
 innodb_file_per_table = 1
@@ -133,7 +137,7 @@ slow_query_log = ON
 long_query_time = 1
 
 [mysql]
-prompt="MySQL [\\d]> "
+prompt="MySQL [\d]> "
 no-auto-rehash
 
 [myisamchk]
@@ -148,6 +152,7 @@ interactive-timeout
 [mysqldump]
 quick
 max_allowed_packet = 32M
+
 EOF
 
     chmod 600 /etc/my.cnf
