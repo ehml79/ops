@@ -48,6 +48,10 @@ secrets file = /etc/rsyncd/rsyncd.secrets
 [backup]
 path = /data/backup
 comment = backup file
+
+[web]
+path = /data/web
+comment = web
 EOF
 
 
