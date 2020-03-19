@@ -23,16 +23,18 @@ function install_redis(){
     cd ${REDIS_VERSION}/
     make 
     make install PREFIX=/data/service/redis 
-    mkdir /data/service/redis/etc
+    mkdir /data/service/redis/{etc,rdb6379,rdb6380}
     cp /data/service/src/${REDIS_VERSION}/redis.conf /data/service/redis/etc/redis_6379.conf
     cp /data/service/src/${REDIS_VERSION}/redis.conf /data/service/redis/etc/redis_6380.conf
      
     sed -i 's/^daemonize.*/daemonize yes/' /data/service/redis/etc/redis_6379.conf
     sed -i 's/^bind.*/bind 127.0.0.1/' /data/service/redis/etc/redis_6379.conf
+    sed -i 's@^dir.*@dir /data/service/redis/rdb6379@' /data/service/redis/etc/redis_6379.conf
 
     sed -i 's/^daemonize.*/daemonize yes/' /data/service/redis/etc/redis_6380.conf
     sed -i 's/^bind.*/bind 127.0.0.1/' /data/service/redis/etc/redis_6380.conf
     sed -i 's/^port.*/port 6380/' /data/service/redis/etc/redis_6380.conf
+    sed -i 's@^dir.*@dir /data/service/redis/rdb6380@' /data/service/redis/etc/redis_6380.conf
     # 有需要改成服务器IP
     sed -i '/pidfile/aslaveof 127.0.0.1 6379' /data/service/redis/etc/redis_6380.conf
 

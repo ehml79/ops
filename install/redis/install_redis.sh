@@ -22,11 +22,13 @@ function install_redis(){
     cd ${REDIS_VERSION}/
     make 
     make install PREFIX=/data/service/redis 
-    mkdir /data/service/redis/etc
+    mkdir /data/service/redis/{etc,rdb}
     cp /data/service/src/${REDIS_VERSION}/redis.conf /data/service/redis/etc/
      
     sed -i 's/^daemonize.*/daemonize yes/' /data/service/redis/etc/redis.conf
     sed -i 's/^bind.*/bind 0.0.0.0/' /data/service/redis/etc/redis.conf
+    sed -i 's@^dir.*@dir /data/service/redis/rdb@' /data/service/redis/etc/redis.conf
+
 
     # 设置密码
     if [ -n "${REDIS_PASSWD}" ];then
