@@ -111,7 +111,7 @@ mkdir -p /data/sh/update
 cat  > /data/sh/update/rsync_update_scripts.sh << EOF
 #!/bin/bash
 
-chown -R ${RUN_USER}.${RUN_USER} /data/svn && chmod -R 775 /data/svn
+chown -R ${RUN_USER}.${RUN_USER} /data/svn && chmod -R 700 /data/svn
 
 svn --username "server"  --password  "${SVN_PASSWD}"   up  /data/svn/
 

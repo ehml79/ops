@@ -42,7 +42,7 @@ function install_mysql(){
     cd /data/service/mysql/
     mkdir /data/service/mysql/data
     chown mysql:mysql /data/service/mysql/data
-    chmod 750 /data/service/mysql/data
+    chmod 700 /data/service/mysql/data
 
     cat > /etc/my.cnf << EOF
 #

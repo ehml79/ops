@@ -17,4 +17,4 @@ git pull
 
 rsync -av --exclude="*.git" ${CODE_DIR}/ ${WEB_DIR}/
 #chown -R nginx.nginx ${CODE_DIR}/ ${WEB_DIR}/
-#chmod -R 755 ${CODE_DIR}/ ${WEB_DIR}/
+#chmod -R 700 ${CODE_DIR}/ ${WEB_DIR}/

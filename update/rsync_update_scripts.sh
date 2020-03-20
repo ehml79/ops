@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # rsync 配合 svn更新
-chown -R www.www /data/svn && chmod -R 775 /data/svn
+chown -R www.www /data/svn && chmod -R 700 /data/svn
 
 rsync_log=/data/logs/rsync_update_scripts.log
 #speed='--bwlimit=5000'
