@@ -23,7 +23,7 @@ do
   git pull
 
   chown -R nginx.nginx ${GIT_TEMP} 
-  chmod -R 775 ${GIT_TEMP}
+  chmod -R 700 ${GIT_TEMP}
 
   # update cdn
   if [ ${CODE_DIR} == "cdn" ];then
