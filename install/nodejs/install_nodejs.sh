@@ -1,6 +1,6 @@
 #!/bin/bash
 
-node_version="v10.16.3"
+node_version="v12.16.1"
 
 
 function install_node(){
