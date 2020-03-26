@@ -16,8 +16,7 @@ function install_prometheus(){
     # 启动脚本
     mkdir -p /data/service/prometheus/log 
     cat > /root/prometheus_restart.sh <<EOF
-    #!/bin/bash
-
+#!/bin/bash
 
 process_name=prometheus
 ulimit -SHn 65535
@@ -28,8 +27,11 @@ kill $(ps aux|grep -w ${process_name}|grep -wv grep| grep -v sh | awk '{print $2
 /data/service/prometheus/prometheus --config.file="/data/service/prometheus/prometheus.yml" --storage.tsdb.path="/data/service/prometheus/data" --storage.tsdb.retention=60d  >> /data/service/prometheus/log/prometheus.log 2>&1 &
 EOF
 
-    # 根据自身服务器，修改 prometheus.yml 
+# 根据自身服务器，修改 prometheus.yml 
+}
 
+
+function create_nginx_conf(){
     # 生成nginx 访问地址
     cat > /data/service/nginx/conf/vhost/prometheus.conf <<EOF
 #
@@ -49,3 +51,5 @@ EOF
 
 }
 
+
+install_prometheus
