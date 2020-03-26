@@ -6,7 +6,7 @@ your_domain=domain
 
 function install_prometheus(){
     mkdir -p /data/service/src/
-    wget -O /data/service/src/prometheus-2.15.2.linux-amd64.tar.gz  https://github.com/prometheus/prometheus/releases/download/v2.15.2/prometheus-2.15.2.linux-amd64.tar.gz 
+    #wget -O /data/service/src/prometheus-2.15.2.linux-amd64.tar.gz  https://github.com/prometheus/prometheus/releases/download/v2.15.2/prometheus-2.15.2.linux-amd64.tar.gz 
     cd /data/service/src/
     tar xf  prometheus-2.15.2.linux-amd64.tar.gz
     
@@ -24,6 +24,7 @@ ulimit -SHn 65535
 kill $(ps aux|grep -w ${process_name}|grep -wv grep| grep -v sh | awk '{print $2}')
 
 /data/service/prometheus/prometheus --config.file="/data/service/prometheus/prometheus.yml" --storage.tsdb.path="/data/service/prometheus/data" --storage.tsdb.retention=60d  >> /data/service/prometheus/log/prometheus.log 2>&1 &
+
 /data/service/prometheus/prometheus --config.file="/data/service/prometheus/prometheus.yml" --storage.tsdb.path="/data/service/prometheus/data" --storage.tsdb.retention=60d  >> /data/service/prometheus/log/prometheus.log 2>&1 &
 EOF
 
