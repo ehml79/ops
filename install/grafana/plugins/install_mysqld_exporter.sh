@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-exporter_password=
+exporter_password=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 function install_mysqld_exporter(){
 
@@ -15,9 +15,9 @@ function install_mysqld_exporter(){
     
     # mysql grant
     
-    CREATE USER 'exporter'@'127.0.0.1' IDENTIFIED BY "${exporter_password}" WITH MAX_USER_CONNECTIONS 3;
-    GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'localhost';
-    flush privileges;
+    mysql -e "CREATE USER 'exporter'@'127.0.0.1' IDENTIFIED BY "${exporter_password}" WITH MAX_USER_CONNECTIONS 3;"
+    mysql -e "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'127.0.0.1';"
+    mysql -e "flush privileges;"
     
     mkdir -p /data/.secret/
 cat > /data/.secret/exporter-my.cnf << EOF
@@ -42,3 +42,4 @@ EOF
 
 }
 
+install_mysqld_exporter
