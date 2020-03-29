@@ -21,11 +21,12 @@ function install_prometheus(){
 process_name=prometheus
 ulimit -SHn 65535
 
-kill $(ps aux|grep -w ${process_name}|grep -wv grep| grep -v sh | awk '{print $2}')
+kill \$(ps aux|grep -w ${process_name}|grep -wv grep| grep -v sh | awk '{print $2}')
 
-/data/service/prometheus/prometheus --config.file="/data/service/prometheus/prometheus.yml" --storage.tsdb.path="/data/service/prometheus/data" --storage.tsdb.retention=60d  >> /data/service/prometheus/log/prometheus.log 2>&1 &
-
-/data/service/prometheus/prometheus --config.file="/data/service/prometheus/prometheus.yml" --storage.tsdb.path="/data/service/prometheus/data" --storage.tsdb.retention=60d  >> /data/service/prometheus/log/prometheus.log 2>&1 &
+/data/service/prometheus/prometheus \
+--config.file="/data/service/prometheus/prometheus.yml" \
+--storage.tsdb.path="/data/service/prometheus/data" \
+--storage.tsdb.retention=60d  >> /data/service/prometheus/log/prometheus.log 2>&1 &
 EOF
 
 # 根据自身服务器，修改 prometheus.yml 
