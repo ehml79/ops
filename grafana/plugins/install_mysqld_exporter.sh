@@ -14,8 +14,8 @@ function install_mysqld_exporter(){
     mv /data/service/mysqld_exporter-0.12.1.linux-amd64/ /data/service/mysqld_exporter
     
     # mysql grant
-    
-    mysql -e "CREATE USER 'exporter'@'127.0.0.1' IDENTIFIED BY "${exporter_password}" WITH MAX_USER_CONNECTIONS 3;"
+    # 在mysql master 授权    
+    mysql -e "CREATE USER 'exporter'@'127.0.0.1' IDENTIFIED BY '${exporter_password}' WITH MAX_USER_CONNECTIONS 3;"
     mysql -e "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'127.0.0.1';"
     mysql -e "flush privileges;"
     
