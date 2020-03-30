@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ZABBIX_VERSION=zabbix-4.4.4
-ZABBIX_SERVER_IP=127.0.0.1
+ZABBIX_SERVER_IP=localhost
 ZABBIX_USER=zabbix
-ZABBIX_DB_PASSWORD=
+ZABBIX_DB_PASSWORD=''
 ZABBIX_DOMAIN=zabbix.example.com
 
 ZABBIX_SERVER_DIR=/data/service/zabbix/server
@@ -23,7 +23,7 @@ function install_zabbix_server(){
     fi
 
 	mkdir -p /data/service/src
-  	mkdir 770 -p /data/service/zabbix
+  	chmod 770 -p /data/service/zabbix
 	chown zabbix:zabbix /data/service/zabbix
 
     addgroup --system --quiet zabbix
@@ -146,6 +146,19 @@ EOF
 }
 
 
+function load_sql(){
+    # 导入数据库
+    cd /data/service/src/${ZABBIX_VERSION}/database/mysql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS ${ZABBIX_USER} default CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "create user '${ZABBIX_USER}'@'%' ; "
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "ALTER USER '${ZABBIX_USER}'@'%' IDENTIFIED  BY '${ZABBIX_DB_PASSWORD}'; "
 
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${ZABBIX_VERSION}/database/mysql/schema.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${ZABBIX_VERSION}/database/mysql/images.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${ZABBIX_VERSION}/database/mysql/data.sql
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to '${ZABBIX_USER}'@'%';"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "FLUSH   PRIVILEGES; "
+}
 
+# load_sql
 install_zabbix_server

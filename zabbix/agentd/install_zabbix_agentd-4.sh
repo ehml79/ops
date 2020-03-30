@@ -94,20 +94,8 @@ UserParameter=mysql.db.discovery[*], /data/service/mysql/bin/mysql --defaults-fi
 UserParameter=mysql.dbsize[*], /data/service/mysql/bin/mysql --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf -sN -e "SELECT SUM(DATA_LENGTH + INDEX_LENGTH) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='\$3'"
 UserParameter=mysql.replication.discovery[*], /data/service/mysql/bin/mysql --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf  -sNX -e "show slave status"
 UserParameter=mysql.slave_status[*], /data/service/mysql/bin/mysql --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf -sNX -e "show slave status"
-
 EOF
 
-    # 导入数据库
-    cd /data/service/src/${ZABBIX_VERSION}/database/mysql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS zabbix default CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "create user 'zabbix'@'%' ; "
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "ALTER USER 'zabbix'@'%' IDENTIFIED  BY '${ZABBIX_DB_PASSWORD}'; "
-
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${ZABBIX_VERSION}/database/mysql/schema.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${ZABBIX_VERSION}/database/mysql/images.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password zabbix < /data/service/src/${ZABBIX_VERSION}/database/mysql/data.sql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "grant all on zabbix.* to 'zabbix'@'%';"
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "FLUSH   PRIVILEGES; "
 
 
 }
