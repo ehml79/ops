@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ZABBIX_VERSION=zabbix-4.4.4
-ZABBIX_SERVER_IP=192.168.0.218
+ZABBIX_SERVER_IP=localhost
 
 ZABBIX_DB_HOST=localhost
 ZABBIX_DB_USER=zabbix
@@ -30,7 +30,7 @@ function install_zabbix_agentd(){
     addgroup --system --quiet zabbix
     adduser --quiet --system --disabled-login --ingroup zabbix --home /data/service/zabbix --no-create-home zabbix
     
-    wget -O /data/service/src/${ZABBIX_VERSION}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz 
+#    wget -O /data/service/src/${ZABBIX_VERSION}.tar.gz https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.4.4/zabbix-4.4.4.tar.gz 
     
     cd /data/service/src
     tar xf ${ZABBIX_VERSION}.tar.gz
@@ -38,11 +38,13 @@ function install_zabbix_agentd(){
     
     ./configure \
     --prefix=${ZABBIX_AGENTD_DIR} \
-    --enable-agent \
-    --enable-agent2
+    --enable-agent 
+
+# 需要go支持
+#    --enable-agent2
 
     make install
-    cp ${ZABBIX_AGENTD_DIR}/agent/etc/zabbix_agentd.conf ${ZABBIX_AGENTD_DIR}/etc/zabbix_agentd.conf.$(date +%F)
+    cp ${ZABBIX_AGENTD_DIR}/etc/zabbix_agentd.conf ${ZABBIX_AGENTD_DIR}/etc/zabbix_agentd.conf.$(date +%F)
 
 cat >  ${ZABBIX_AGENTD_DIR}/etc/zabbix_agentd.conf <<EOF
 LogFile=/tmp/zabbix_agentd.log
