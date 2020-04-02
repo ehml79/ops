@@ -5,7 +5,9 @@ PUB_KEY=""
 
 SSHD_CONFIG="/etc/ssh/sshd_config"
 
-echo ${PUB_KEY} >> /root/.ssh/authorized_keys
+cat > /root/.ssh/authorized_keys << EOF
+${PUB_KEY}
+EOF
 
 sed -i 's@^#PubkeyAuthentication.*@PubkeyAuthentication yes@g'  ${SSHD_CONFIG}
 sed -i 's@^PubkeyAuthentication.*@PubkeyAuthentication yes@g'  ${SSHD_CONFIG}
