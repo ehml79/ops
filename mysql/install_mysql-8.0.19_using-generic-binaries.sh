@@ -4,6 +4,7 @@ function install_mysql(){
 
     mysql_version="mysql-8.0.19"
     mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
+    mysql_port=3306
 
     sudo apt -y install make cmake gcc g++ bison libncurses5-dev build-essential libssl-dev  libaio1
     
@@ -25,12 +26,12 @@ cat > /etc/my.cnf <<EOF
 [client]
 user = root
 host=localhost
-port = 3306
+port = ${mysql_port}
 socket = /tmp/mysql.sock
 
 
 [mysqld]
-port    = 3306
+port    = ${mysql_port}
 mysqlx_port = 33060
 socket  = /tmp/mysql.sock
 mysqlx_socket=/tmp/mysqlx.sock
@@ -108,7 +109,7 @@ slave-skip-errors = 1032,1062,126,1114,1146,1048,1396
 #master-host     =   192.168.1.2
 #master-user     =   username
 #master-password =   password
-#master-port     =  3306
+#master-port     =  ${mysql_port}
 
 #relay-log-index = /data/mysql/relaylog
 #relay-log-info-file = /data/mysql/relaylog
