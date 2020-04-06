@@ -1,7 +1,9 @@
 #!/bin/bash
 
+
 GIT_TEMP=/data/gittemp/
 WEB_DIR=/data/web/
+BRANCH=master
 
 for CODE_DIR in $(ls ${GIT_TEMP})
 do
@@ -9,9 +11,9 @@ do
   # git clone -b master git@git.sample.com:/data/service/git/h5game.git
   
   cd ${GIT_TEMP}/${CODE_DIR}
-  #git checkout dev
+  #git checkout ${BRANCH}
   git fetch --all
-  git reset --hard origin/master
+  git reset --hard origin/${BRANCH}
   git pull
 
 done
