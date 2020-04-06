@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GIT_TEMP=/data/gittemp
+GIT_TEMP=/data/gittemp/
 WEB_DIR=/data/web/
 
 for CODE_DIR in $(ls ${GIT_TEMP})
