@@ -5,7 +5,7 @@ ZABBIX_SERVER_IP=localhost
 
 ZABBIX_DB_HOST=localhost
 ZABBIX_DB_USER=zabbix
-ZABBIX_DB_PASSWORD=
+ZABBIX_DB_PASSWORD=''
 
 ZABBIX_AGENTD_DIR=/data/service/zabbix/agent
 
@@ -101,5 +101,5 @@ EOF
 }
 
 
-install_zabbix_agentd
-#check_mysql
+#install_zabbix_agentd
+check_mysql
