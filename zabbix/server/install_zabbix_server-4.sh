@@ -3,7 +3,7 @@
 ZABBIX_VERSION=zabbix-4.4.4
 ZABBIX_SERVER_IP=localhost
 ZABBIX_USER=zabbix
-ZABBIX_DB_PASSWORD=''
+ZABBIX_DB_PASSWORD='rPSONh1JNaKtSFFD'
 ZABBIX_DOMAIN=zabbix.example.com
 
 ZABBIX_SERVER_DIR=/data/service/zabbix/server
@@ -160,5 +160,5 @@ function load_sql(){
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "FLUSH   PRIVILEGES; "
 }
 
-# load_sql
 install_zabbix_server
+#load_sql
