@@ -79,13 +79,12 @@ myisam_repair_threads = 1
 #myisam_recover
 
 server-id = 1
-interactive_timeout = 120
-wait_timeout = 120
+interactive_timeout = 2880000
+wait_timeout = 2880000
 
 skip-name-resolve
 #master-connect-retry = 10
 skip-external-locking
-max_allowed_packet = 1M
 table_open_cache = 64
 key_buffer_size = 16M
 sort_buffer_size = 512K
