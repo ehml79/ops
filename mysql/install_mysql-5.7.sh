@@ -112,8 +112,8 @@ myisam_repair_threads = 1
 #myisam_recover
 
 server-id = 1
-interactive_timeout = 120
-wait_timeout = 120
+interactive_timeout = 2880000
+wait_timeout = 2880000
 
 skip-name-resolve
 #master-connect-retry = 10
