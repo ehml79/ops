@@ -57,9 +57,9 @@ expect {
 expect eof
 EOF
 
-chown -R git.git /home/git/.ssh
+    chown -R git.git /home/git/.ssh
 
-cat /home/git/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
+    cat /home/git/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
 
 # 生成 root key
@@ -89,15 +89,17 @@ expect {
 expect eof
 EOF
 
-cat  /root/.ssh/id_rsa.pub >> /home/git/.ssh/authorized_keys
+    cat  /root/.ssh/id_rsa.pub >> /home/git/.ssh/authorized_keys
 
-mkdir -p /data/gittemp/
-cd /data/gittemp/
-git clone git@localhost:/data/service/git/${projetc_name}.git
+    mkdir -p /data/gittemp/
+    cd /data/gittemp/
+
+    git clone git@localhost:/data/service/git/${projetc_name}.git
     
-mv /root/post-receive  /data/service/git/${projetc_name}.git/hooks/post-receive 
-chown git.git /data/service/git/${projetc_name}.git/hooks/post-receive 
-chmod +x /data/service/git/${projetc_name}.git/hooks/post-receive
+    mv /root/post-receive  /data/service/git/${projetc_name}.git/hooks/post-receive 
+
+    chown git.git /data/service/git/${projetc_name}.git/hooks/post-receive 
+    chmod +x /data/service/git/${projetc_name}.git/hooks/post-receive
 }
 
 
