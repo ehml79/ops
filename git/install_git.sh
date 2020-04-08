@@ -32,7 +32,7 @@ function git_deploy(){
 
 # 生成 git key
 expect <<EOF
-spawn ssh-keygen -t rsa
+spawn ssh-keygen -t rsa -C "git"
 
 expect {
     "*id_rsa):" {
@@ -64,7 +64,7 @@ EOF
 
 # 生成 root key
 expect <<EOF
-spawn ssh-keygen -t rsa
+spawn ssh-keygen -t rsa -C "root"
 
 expect {
     "*id_rsa):" {
