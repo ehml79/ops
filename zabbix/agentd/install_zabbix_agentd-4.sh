@@ -91,8 +91,9 @@ EOF
     chmod 600 ${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf
     chown zabbix.zabbix ${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf
 
-#    mv /root/userparameter_mysql.conf  /data/service/zabbix/agent/etc/zabbix_agentd.conf.d/userparameter_mysql.conf
+    mv /root/userparameter_mysql.conf  ${ZABBIX_AGENTD_DIR}/etc/zabbix_agentd.conf.d/userparameter_mysql.conf
 
+    chown zabbix.zabbix  ${ZABBIX_AGENTD_DIR}/etc/zabbix_agentd.conf.d/userparameter_mysql.conf
 
 
 }
