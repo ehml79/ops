@@ -1,10 +1,9 @@
 #!/bin/bash
 
-echo `date '+%F %T'` >> /tmp/git.log
 
 /usr/bin/ssh -p 22  \
 -o ConnectTimeout=3 \
 -o ConnectionAttempts=5 \
 -o PasswordAuthentication=no \
 -o StrictHostKeyChecking=no \
-root@localhost "/bin/bash /data/sh/update/update_git.sh"  2>&1 >> /tmp/git.log
+root@localhost "/bin/bash /data/sh/update/update_git.sh"
