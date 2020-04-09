@@ -54,6 +54,11 @@ Hostname=Zabbix server
 Include=${ZABBIX_AGENTD_DIR}/etc/zabbix_agentd.conf.d/*.conf
 EOF
 
+    # server agent in same instance
+    if [ -d  /data/service/zabbix/server ];then
+	sed -i "s#Server=.*#Server=127.0.0.1#g" ${ZABBIX_AGENTD_DIR}/etc/zabbix_agentd.conf 
+    fi
+
 
     if [ -f /usr/bin/apt ];then
         # ubuntu
