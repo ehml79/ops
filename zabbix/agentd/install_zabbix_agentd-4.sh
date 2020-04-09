@@ -101,5 +101,5 @@ EOF
 }
 
 
-#install_zabbix_agentd
-check_mysql
+install_zabbix_agentd
+#check_mysql
