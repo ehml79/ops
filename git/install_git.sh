@@ -9,7 +9,7 @@ function install_git(){
 
     sudo apt-get -y install git expect
     
-    sudo adduser --disabled-password git 
+    sudo adduser --quiet --disabled-password git 
     
     mkdir -p /data/service/git
     
