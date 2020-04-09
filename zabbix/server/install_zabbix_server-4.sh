@@ -23,7 +23,7 @@ function install_zabbix_server(){
     fi
 
 	mkdir -p /data/service/src
-  	chmod 770 -p /data/service/zabbix
+  	chmod 700  /data/service/zabbix
 	chown zabbix:zabbix /data/service/zabbix
 
     addgroup --system --quiet zabbix
