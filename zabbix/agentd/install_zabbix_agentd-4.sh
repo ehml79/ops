@@ -91,15 +91,7 @@ EOF
     chmod 600 ${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf
     chown zabbix.zabbix ${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf
 
-cat > ${ZABBIX_AGENTD_DIR}/etc/zabbix_agentd.conf.d/userparameter_mysql.conf <<EOF
-UserParameter=mysql.ping[*], /data/service/mysql/bin/mysqladmin --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf ping
-UserParameter=mysql.get_status_variables[*], /data/service/mysql/bin/mysql --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf -sNX -e "show global status"
-UserParameter=mysql.version[*], /data/service/mysql/bin/mysqladmin --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf -s  version
-UserParameter=mysql.db.discovery[*], /data/service/mysql/bin/mysql --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf -sN -e "show databases"
-UserParameter=mysql.dbsize[*], /data/service/mysql/bin/mysql --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf -sN -e "SELECT SUM(DATA_LENGTH + INDEX_LENGTH) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='\$3'"
-UserParameter=mysql.replication.discovery[*], /data/service/mysql/bin/mysql --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf  -sNX -e "show slave status"
-UserParameter=mysql.slave_status[*], /data/service/mysql/bin/mysql --defaults-file=${ZABBIX_AGENTD_DIR}/etc/zabbix-my.cnf -sNX -e "show slave status"
-EOF
+    mv /root/userparameter_mysql.conf  /data/service/zabbix/agent/etc/zabbix_agentd.conf.d/userparameter_mysql.conf
 
 
 
