@@ -6,32 +6,37 @@
 DOMAIN_NAME="gitlab.example.com"
 NGINX_USER="nginx"
 
-# 信任 GitLab 的 GPG 公钥
-curl https://packages.gitlab.com/gpg.key 2> /dev/null | sudo apt-key add - &>/dev/null
+function install_gitlab(){
 
-# 配置清华源
-echo "deb https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu bionic main"  > /etc/apt/sources.list.d/gitlab_gitlab-ce.list
+	# 信任 GitLab 的 GPG 公钥
+	curl https://packages.gitlab.com/gpg.key 2> /dev/null | sudo apt-key add - &>/dev/null
 
-sudo apt-get update
-sudo apt-get install -y curl openssh-server ca-certificates
+	# 配置清华源
+	echo "deb https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu bionic main"  > /etc/apt/sources.list.d/gitlab_gitlab-ce.list
 
-sudo apt-get install -y postfix
-# 选择“Internet Site”并按Enter键。
+	sudo apt-get update
+	sudo apt-get install -y curl openssh-server ca-certificates
 
-sudo apt-get install gitlab-ce
+	sudo apt-get install -y postfix
+	# 选择“Internet Site”并按Enter键。
 
-# config
-cp /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.rb.`date +%F`
+	sudo apt-get install gitlab-ce
 
-# 配置域名
-sed -i "s@^external_url .*@external_url 'https://localhost'@" /etc/gitlab/gitlab.rb
+	# config
+	cp /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.rb.`date +%F`
 
-gitlab-ctl reconfigure
+	# 配置域名
+	sed -i "s@^external_url .*@external_url 'https://${DOMAIN_NAME}'@" /etc/gitlab/gitlab.rb
 
-# 有nginx的情况下,更改gitlab默认nginx 80 端口，防止端口冲突
-sed -i "s/listen \*:80;/listen \*:82;/" /var/opt/gitlab/nginx/conf/gitlab-http.conf
+	gitlab-ctl reconfigure
+	gitlab-ctl start
+}
 
-echo "127.0.0.1 ${DOMAIN_NAME}" >> /etc/hosts 
+function proxy(){
+	# 有nginx的情况下,更改gitlab默认nginx 80 端口，防止端口冲突
+	sed -i "s/listen \*:80;/listen \*:82;/" /var/opt/gitlab/nginx/conf/gitlab-http.conf
+
+	echo "127.0.0.1 ${DOMAIN_NAME}" >> /etc/hosts 
 
 cat > /data/service/nginx/conf/${DOMAIN_NAME}.conf <<EOF
 server {
@@ -44,5 +49,7 @@ server {
 }
 EOF
 
-nginx -s reload
-gitlab-ctl start
+	nginx -s reload
+}
+
+install_gitlab
