@@ -4,7 +4,7 @@
 # https://about.gitlab.com/install/#ubuntu
 
 DOMAIN_NAME="gitlab.example.com"
-NGINX_USER="nginx"
+
 
 function install_gitlab(){
 
