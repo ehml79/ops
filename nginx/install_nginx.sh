@@ -33,7 +33,7 @@ install_nginx(){
         libgoogle-perftools-dev \
         libatomic-ops-dev \
         libxml2-dev \
-	    libxslt1-dev
+        libxslt1-dev
     elif [ -f /usr/bin/yum ];then
     	echo 'centOS'
     	yum -y install wget \
