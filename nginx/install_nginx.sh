@@ -69,11 +69,8 @@ install_nginx(){
     --with-http_realip_module \
     --with-http_addition_module \
     --with-http_xslt_module \
-    --with-http_xslt_module=dynamic \
     --with-http_image_filter_module \
-    --with-http_image_filter_module=dynamic \
     --with-http_geoip_module \
-    --with-http_geoip_module=dynamic \
     --with-http_sub_module \
     --with-http_dav_module \
     --with-http_flv_module \
@@ -87,20 +84,23 @@ install_nginx(){
     --with-http_slice_module \
     --with-http_stub_status_module \
     --with-stream \
-    --with-stream=dynamic \
     --with-stream_ssl_module \
     --with-stream_realip_module \
     --with-stream_geoip_module \
-    --with-stream_geoip_module=dynamic \
     --with-stream_ssl_preread_module \
     --with-google_perftools_module \
     --with-compat \
     --with-pcre \
     --with-libatomic
+#    --with-http_xslt_module=dynamic \
+#    --with-http_image_filter_module=dynamic \
+#    --with-http_geoip_module=dynamic \
+#    --with-stream=dynamic \
+#    --with-stream_geoip_module=dynamic \
 
     make  && make install
 
-    [ ! -d  ${INSTALL_DIR}/nginx/conf/vhost/  ] && mkdir -p ${INSTALL_DIR}/nginx/conf/{vhost,tcp,cert}
+    [ ! -d  ${INSTALL_DIR}/nginx/conf/vhost/  ] && mkdir -p ${INSTALL_DIR}/nginx/conf/{vhost,stream,cert}
 
     mv -f /root/nginx.conf ${INSTALL_DIR}/nginx/conf/
     mv -f /root/fastcgi_sample.conf ${INSTALL_DIR}/nginx/conf/vhost/
