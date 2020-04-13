@@ -5,6 +5,8 @@
 
 DOMAIN_NAME="gitlab.example.com"
 
+# GitLab之不允许用户注册 
+# https://blog.csdn.net/yelllowcong/article/details/79938355
 
 function install_gitlab(){
 
