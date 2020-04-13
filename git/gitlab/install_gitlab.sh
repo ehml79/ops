@@ -31,7 +31,6 @@ function install_gitlab(){
     sed -i "s@^external_url .*@external_url 'https://${DOMAIN_NAME}'@" /etc/gitlab/gitlab.rb
 
     # 限制普通用户创建组
-    #sed -i "s@# gitlab_rails\[\'gitlab_default_can_create_group\'\] = .*@gitlab_rails\[\'gitlab_default_can_create_group\'\] = false@" /etc/gitlab/gitlab.rb 
     sed -i "s@# gitlab_rails\['gitlab_default_can_create_group'\].*@gitlab_rails['gitlab_default_can_create_group'] = false@" /etc/gitlab/gitlab.rb
 
     gitlab-ctl reconfigure
