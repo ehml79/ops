@@ -53,3 +53,4 @@ EOF
 }
 
 install_gitlab
+# proxy
