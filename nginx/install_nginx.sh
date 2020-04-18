@@ -102,8 +102,8 @@ install_nginx(){
 
     [ ! -d  ${INSTALL_DIR}/nginx/conf/vhost/  ] && mkdir -p ${INSTALL_DIR}/nginx/conf/{vhost,stream,cert}
 
-    mv -f /root/nginx.conf ${INSTALL_DIR}/nginx/conf/
-    mv -f /root/fastcgi_sample.conf ${INSTALL_DIR}/nginx/conf/vhost/
+    mv -f /root/template_nginx.conf ${INSTALL_DIR}/nginx/conf/nginx.conf
+    mv -f /root/template_fastcgi.conf ${INSTALL_DIR}/nginx/conf/vhost/
 
     echo "export PATH=\$PATH:${INSTALL_DIR}/nginx/sbin" > /etc/profile.d/nginx.sh
 
