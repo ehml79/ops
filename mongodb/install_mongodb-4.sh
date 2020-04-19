@@ -1,5 +1,7 @@
 #!/bin/bash
 
+VERSION=4.2.5
+
 
 
 function install_mongodb(){
@@ -11,18 +13,18 @@ function install_mongodb(){
         echo 'ubuntu'
         # Ubuntu 18.04
         sudo apt-get -y install libcurl4 openssl
-        wget -O  /data/service/src/mongodb-linux-x86_64-ubuntu1804-4.2.2.tgz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.2.2.tgz
+        wget -O  /data/service/src/mongodb-linux-x86_64-ubuntu1804-${VERSION}.tgz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-${VERSION}.tgz
         cd /data/service/src
-        tar xf mongodb-linux-x86_64-ubuntu1804-4.2.2.tgz
-        mv mongodb-linux-x86_64-ubuntu1804-4.2.2 /data/service/mongodb
+        tar xf mongodb-linux-x86_64-ubuntu1804-${VERSION}.tgz
+        mv mongodb-linux-x86_64-ubuntu1804-${VERSION} /data/service/mongodb
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         # centOS 7
         sudo yum -y install libcurl openssl
-        wget -O  /data/service/src/mongodb-linux-s390x-rhel72-4.2.2.tgz https://fastdl.mongodb.org/linux/mongodb-linux-s390x-rhel72-4.2.2.tgz
+        wget -O  /data/service/src/mongodb-linux-s390x-rhel72-${VERSION}.tgz https://fastdl.mongodb.org/linux/mongodb-linux-s390x-rhel72-${VERSION}.tgz
         cd /data/service/src
-        tar xf mongodb-linux-s390x-rhel72-4.2.2.tgz
-        mv mongodb-linux-s390x-rhel72-4.2.2 /data/service/mongodb
+        tar xf mongodb-linux-s390x-rhel72-${VERSION}.tgz
+        mv mongodb-linux-s390x-rhel72-${VERSION} /data/service/mongodb
     else
         echo 'unknow OS'
         exit 1
