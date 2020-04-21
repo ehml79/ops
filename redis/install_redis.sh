@@ -24,7 +24,7 @@ function install_redis(){
     fi
 
     mkdir -p ${SRC_DIR}/
-#    wget -O ${SRC_DIR}/${REDIS_VERSION}.tar.gz  http://download.redis.io/releases/${REDIS_VERSION}.tar.gz 
+    wget -O ${SRC_DIR}/${REDIS_VERSION}.tar.gz  http://download.redis.io/releases/${REDIS_VERSION}.tar.gz 
     cd ${SRC_DIR}
     tar xf ${REDIS_VERSION}.tar.gz
     cd ${REDIS_VERSION}/
@@ -37,7 +37,7 @@ function install_redis(){
     cp ${SRC_DIR}/${REDIS_VERSION}/redis.conf ${REDIS_CONFIG_FILE}
      
     sed -i "s#^port .\+#port ${REDIS_PORT}#" ${REDIS_CONFIG_FILE}
-    sed -i "s#^logfile .\+#logfile /data/service/redis/logs/redis_${REDIS_PORT}.log#" ${REDIS_CONFIG_FILE}
+    sed -i "s#^logfile .\+#logfile ${REDIS_LOG_FILE}#" ${REDIS_CONFIG_FILE}
     sed -i "s@^dir.*@dir /data/service/redis/data/${REDIS_PORT}@" ${REDIS_CONFIG_FILE}
     sed -i "s#^pidfile .\+#pidfile /var/run/redis_${REDIS_PORT}.pid#" ${REDIS_CONFIG_FILE}
     sed -i 's/^daemonize.*/daemonize yes/' ${REDIS_CONFIG_FILE}
