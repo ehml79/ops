@@ -3,8 +3,8 @@
 REDIS_VERSION="redis-5.0.8"
 REDIS_PASSWD=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 REDIS_PORT=6379
-SRC_DIR=${SRC_DIR}
-REDIS_CONFIG_FILE=${REDIS_CONFIG_FILE}
+SRC_DIR=/data/service/src
+REDIS_CONFIG_FILE=/data/service/redis/etc/${REDIS_PORT}.conf
 REDIS_DATA_DIR=/data/service/redis/data/${REDIS_PORT}
 
 REDIS_LOG_FILE=/data/service/redis/logs/redis_${REDIS_PORT}.log
@@ -13,27 +13,28 @@ CLI_EXEC=/data/service/redis/bin/redis-cli
 
 
 function install_redis(){
-    # 判断系统
-    if [ -f /usr/bin/apt ];then
-        apt -y install make  build-essential libjemalloc-dev
-    elif [ -f /usr/bin/yum ];then
-	    yum -y install  gcc gcc-c++
-    else
-	    echo 'unknow OS'
-	    exit 1
-    fi
+#    # 判断系统
+#    if [ -f /usr/bin/apt ];then
+#        apt -y install make  build-essential libjemalloc-dev
+#    elif [ -f /usr/bin/yum ];then
+#	    yum -y install  gcc gcc-c++
+#    else
+#	    echo 'unknow OS'
+#	    exit 1
+#    fi
+#
+#    mkdir -p ${SRC_DIR}/
+##    wget -O ${SRC_DIR}/${REDIS_VERSION}.tar.gz  http://download.redis.io/releases/${REDIS_VERSION}.tar.gz 
+#    cd ${SRC_DIR}
+#    tar xf ${REDIS_VERSION}.tar.gz
+#    cd ${REDIS_VERSION}/
+#    make 
+#    make install PREFIX=/data/service/redis 
+#    mkdir /data/service/redis/{etc,data,logs}
+#    mkdir ${REDIS_DATA_DIR}
 
-    mkdir -p ${SRC_DIR}/
-    wget -O ${SRC_DIR}/${REDIS_VERSION}.tar.gz  http://download.redis.io/releases/${REDIS_VERSION}.tar.gz 
-    cd ${SRC_DIR}
-    tar xf ${REDIS_VERSION}.tar.gz
-    cd ${REDIS_VERSION}/
-    make 
-    make install PREFIX=/data/service/redis 
-    mkdir /data/service/redis/{etc,data,logs}
-    mkdir ${REDIS_DATA_DIR}
 
-    cp ${SRC_DIR}/${REDIS_VERSION}/${REDIS_PORT}.conf ${REDIS_CONFIG_FILE}
+    cp ${SRC_DIR}/${REDIS_VERSION}/redis.conf ${REDIS_CONFIG_FILE}
      
     sed -i "s#^port .\+#port ${REDIS_PORT}#" ${REDIS_CONFIG_FILE}
     sed -i "s#^logfile .\+#logfile /data/service/redis/logs/redis_${REDIS_PORT}.log#" ${REDIS_CONFIG_FILE}
@@ -66,6 +67,7 @@ function install_redis(){
     	echo "No supported init tool found."
     fi
 
+    chmod +x /etc/init.d/redis_${REDIS_PORT}
     /etc/init.d/redis_${REDIS_PORT} start
 
 }
