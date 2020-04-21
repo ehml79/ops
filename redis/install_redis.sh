@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REDIS_VERSION="redis-5.0.7"
+REDIS_VERSION="redis-5.0.8"
 REDIS_PASSWD=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 
