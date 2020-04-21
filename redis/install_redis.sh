@@ -13,25 +13,25 @@ CLI_EXEC=/data/service/redis/bin/redis-cli
 
 
 function install_redis(){
-#    # 判断系统
-#    if [ -f /usr/bin/apt ];then
-#        apt -y install make  build-essential libjemalloc-dev
-#    elif [ -f /usr/bin/yum ];then
-#	    yum -y install  gcc gcc-c++
-#    else
-#	    echo 'unknow OS'
-#	    exit 1
-#    fi
-#
-#    mkdir -p ${SRC_DIR}/
-##    wget -O ${SRC_DIR}/${REDIS_VERSION}.tar.gz  http://download.redis.io/releases/${REDIS_VERSION}.tar.gz 
-#    cd ${SRC_DIR}
-#    tar xf ${REDIS_VERSION}.tar.gz
-#    cd ${REDIS_VERSION}/
-#    make 
-#    make install PREFIX=/data/service/redis 
-#    mkdir /data/service/redis/{etc,data,logs}
-#    mkdir ${REDIS_DATA_DIR}
+    # 判断系统
+    if [ -f /usr/bin/apt ];then
+        apt -y install make  build-essential libjemalloc-dev
+    elif [ -f /usr/bin/yum ];then
+	    yum -y install  gcc gcc-c++
+    else
+	    echo 'unknow OS'
+	    exit 1
+    fi
+
+    mkdir -p ${SRC_DIR}/
+#    wget -O ${SRC_DIR}/${REDIS_VERSION}.tar.gz  http://download.redis.io/releases/${REDIS_VERSION}.tar.gz 
+    cd ${SRC_DIR}
+    tar xf ${REDIS_VERSION}.tar.gz
+    cd ${REDIS_VERSION}/
+    make 
+    make install PREFIX=/data/service/redis 
+    mkdir /data/service/redis/{etc,data,logs}
+    mkdir ${REDIS_DATA_DIR}
 
 
     cp ${SRC_DIR}/${REDIS_VERSION}/redis.conf ${REDIS_CONFIG_FILE}
