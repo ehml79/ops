@@ -23,6 +23,11 @@ sudo add-apt-repository \
    $(lsb_release -cs) \
    stable"
 
+# 清华源
+sudo add-apt-repository \
+   "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
 
 sudo apt-get update
 
