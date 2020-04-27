@@ -33,3 +33,18 @@ sudo apt-get update
 
 
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+
+
+
+# 更换源
+
+cat >/etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
+EOF
+
+
+
+/etc/init.d/docker restart
+
