@@ -14,8 +14,11 @@ umysqldump="/data/service/mysql/bin/mysqldump"
 umysql="/data/service/mysql/bin/mysql"
 keep_day=7
 
+
 # 减锁，执行脚本
-chattr -R -i ${backup_database_dir}
+if [ ! -e ${backup_database_dir} ];then
+    chattr -R -i ${backup_database_dir}
+fi
 
 # 建立备份目录
 if [ ! -e ${backup_dir} ];then
@@ -23,9 +26,10 @@ if [ ! -e ${backup_dir} ];then
 fi
 
 # 建立备份日志目录
-if [ ! -e /data/backup/log ];then
-    mkdir -p /data/backup/log
+if [ ! -e /data/logs/ ];then
+    mkdir -p /data/logs
 fi
+
 
 # 删除旧备份
 function clean_backup(){
