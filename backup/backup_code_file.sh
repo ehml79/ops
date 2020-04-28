@@ -11,7 +11,9 @@ backup_log=/data/logs/backup_code_file.log
 keep_day=7
 
 # 减锁，执行脚本
-chattr -R -i ${backup_code_dir}
+if [ -e ${backup_code_dir} ];then
+    chattr -R -i ${backup_code_dir}
+fi
 
 # 建立备份目录
 if [ ! -e ${backup_dir} ];then

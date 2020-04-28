@@ -12,7 +12,9 @@ nginx_dir=/data/service/nginx
 keep_day=7
 
 # 减锁，执行脚本
-chattr -R -i ${backup_nginx_conf_dir}
+if [ -e ${backup_nginx_conf_dir} ];then
+    chattr -R -i ${backup_nginx_conf_dir}
+fi
 
 # 建立备份目录
 if [ ! -e ${backup_dir} ];then

@@ -11,7 +11,9 @@ backup_log=/data/logs/backup_crontab.log
 keep_day=7
 
 # 减锁，执行脚本
-chattr -R -i ${back_cron_conf_dir}
+if [ -e ${back_cron_conf_dir} ];then
+    chattr -R -i ${back_cron_conf_dir}
+fi
 
 # 建立备份目录
 if [ ! -e ${backup_dir} ];then

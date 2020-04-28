@@ -16,7 +16,7 @@ keep_day=7
 
 
 # 减锁，执行脚本
-if [ ! -e ${backup_database_dir} ];then
+if [  -e ${backup_database_dir} ];then
     chattr -R -i ${backup_database_dir}
 fi
 
