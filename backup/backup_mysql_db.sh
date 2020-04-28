@@ -42,16 +42,16 @@ ${umysql} ${mycnf}  -uroot  -A -N  -e  "show databases" | while read line
         do
             #echo ${db_name}
             # 备份所有数据
-            ${umysqldump}  ${mycnf}  -uroot  --opt --single-transaction   --databases ${db_name}  > ${backup_dir}/${db_name}.sql
+            ${umysqldump}  ${mycnf}  -uroot  --opt --single-transaction  --flush-logs --databases ${db_name}  > ${backup_dir}/${db_name}.sql
             # 备份所有表结构
-            ${umysqldump}  ${mycnf}  -uroot  --opt --single-transaction   --databases -d ${db_name}  > ${backup_dir}/${db_name}_struc.sql
+            ${umysqldump}  ${mycnf}  -uroot  --opt --single-transaction  --flush-logs --databases -d ${db_name}  > ${backup_dir}/${db_name}_struc.sql
             # 备份单表
             mkdir -p ${backup_dir}/${db_name}
             ${umysql} ${mycnf}   -uroot  -A -N  -e  "use ${db_name}; show tables" | while read line
             do
                 table_name=$(echo $line )
                 #echo ${table_name}
-                ${umysqldump}  ${mycnf}  -uroot  --opt --single-transaction    ${db_name} ${table_name}  > ${backup_dir}/${db_name}/${table_name}.sql
+                ${umysqldump}  ${mycnf}  -uroot  --opt --single-transaction --flush-logs   ${db_name} ${table_name}  > ${backup_dir}/${db_name}/${table_name}.sql
             done
     
         done
