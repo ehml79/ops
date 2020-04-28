@@ -20,8 +20,8 @@ if [ ! -e ${backup_dir} ];then
 fi
 
 # 建立备份日志目录
-if [ ! -e /data/backup/log ];then
-    mkdir -p /data/backup/log
+if [ ! -e /data/logs ];then
+    mkdir -p /data/logs
 fi
 
 # 删除旧备份
