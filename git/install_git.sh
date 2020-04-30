@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-projetc_name=repo
+projetc_name=bygszsb
 your_authorized_keys=""
 
 
@@ -26,6 +26,11 @@ function install_git(){
     
     echo "${your_authorized_keys}"  >>  /home/git/.ssh/authorized_keys
     echo "${your_authorized_keys}"  >>  /root/.ssh/authorized_keys
+
+    # hook
+    cp /root/post-receive  /data/service/git/${projetc_name}.git/hooks/post-receive 
+    chown git.git /data/service/git/${projetc_name}.git/hooks/post-receive 
+    chmod +x /data/service/git/${projetc_name}.git/hooks/post-receive
 }
 
 function git_deploy(){
@@ -96,12 +101,8 @@ EOF
 
     git clone git@localhost:/data/service/git/${projetc_name}.git
     
-    mv /root/post-receive  /data/service/git/${projetc_name}.git/hooks/post-receive 
-
-    chown git.git /data/service/git/${projetc_name}.git/hooks/post-receive 
-    chmod +x /data/service/git/${projetc_name}.git/hooks/post-receive
 }
 
 
 install_git
-git_deploy
+#git_deploy
