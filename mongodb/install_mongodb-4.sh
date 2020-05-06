@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MONGODB_VERSION=4.2.5
+MONGODB_VERSION=4.2.6
 MONGODB_PASSWORD=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 
