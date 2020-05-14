@@ -1,7 +1,7 @@
 #!/bin/bash
 
 RUN_USER=nginx
-NGINX="nginx-1.16.1"
+NGINX="nginx-1.18.0"
 
 INSTALL_DIR=/data/service
 SRC_DIR=${INSTALL_DIR}/src
