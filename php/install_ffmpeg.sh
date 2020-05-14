@@ -2,6 +2,8 @@
 
 # ffmpeg
 
+mkdir -p /data/service/src
+
 wget -O /data/service/src/ffmpeg-4.2.2.tar.bz2 https://ffmpeg.org/releases/ffmpeg-4.2.2.tar.bz2
 cd /data/service/src/
 tar xf ffmpeg-4.2.2.tar.bz2
