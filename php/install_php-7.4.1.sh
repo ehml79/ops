@@ -205,8 +205,9 @@ function install_php(){
     sed -i 's@^post_max_size.*@post_max_size = 100M@' /data/service/php/etc/php.ini
     sed -i 's@^upload_max_filesize.*@upload_max_filesize = 50M@' /data/service/php/etc/php.ini
     sed -i 's@^max_execution_time.*@max_execution_time = 600@' /data/service/php/etc/php.ini
-    sed -i 's@^disable_functions.*@disable_functions =  passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,ini_alter,ini_restore,dl,readlink,symlink,popepassthru,stream_socket_server,popen,openlog,syslog,fsocket@g' /data/service/php/etc/php.ini
+    sed -i 's@^disable_functions.*@disable_functions =  passthru,exec,system,chroot,chgrp,chown,ini_alter,ini_restore,dl,readlink,symlink,popepassthru,stream_socket_server,popen,openlog,syslog,fsocket@g' /data/service/php/etc/php.ini
     
+
     sed -i 's@; display_errors =.*@display_errors = On@' /data/service/php/etc/php.ini
     sed -i 's@^;sendmail_path.*@sendmail_path = /usr/sbin/sendmail -t -i@' /data/service/php/etc/php.ini
     sed -i 's@^;realpath_cache_size.*@realpath_cache_size = 2M@' /data/service/php/etc/php.ini
@@ -279,6 +280,9 @@ function install_extension(){
     ./configure --with-php-config=/data/service/php/bin/php-config
     make && sudo make install
     echo "extension=mcrypt.so" > /data/service/php/etc/conf.d/mcrypt.ini
+
+
+
 
 }
 
