@@ -10,7 +10,7 @@ tar xf ffmpeg-4.2.2.tar.bz2
 cd ffmpeg-4.2.2
 ./configure --prefix=/data/service/ffmpeg --enable-shared --disable-static --disable-doc --enable-ffplay --disable-x86asm
 make && sudo make install
-echo "include /data/service/ffmpeg/lib" > /etc/ld.so.conf.d/ffmpeg.conf
+echo "/data/service/ffmpeg/lib" > /etc/ld.so.conf.d/ffmpeg.conf
 /sbin/ldconfig
 
 
