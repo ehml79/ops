@@ -17,3 +17,4 @@ echo "include /data/service/ffmpeg/lib" > /etc/ld.so.conf.d/ffmpeg.conf
 echo 'export FFMPEG_HOME=/data/service/ffmpeg' > /etc/profile.d/ffmpeg.sh
 echo 'export PATH=$PATH:$FFMPEG_HOME/bin'  >> /etc/profile.d/ffmpeg.sh
 echo 'export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/data/service/ffmpeg/lib/pkgconfig' >> /etc/profile.d/ffmpeg.sh
+echo 'export LD_LIBRARY_PATH=/data/service/ffmpeg/lib' >> /etc/profile.d/ffmpeg.sh
