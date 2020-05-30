@@ -10,5 +10,7 @@ Host ${HOST}
     User root
     IdentityFile ~/.ssh/id_rsa
     IdentitiesOnly yes
+    StrictHostKeyChecking no
+
 
 EOF
