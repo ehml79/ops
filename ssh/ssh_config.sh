@@ -12,5 +12,8 @@ Host ${HOST}
     IdentitiesOnly yes
     StrictHostKeyChecking no
 
+    ControlPath ~/.ssh/master-%r@%h:%p
+    ControlMaster auto
+    ControlPersist yes
 
 EOF
