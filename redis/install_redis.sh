@@ -53,7 +53,7 @@ function install_redis(){
     echo 'export PATH="$PATH:/data/service/redis/bin/"' > /etc/profile.d/redis.sh
     echo "export REDISCLI_AUTH=${REDIS_PASSWD}" >> /etc/profile.d/redis.sh
 
-    mv redis_init_script /etc/init.d/redis_${REDIS_PORT}
+    mv /root/redis_init_script /etc/init.d/redis_${REDIS_PORT}
     
     sed -i "s#^EXEC=.*#EXEC=${REDIS_EXECUTABLE}#" /etc/init.d/redis_${REDIS_PORT}
     sed -i "s#^CLIEXEC=.*#CLIEXEC=${CLI_EXEC}#" /etc/init.d/redis_${REDIS_PORT}
