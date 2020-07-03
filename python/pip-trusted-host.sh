@@ -11,7 +11,7 @@ cat > /root/.pip/pip.conf <<EOF
 ## modifications made here will not survive a re-bundle.
 ###
 [global]
-index-url=http://${trusted_host}/pypi/simple/
+index-url=https://${trusted_host}/pypi/simple/
 
 [install]
 trusted-host=${trusted_host}
