@@ -57,7 +57,7 @@ EOF
 
 cat > /root/rsyncd_restart.sh <<EOF
 #!/bin/bash
-pid_file=/var/run/rsyncd.pid
+pid_file=/data/logs/rsync/rsyncd.pid
 rsync_daemon='rsync --daemon --config=/etc/rsyncd/rsyncd.conf'
 
 if [ -f \${pid_file} ];then
