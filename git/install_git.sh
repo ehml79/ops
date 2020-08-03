@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-projetc_name=bygszsb
+projetc_name=projname
 your_authorized_keys=""
 
 
