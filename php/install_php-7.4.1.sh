@@ -282,6 +282,16 @@ function install_extension(){
     echo "extension=mcrypt.so" > /data/service/php/etc/conf.d/mcrypt.ini
 
 
+    # swoole
+    wget -O /data/service/src/swoole-src-4.5.2.tgz wget -c https://github.com/swoole/swoole-src/archive/v4.5.2.tar.gz
+    cd /data/service/src/
+    tar xf swoole-src-4.5.2.tgz
+    cd swoole-src-4.5.2
+    /data/service/php/bin/phpize
+    ./configure --with-php-config=/data/service/php/bin/php-config
+    make && sudo make install
+    # echo "extension=swoole.so" > /data/service/php/etc/conf.d/swoole.ini
+
 
 
 }
