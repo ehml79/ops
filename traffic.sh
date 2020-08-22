@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bash $0 eth0
+# bash $0 eth0
 
  
 ethn=$1
