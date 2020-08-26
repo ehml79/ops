@@ -50,7 +50,7 @@ threads = 2
 daemon = False
 debug = True
 
-#proc_name = 'webapi'
+#proc_name = '${project_name}'
 loglevel = 'info'
 pidfile = '/data/logs/gunicorn/gunicorn.pid'
 accesslog = '/data/logs/gunicorn/gunicorn_access.log'
