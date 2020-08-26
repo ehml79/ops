@@ -3,6 +3,7 @@
 
 project_name=blogproject
 
+/data/venv/py3/bin/pip install psutil
 /data/venv/py3/bin/pip install gunicorn
 /data/venv/py3/bin/pip install gevent
 
@@ -14,12 +15,13 @@ After=syslog.target network.target remote-fs.target nss-lookup.target
 
 [Service]
 User=root
-WorkingDirectory=/data/web/blog
-ExecStart=/data/venv/py3/bin/gunicorn -c gunicorn_conf.py ${project_name}.wsgi:application
+WorkingDirectory=/data/web/${project_name}/
+ExecStart=/usr/local/bin/gunicorn -c /data/web/${project_name}/gunicorn_conf.py  ${project_name}.wsgi:application
 Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+
 EOF
 
 sudo systemctl enable gunicorn
@@ -29,20 +31,30 @@ sudo systemctl start gunicorn
 
 mkdir -p /data/logs/gunicorn
 
-cat > /data/web/blog/gunicorn_conf.py <<EOF
+cat > /data/web/${project_name}/gunicorn_conf.py <<EOF
+import logging
+import logging.handlers
+from logging.handlers import WatchedFileHandler
+import os
 import multiprocessing
 
-bind = '127.0.0.1:8000'
-workers = multiprocessing.cpu_count() * 2 + 1
-
+bind = '0.0.0.0:8000'
 backlog = 2048
-worker_class = "gevent"
-worker_connections = 1000
+timeout = 30
+
+worker_class = 'gevent'
+workers = multiprocessing.cpu_count() * 2 + 1
+worker_connections = 10000
+threads = 2
+
 daemon = False
 debug = True
-proc_name = '${project_name}'
+
+#proc_name = 'webapi'
+loglevel = 'info'
 pidfile = '/data/logs/gunicorn/gunicorn.pid'
-errorlog = '/data/logs/gunicorn/gunicorn.log'
+accesslog = '/data/logs/gunicorn/gunicorn_access.log'
+errorlog = '/data/logs/gunicorn/gunicorn_error.log'
 EOF
 
 
@@ -64,4 +76,5 @@ server {
     }
 }
 EOF
+
 nginx -s reload
