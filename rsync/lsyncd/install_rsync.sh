@@ -31,6 +31,7 @@ function install_rsync(){
 function install_lsyncd(){
 
     apt -y install lsyncd
+    mkdir /etc/lsyncd/
     mkdir -p /data/logs/lsyncd
 
 cat > /etc/lsyncd/lsyncd.conf.lua <<EOF
