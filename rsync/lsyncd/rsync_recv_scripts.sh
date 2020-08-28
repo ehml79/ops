@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# send or recv
 
 rsync_log=/data/logs/rsync_recv_scripts.log
 speed='--bwlimit=5000'
@@ -21,6 +22,7 @@ echo >> ${rsync_log}
 
 for remote_ip in ${ip_list[@]}
 do
+    # recv
     ${relRsync} --exclude="*.git" --exclude="*.svn" --exclude="*.apk" --exclude="*.log" rsync@${remote_ip}::backup  /data/backup/rsync/${remote_ip}  >> ${rsync_log} 2>&1
 done
 

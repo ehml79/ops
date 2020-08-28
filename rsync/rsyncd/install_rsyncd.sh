@@ -1,12 +1,13 @@
 #!/bin/bash
 
+# client
 
 rsync_user=rsync
 rsync_passwd=
 rsync_hosts_allow=
 
 
-function rsync_send(){
+function install_rsyncd(){
 
     if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
@@ -74,4 +75,4 @@ EOF
     rsync --daemon --config=/etc/rsyncd/rsyncd.conf
 }
 
-rsync_send
+install_rsyncd
