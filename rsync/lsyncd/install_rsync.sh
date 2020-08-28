@@ -53,7 +53,7 @@ sync {
     compress = true,
     verbose = true,
     password_file = "/etc/rsyncd/rsyncd.pass",
-    _extra = {""}
+    _extra = {"--delete"}
   }
 }
 EOF
