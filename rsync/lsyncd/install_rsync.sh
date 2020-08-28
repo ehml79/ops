@@ -38,7 +38,7 @@ settings {
   logfile = "/data/logs/lsyncd/lsyncd.log",
   statusFile = "/data/logs/lsyncd/lsyncd.status",
   inotifyMode = "CloseWrite",
-  maxProcesses = 8,
+  maxProcesses = 2,
 }
 sync {
   default.rsync,
