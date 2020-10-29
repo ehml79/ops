@@ -36,7 +36,28 @@ function install_mongodb(){
 
     mv  /root/mongod.conf  /data/service/mongodb/etc/mongod.conf 
     
-    /bin/bash /root/mongo_restart.sh
+
+
+cat > /etc/systemd/system/mongodb.service << EOF
+[Unit]
+ 
+Description=mongodb 
+After=network.target remote-fs.target nss-lookup.target
+ 
+[Service]
+Type=forking
+ExecStart=/data/service/mongodb/bin/mongod --config /data/service/mongodb/etc/mongod.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/data/service/mongodb/bin/mongod --shutdown --config /data/service/mongodb/etc/mongod.conf
+PrivateTmp=true
+  
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl enable mongodb
+sudo systemctl start mongodb
+
 
     echo /data/service/mongodb/bin/mongo 127.0.0.1/admin --eval \"db.createUser\(\{user:\'root\',pwd:\'$MONGODB_PASSWORD\',roles:[\'userAdminAnyDatabase\']\}\)\" | bash
     
@@ -44,7 +65,9 @@ function install_mongodb(){
 
     echo 'export PATH=$PATH:/data/service/mongodb/bin/' > /etc/profile.d/mongodb.sh
     export PATH=$PATH:/data/service/mongodb/bin/
+
 }
+
 
 
 install_mongodb
