@@ -38,7 +38,7 @@ function install_mongodb(){
     
 
 
-cat > /etc/systemd/system/mongodb.service << EOF
+cat > /lib/systemd/system/mongodb.service << EOF
 [Unit]
  
 Description=mongodb 
