@@ -7,7 +7,7 @@ mkdir /data/venv
 
 cd /data/venv/
 
-virtualenv -p /usr/bin/python3 --no-site-packages py3
+virtualenv -p /usr/bin/python3 py3
 
 # 启动虚拟环境
 # source /data/venv/py3/bin/activate
