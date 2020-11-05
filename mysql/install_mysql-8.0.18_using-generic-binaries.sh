@@ -36,7 +36,7 @@ basedir = /data/service/mysql
 datadir = /data/service/mysql/data
 user    = mysql
 # 默认就好
-#log-error = /data/service/mysql/data/iZuf60n322uwbuisp4kf48Z.err
+log-error = /data/service/mysql/data/mysqld.err
 # 默认就好
 #pid-file = /data/mysql/mysql.pid
 #skip-grant-tables
@@ -130,7 +130,7 @@ innodb_data_home_dir = /data/service/mysql/data
 innodb_log_group_home_dir = /data/service/mysql/data
 
 slow_query_log = ON
-#log-slow-queries = /data/service/mysql/slow.log
+log-slow-queries = /data/service/mysql/data/slow.log
 long_query_time = 1
 
 [mysql]
