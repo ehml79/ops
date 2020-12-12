@@ -11,7 +11,7 @@ mv /data/service/jdk1.8.0_211 /data/service/jdk
 
 profiled="/etc/profile.d/java.sh"
 
-export JAVA_HOME=/data/service/jdk/             
+export JAVA_HOME=/data/service/jdk
 export JRE_HOME=${JAVA_HOME}/jre
 export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH
 export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
