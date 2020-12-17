@@ -66,7 +66,7 @@ function install_php(){
     --with-fpm-group=${web_user} \
     --with-fpm-user=${web_user} \
     --with-config-file-path=/data/service/php/etc \
-    --with-config-file-scan-dir=/data/service/php/etc \
+    --with-config-file-scan-dir=/data/service/php/etc/conf.d \
     --with-curl=shared,/usr \
     --with-freetype-dir=/usr/local/freetype \
     --with-sodium=/usr/local \
