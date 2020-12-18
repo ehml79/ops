@@ -288,7 +288,9 @@ function install_extension(){
     tar xf swoole-src-4.5.2.tgz
     cd swoole-src-4.5.2
     /data/service/php/bin/phpize
-    ./configure --with-php-config=/data/service/php/bin/php-config
+    ./configure --with-php-config=/data/service/php/bin/php-config \
+    --enable-openssl \
+    --enable-http2 
     make && sudo make install
     # echo "extension=swoole.so" > /data/service/php/etc/conf.d/swoole.ini
 
