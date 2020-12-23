@@ -133,7 +133,7 @@ innodb_data_home_dir = /data/service/mysql/data
 innodb_log_group_home_dir = /data/service/mysql/data
 
 slow_query_log = ON
-log-slow-queries = /data/service/mysql/data/slow.log
+#log-slow-queries = /data/service/mysql/data/slow.log
 long_query_time = 1
 
 [mysql]
