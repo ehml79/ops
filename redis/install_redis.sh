@@ -70,7 +70,8 @@ function install_redis(){
 
     chmod +x /etc/init.d/redis_${REDIS_PORT}
     /etc/init.d/redis_${REDIS_PORT} start
-
+    systemctl enable redis_6379
+    systemctl restart redis_6379
 }
 
 
