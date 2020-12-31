@@ -37,8 +37,18 @@ function install_mongodb(){
     mv  /root/mongod.conf  /data/service/mongodb/etc/mongod.conf 
     
 
+if [ -f /usr/bin/apt ];then
+    echo 'ubuntu'
+     SYSTEM_DIR=/lib/systemd/system/mongodb.service 
+elif [ -f /usr/bin/yum ];then
+     SYSTEM_DIR=/usr/lib/systemd/system/mongodb.service
 
-cat > /lib/systemd/system/mongodb.service << EOF
+else
+    echo 'unknow OS'
+    exit 1
+fi
+
+cat  >> ${SYSTEM_DIR} << EOF
 [Unit]
  
 Description=mongodb 
