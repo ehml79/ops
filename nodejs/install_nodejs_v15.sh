@@ -12,5 +12,5 @@ elif [ -f /usr/bin/yum ];then
     curl -sL https://rpm.nodesource.com/setup_15.x | bash -
     sudo yum -y install nodejs
 else
-    echo 'unknow OS'
+    echo 'Unknow OS'
 fi
