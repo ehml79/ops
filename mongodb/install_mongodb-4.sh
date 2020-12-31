@@ -21,7 +21,7 @@ function install_mongodb(){
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         # centOS 7
-        sudo yum -y install libcurl openssl
+        sudo yum -y install libcurl openssl wget
         wget -O  /data/service/src/mongodb-linux-s390x-rhel72-${MONGODB_VERSION}.tgz https://fastdl.mongodb.org/linux/mongodb-linux-s390x-rhel72-${MONGODB_VERSION}.tgz
         cd /data/service/src
         tar xf mongodb-linux-s390x-rhel72-${MONGODB_VERSION}.tgz
