@@ -18,7 +18,8 @@ function install_mongodb(){
         cd /data/service/src
         tar xf mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz
         mv mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION} /data/service/mongodb
-        SYSTEM_DIR=/lib/systemd/system/mongodb.service 
+
+        SYSTEM_DIR=/lib/systemd/system/mongod.service 
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         # centOS 7
@@ -27,7 +28,8 @@ function install_mongodb(){
         cd /data/service/src
         tar xf mongodb-linux-x86_64-rhel70-${MONGODB_VERSION}.tgz
         mv mongodb-linux-x86_64-rhel70-${MONGODB_VERSION} /data/service/mongodb
-        SYSTEM_DIR=/usr/lib/systemd/system/mongodb.service
+
+        SYSTEM_DIR=/usr/lib/systemd/system/mongod.service
     else
         echo 'unknow OS'
         exit 1
@@ -56,19 +58,20 @@ PrivateTmp=true
 WantedBy=multi-user.target
 EOF
 
-sudo systemctl enable mongodb
-sudo systemctl start mongodb
+sudo systemctl enable mongod
+sudo systemctl start mongod
 
 
-    echo /data/service/mongodb/bin/mongo 127.0.0.1/admin --eval \"db.createUser\(\{user:\'root\',pwd:\'$MONGODB_PASSWORD\',roles:[\'userAdminAnyDatabase\']\}\)\" | bash
+#    echo /data/service/mongodb/bin/mongo 127.0.0.1/admin --eval \"db.createUser\(\{user:\'root\',pwd:\'$MONGODB_PASSWORD\',roles:[\'userAdminAnyDatabase\']\}\)\" | bash
     
-    echo $MONGODB_PASSWORD > /data/service/mongodb/etc/mongodb.secret
+#    echo $MONGODB_PASSWORD > /data/service/mongodb/etc/mongodb.secret
 
     echo 'export PATH=$PATH:/data/service/mongodb/bin/' > /etc/profile.d/mongodb.sh
     export PATH=$PATH:/data/service/mongodb/bin/
 
 }
 
-
+# mongo -u usernamd -p password --port 27017 --host localhost
+# mongo localhost:27017/dbname  -u username -p password
 
 install_mongodb
