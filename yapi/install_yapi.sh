@@ -25,6 +25,7 @@ mv package/ vendors
 cat > /data/web/yapi/config.json << EOF
 {
   "port": "3000",
+  "closeRegister":true,
   "adminAccount": "admin@admin.com",
   "timeout":120000,
   "db": {
