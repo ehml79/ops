@@ -3,6 +3,7 @@
 # https://hellosean1025.github.io/yapi/devops/index.html
 # https://github.com/YMFE/yapi
 # 初始化管理员账号成功,账号名："admin@admin.com"，密码："ymfe.org"
+# CentOS Linux release 7.7.1908 (Core)
 
 DOMAIN_NAME=yapi.example.com
 
@@ -14,9 +15,13 @@ sudo yum install -y nodejs
 
 # install nginx
 
+# install yapi
 mkdir /data/web/yapi
 cd /data/web/yapi
-git clone https://github.com/YMFE/yapi.git vendors
+wget -O /data/service/src/yapi-vendor-1.9.2.tgz  https://registry.npm.taobao.org/yapi-vendor/download/yapi-vendor-1.9.2.tgz
+tar xf /data/service/src/yapi-vendor-1.9.2.tgz -C /data/web/yapi/
+mv package/ vendors
+
 cat > /data/web/yapi/config.json << EOF
 {
   "port": "3000",
