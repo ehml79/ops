@@ -18,6 +18,7 @@ function install_mongodb(){
         cd /data/service/src
         tar xf mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz
         mv mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION} /data/service/mongodb
+        SYSTEM_DIR=/lib/systemd/system/mongodb.service 
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
         # centOS 7
@@ -26,6 +27,7 @@ function install_mongodb(){
         cd /data/service/src
         tar xf mongodb-linux-x86_64-rhel70-${MONGODB_VERSION}.tgz
         mv mongodb-linux-x86_64-rhel70-${MONGODB_VERSION} /data/service/mongodb
+        SYSTEM_DIR=/usr/lib/systemd/system/mongodb.service
     else
         echo 'unknow OS'
         exit 1
@@ -36,17 +38,6 @@ function install_mongodb(){
 
     mv  /root/mongod.conf  /data/service/mongodb/etc/mongod.conf 
     
-
-if [ -f /usr/bin/apt ];then
-    echo 'ubuntu'
-     SYSTEM_DIR=/lib/systemd/system/mongodb.service 
-elif [ -f /usr/bin/yum ];then
-     SYSTEM_DIR=/usr/lib/systemd/system/mongodb.service
-
-else
-    echo 'unknow OS'
-    exit 1
-fi
 
 cat  > ${SYSTEM_DIR} << EOF
 [Unit]
