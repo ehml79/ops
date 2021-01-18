@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# CentOS Linux release 7.9.2009 (Core)
 
 sudo yum install -y curl policycoreutils-python openssh-server perl
 sudo systemctl enable sshd
