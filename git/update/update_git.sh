@@ -19,7 +19,7 @@ do
 done
 
 chown -R nginx.nginx ${GIT_TEMP}
-chmod -R 750 ${GIT_TEMP}
+chmod -R 700 ${GIT_TEMP}
 rsync -av --exclude="*.git" ${GIT_TEMP}   ${WEB_DIR} 
 
 # systemctl restart gunicorn.service
