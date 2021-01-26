@@ -21,6 +21,7 @@ install_nginx(){
     if [ -f /usr/bin/apt ];then
     	echo 'ubuntu'
     	apt -y install  git \
+	build-essential \
         libpcre3 \
         libpcre3-dev \
         zlib1g-dev \
