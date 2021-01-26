@@ -60,9 +60,9 @@ sync {
 EOF
 
 
-systemctl start lsyncd
-systemctl restart lsyncd
-systemctl enable  lsyncd
+    systemctl start lsyncd
+    systemctl restart lsyncd
+    systemctl enable  lsyncd
 
 }
 
