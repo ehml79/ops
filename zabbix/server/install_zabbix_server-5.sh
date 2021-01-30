@@ -60,6 +60,7 @@ DBHost=${ZABBIX_SERVER_IP}
 DBName=${ZABBIX_USER}
 DBUser=${ZABBIX_USER}
 DBPassword=${ZABBIX_DB_PASSWORD} 
+DBSocket=/tmp/mysql.sock
 ListenIP=0.0.0.0
 StartPollersUnreachable=1
 StartTrappers=5
@@ -150,7 +151,7 @@ EOF
 function load_sql(){
     # 导入数据库
     cd /data/service/src/${ZABBIX_VERSION}/database/mysql
-    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS ${ZABBIX_USER} default CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+    /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "CREATE DATABASE IF NOT EXISTS ${ZABBIX_USER} default CHARACTER SET utf8 COLLATE  utf8_bin;"
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "create user '${ZABBIX_USER}'@'%' ; "
     /data/service/mysql/bin/mysql  --defaults-file=/etc/my.cnf --connect-expired-password -e "ALTER USER '${ZABBIX_USER}'@'%' IDENTIFIED  BY '${ZABBIX_DB_PASSWORD}'; "
 
