@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 59 23 * * * nginx_split_log.sh
+# 0 0 * * * nginx_split_log.sh
 
 logPath=/data/service/nginx/logs
 backupPath=/data/service/nginx/logs/backup
