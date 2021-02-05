@@ -40,7 +40,6 @@ function install_mongodb(){
     mkdir -p /data/service/mongodb/{etc,data}
     touch /data/service/mongodb/mongodb.log
 
-    mv  /root/mongod.conf  /data/service/mongodb/etc/mongod.conf 
 
 cat >  /data/service/mongodb/etc/mongod.conf  << EOF
 # mongod.conf
