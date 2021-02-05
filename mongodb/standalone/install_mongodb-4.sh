@@ -41,7 +41,48 @@ function install_mongodb(){
     touch /data/service/mongodb/mongodb.log
 
     mv  /root/mongod.conf  /data/service/mongodb/etc/mongod.conf 
-    
+
+cat >  /data/service/mongodb/etc/mongod.conf  << EOF
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /data/service/mongodb/mongodb.log
+
+# Where and how to store data.
+storage:
+  dbPath: /data/service/mongodb/data
+  journal:
+    enabled: true
+#  engine:
+#  mmapv1:
+#  wiredTiger:
+
+# how the process runs
+processManagement:
+  fork: true  # fork and run in background
+  pidFilePath: /var/run/mongod.pid
+
+# network interfaces
+net:
+  port: 27017
+  bindIp: 127.0.0.1
+  unixDomainSocket:
+    enabled: false
+
+#security:
+#  authorization: enabled
+
+#operationProfiling:
+#replication:
+#sharding:
+EOF
+
 
 cat  > ${SYSTEM_DIR} << EOF
 [Unit]
