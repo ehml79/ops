@@ -93,6 +93,7 @@ function install_tools(){
         tar xf mongodb-database-tools-ubuntu1804-x86_64-100.3.0.tgz
         mv mongodb-database-tools-ubuntu1804-x86_64-100.3.0 /data/service/mongodb-database-tools
     else
+        # https://fastdl.mongodb.org/tools/db/mongodb-database-tools-rhel70-x86_64-100.3.0.tgz
         echo "Unknow"
         exit
     fi
