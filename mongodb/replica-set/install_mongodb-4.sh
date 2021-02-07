@@ -2,30 +2,31 @@
 
 # for Ubuntu 20.04 LTS
 # for Ubuntu 18.04 LTS
+# for CentOS Linux 7 (Core)
 
 MONGODB_VERSION=4.4.2
 MONGODB_PASSWORD=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
 
 function ubuntu2004(){
-   echo "20.04"
-   wget -O  /data/service/src/mongodb-linux-x86_64-ubuntu2004-${MONGODB_VERSION}.tgz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-${MONGODB_VERSION}.tgz
-   tar xf mongodb-linux-x86_64-ubuntu2004-${MONGODB_VERSION}.tgz
-   mv mongodb-linux-x86_64-ubuntu2004-${MONGODB_VERSION} /data/service/mongodb
+    echo "20.04"
+    wget -O  /data/service/src/mongodb-linux-x86_64-ubuntu2004-${MONGODB_VERSION}.tgz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-${MONGODB_VERSION}.tgz
+    tar xf mongodb-linux-x86_64-ubuntu2004-${MONGODB_VERSION}.tgz
+    mv mongodb-linux-x86_64-ubuntu2004-${MONGODB_VERSION} /data/service/mongodb
 }
 
 function ubuntu1804(){
-   echo "18.04"
-   wget -O  /data/service/src/mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz
-   tar xf mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz
-   mv mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION} /data/service/mongodb
+    echo "18.04"
+    wget -O  /data/service/src/mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz
+    tar xf mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION}.tgz
+    mv mongodb-linux-x86_64-ubuntu1804-${MONGODB_VERSION} /data/service/mongodb
 }
 
 function centos7(){
-   echo 'centOS'
-   wget -O /data/service/src/mongodb-linux-x86_64-rhel70-4.4.2.tgz  https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-4.4.2.tgz
-   tar xf mongodb-linux-x86_64-rhel70-${MONGODB_VERSION}.tgz
-   mv mongodb-linux-x86_64-rhel70-${MONGODB_VERSION} /data/service/mongodb
+    echo 'centOS'
+    wget -O /data/service/src/mongodb-linux-x86_64-rhel70-4.4.2.tgz  https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-4.4.2.tgz
+    tar xf mongodb-linux-x86_64-rhel70-${MONGODB_VERSION}.tgz
+    mv mongodb-linux-x86_64-rhel70-${MONGODB_VERSION} /data/service/mongodb
 }
 
 
@@ -40,6 +41,7 @@ function install_mongodb(){
     if [ -f /usr/bin/apt ];then
 
         sudo apt-get -y install libcurl4 openssl
+        SYSTEM_DIR=/lib/systemd/system/mongod.service 
 
         if [ "${VERSION}"=="20.04" ];then
             # for Ubuntu 20.04
@@ -52,11 +54,10 @@ function install_mongodb(){
             exit
         fi
 
-        SYSTEM_DIR=/lib/systemd/system/mongod.service 
-
     elif [ -f /usr/bin/yum ];then
 
         sudo yum -y install libcurl openssl wget
+        SYSTEM_DIR=/usr/lib/systemd/system/mongod.service
 
         if [ "${VERSION}"=="7" ];then
             # centOS 7
@@ -66,7 +67,6 @@ function install_mongodb(){
             exit
         fi
 
-        SYSTEM_DIR=/usr/lib/systemd/system/mongod.service
     else
         echo 'unknow OS'
         exit 1
