@@ -115,35 +115,6 @@ sudo systemctl start mongod
 # mongo -u usernamd -p password --port 27017 --host localhost
 # mongo localhost:27017/dbname  -u username -p password
 
-function install_tools(){
-
-    VERSION=$(grep "VERSION_ID" /etc/os-release | cut -f 2 -d '=')
-    cd /data/service/src
-    
-    if [ "${VERSION}"=="20.04" ];then
-        # for Ubuntu 20.04 
-        echo "20.04"
-        wget -O /data/service/src/mongodb-database-tools-ubuntu2004-x86_64-100.3.0.tgz  https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-x86_64-100.3.0.tgz 
-        tar xf mongodb-database-tools-ubuntu2004-x86_64-100.3.0.tgz
-        mv mongodb-database-tools-ubuntu2004-x86_64-100.3.0 /data/service/mongodb-database-tools
-    elif [ "${VERSION}"=="18.04" ];then
-        # for Ubuntu 18.04 
-        echo "18.04"
-        wget -O /data/service/src/mongodb-database-tools-ubuntu1804-x86_64-100.3.0.tgz  https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu1804-x86_64-100.3.0.tgz
-        tar xf mongodb-database-tools-ubuntu1804-x86_64-100.3.0.tgz
-        mv mongodb-database-tools-ubuntu1804-x86_64-100.3.0 /data/service/mongodb-database-tools
-    else
-        # https://fastdl.mongodb.org/tools/db/mongodb-database-tools-rhel70-x86_64-100.3.0.tgz
-        echo "Unknow"
-        exit
-    fi
-
-
-    echo 'export PATH=$PATH:/data/service/mongodb-database-tools/bin' > /etc/profile.d/mongodb-database-tools.sh
-    export PATH=$PATH:/data/service/mongodb-database-tools/bin
-}
-
 
 
 install_mongodb
-install_tools
