@@ -35,7 +35,6 @@ function install_tools(){
     if [ -f /usr/bin/apt ];then
         # Ubuntu
         sudo apt-get -y install libcurl4 openssl
-        SYSTEM_DIR=/lib/systemd/system/mongod.service
 
         if [ "${VERSION}"=="20.04" ];then
             # for Ubuntu 20.04
@@ -51,7 +50,6 @@ function install_tools(){
     elif [ -f /usr/bin/yum ];then
         # centOS 
         sudo yum -y install libcurl openssl wget
-        SYSTEM_DIR=/usr/lib/systemd/system/mongod.service
 
         if [ "${VERSION}"=="7" ];then
 	    centos7
