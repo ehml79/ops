@@ -120,7 +120,10 @@ net:
 #  authorization: enabled
 
 #operationProfiling:
-#replication:
+replication:
+  oplogSizeMB: 20
+  replSetName: rs0
+
 #sharding:
 EOF
 
