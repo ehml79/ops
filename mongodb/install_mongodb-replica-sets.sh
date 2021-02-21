@@ -1,5 +1,5 @@
-
-
+#!/bin/bash
+# Unavailable
 
 mkdir -p /data/service/mongodb
 mkdir -p /data/service/mongodb/conf
