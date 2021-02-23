@@ -223,6 +223,9 @@ source /etc/profile.d/mongodb.sh
 
 /bin/echo 'rs.isMaster()' |  /data/service/mongodb/bin/mongo  localhost:27017 --quiet
 
+# /data/service/mongodb/bin/mongo localhost:27017/admin --eval "db.stats()"
+
+# /bin/echo 'db.stats()' |  /data/service/mongodb/bin/mongo  localhost:27017 --quiet
 
 # mongo --port 27017
 # mongo --port 27018
