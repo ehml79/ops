@@ -125,7 +125,7 @@ cat > /data/service/mongodb/conf/rs2.conf <<EOF
 systemLog:
   destination: file
   logAppend: true
-  path: /data/service/mongodb/rs1.log
+  path: /data/service/mongodb/rs2.log
 
 # Where and how to store data.
 storage:
@@ -139,7 +139,7 @@ storage:
 # how the process runs
 processManagement:
   fork: true  # fork and run in background
-  pidFilePath: /data/service/mongodb/rs1.pid
+  pidFilePath: /data/service/mongodb/rs2.pid
 
 # network interfaces
 net:
