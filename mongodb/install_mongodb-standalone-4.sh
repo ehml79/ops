@@ -29,7 +29,7 @@ function ubuntu1804(){
 function centos7(){
     echo 'centOS'
     sudo yum -y install libcurl openssl wget
-    wget -O /data/service/src/mongodb-linux-x86_64-rhel70-4.4.2.tgz  https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-4.4.2.tgz
+    wget -O /data/service/src/mongodb-linux-x86_64-rhel70-${MONGODB_VERSION}.tgz  https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-${MONGODB_VERSION}.tgz
     tar xf mongodb-linux-x86_64-rhel70-${MONGODB_VERSION}.tgz
     mv mongodb-linux-x86_64-rhel70-${MONGODB_VERSION} /data/service/mongodb
 }
