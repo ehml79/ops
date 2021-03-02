@@ -227,7 +227,7 @@ ssh ${node1} "mongod -f /data/service/mongodb/conf/shard2.conf"
 ssh ${node2} "mongod -f /data/service/mongodb/conf/shard2.conf"
 ssh ${node3} "mongod -f /data/service/mongodb/conf/shard2.conf"
 
-mongo --host ${node2}  27002
+mongo --host ${node2} --port 27002
 
 
 
@@ -250,7 +250,7 @@ ssh ${node3} "mongod -f /data/service/mongodb/conf/shard3.conf"
 
 
 
-mongo --host ${node3}  27003
+mongo --host ${node3} --port  27003
 
 
 
