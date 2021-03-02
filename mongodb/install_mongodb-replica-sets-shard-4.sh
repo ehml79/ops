@@ -20,9 +20,9 @@ node3=192.168.217.133
 
 
 
-wget -O /data/service/src/mongodb-linux-x86_64-rhel70-3.6.22.tgz  https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.6.22.tgz
-tar xf mongodb-linux-x86_64-rhel70-3.6.22.tgz
-mv mongodb-linux-x86_64-rhel70-3.6.22 /data/service/mongodb
+wget -O /data/service/src/mongodb-linux-x86_64-rhel70-4.4.2.tgz  https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-4.4.2.tgz
+tar xf mongodb-linux-x86_64-rhel70-4.4.2.tgz
+mv mongodb-linux-x86_64-rhel70-4.4.2 /data/service/mongodb
 
 
 mkdir -p /data/service/mongodb/conf
@@ -200,7 +200,7 @@ processManagement:
   pidFilePath: /data/service/mongodb/mongos/mongos.pid
 net:
   bindIp: 0.0.0.0
-  port: 10051
+  port: 20000
   maxIncomingConnections: 20000
 sharding:
   configDB: configs/192.168.217.131:21000,192.168.217.132:21000,192.168.217.133:21000
