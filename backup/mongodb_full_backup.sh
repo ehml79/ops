@@ -1,4 +1,5 @@
 #!/bin/bash
+# reference https://www.cnblogs.com/hukey/p/11512062.html
  
 host='192.168.1.243'
 port='27017'

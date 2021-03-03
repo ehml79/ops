@@ -1,5 +1,6 @@
 #!/bin/bash
- 
+# reference https://www.cnblogs.com/hukey/p/11512062.html
+
 
 mongodb_host=192.168.1.243
 mongodb_port=27017
