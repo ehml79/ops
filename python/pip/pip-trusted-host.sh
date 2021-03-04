@@ -1,9 +1,6 @@
 #!/bin/bas
 
 
-trusted_host="mirrors.aliyun.com"
-
-
 mkdir -p  /root/.pip
 
 cat > /root/.pip/pip.conf <<EOF
@@ -11,8 +8,8 @@ cat > /root/.pip/pip.conf <<EOF
 ## modifications made here will not survive a re-bundle.
 ###
 [global]
-index-url=https://${trusted_host}/pypi/simple/
+index-url=https://mirrors.aliyun.com/pypi/simple/
 
 [install]
-trusted-host=${trusted_host}
+trusted-host=mirrors.aliyun.com
 EOF
