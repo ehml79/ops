@@ -5,7 +5,8 @@ function install_mysql(){
     mysql_version="mysql-8.0.18"
     mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
 
-    sudo apt -y install make cmake gcc g++ bison libncurses5-dev build-essential libssl-dev  libaio1
+    sudo apt -y install make cmake gcc g++ bison libncurses5-dev build-essential libssl-dev  libaio1  libncurses5
+
     
     groupadd mysql
     useradd -r -g mysql -s /bin/false mysql
