@@ -1,13 +1,14 @@
 #!/bin/bash
 
 
-count=$(lastb | awk '{print $3}' | sort -rn | uniq -c |head -1 | awk '{print $1}')
-ip=$(lastb | awk '{print $3}' | sort -rn | uniq -c |head -1 | awk '{print $2}')
+lastb | awk '{print $3}' | uniq -c | sort -r | \
 
-if [ $count -gt 10 ];then
-    echo $ip
-    grep $ip /etc/hosts.deny
-    if [ $? -eq 1 ];then
-        echo "sshd: ${ip}" >> /etc/hosts.deny
-    fi
-fi
+while read count ips
+do
+    grep -q $ips /etc/hosts.deny
+        if [ $? != 0 ] ; then
+            if [ $count -ge 5 ] ; then
+                echo "sshd: $ips" >> /etc/hosts.deny
+            fi
+        fi
+done
