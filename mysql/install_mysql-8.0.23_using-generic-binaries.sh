@@ -7,7 +7,9 @@ function install_mysql(){
     mysql_port=3306
 
     sudo apt -y install make cmake gcc g++ bison libncurses5-dev build-essential libssl-dev  libaio1  libncurses5
+    sudo yum -y install ncurses-compat-libs 
     
+
     groupadd mysql
     useradd -r -g mysql -s /bin/false mysql
     
