@@ -179,8 +179,7 @@ EOF
     echo 'export PATH=$PATH:/data/service/mysql/bin' > /etc/profile.d/mysql.sh
     
     # 修改密码
-    /data/service/mysql/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${mysql_passwd}';"
-    # /data/service/mysql/bin/mysql -uroot -e "update mysql.user set authentication_string=password('${mysql_passwd}') where user='root' ; flush privileges; "
+    /data/service/mysql/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED  BY '${mysql_passwd}';"
     sed -i "/\[client\]/apassword = ${mysql_passwd}"  /etc/my.cnf
 
 }
