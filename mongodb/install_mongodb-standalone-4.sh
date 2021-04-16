@@ -133,8 +133,14 @@ sudo systemctl enable mongod
 sudo systemctl start mongod
 
 
-#    echo /data/service/mongodb/bin/mongo 127.0.0.1/admin --eval \"db.createUser\(\{user:\'root\',pwd:\'$MONGODB_PASSWORD\',roles:[\'userAdminAnyDatabase\']\}\)\" | bash
-#    echo $MONGODB_PASSWORD > /data/service/mongodb/etc/mongodb.secret
+    echo /data/service/mongodb/bin/mongo 127.0.0.1/admin --eval \"db.createUser\(\{user:\'root\',pwd:\'$MONGODB_PASSWORD\',roles:[\'userAdminAnyDatabase\']\}\)\" | bash
+    echo $MONGODB_PASSWORD > /data/service/mongodb/etc/mongodb.secret
+cat >> /data/service/mongodb/etc/mongod.conf <<EOF
+security:
+  authorization: enabled
+EOF
+
+    sudo systemctl restart mongod
 
     echo 'export PATH=$PATH:/data/service/mongodb/bin/' > /etc/profile.d/mongodb.sh
     export PATH=$PATH:/data/service/mongodb/bin/
