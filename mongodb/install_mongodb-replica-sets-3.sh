@@ -108,7 +108,7 @@ net:
 #operationProfiling:
 replication:
   oplogSizeMB: 20
-  replSetName: rs0
+  replSetName: replica
 
 #sharding:
 EOF
@@ -154,7 +154,7 @@ net:
 #operationProfiling:
 replication:
   oplogSizeMB: 20
-  replSetName: rs0
+  replSetName: replica
 
 #sharding:
 EOF
@@ -200,7 +200,7 @@ net:
 #operationProfiling:
 replication:
   oplogSizeMB: 20
-  replSetName: rs0
+  replSetName: replica
 
 #sharding:
 EOF
@@ -219,7 +219,7 @@ source /etc/profile.d/mongodb.sh
 
 /bin/echo 'rs.status()' |  /data/service/mongodb/bin/mongo  localhost:27017 --quiet
 
-/bin/echo 'rs.initiate({"_id":"rs0","members":[ {"_id":1,"host":"localhost:27017"}, {"_id":2,"host":"localhost:27018"}, {"_id":3,"host":"localhost:27019"} ]})' |  /data/service/mongodb/bin/mongo  localhost:27017 --quiet
+/bin/echo 'rs.initiate({"_id":"replica","members":[ {"_id":1,"host":"localhost:27017"}, {"_id":2,"host":"localhost:27018"}, {"_id":3,"host":"localhost:27019"} ]})' |  /data/service/mongodb/bin/mongo  localhost:27017 --quiet
 
 /bin/echo 'rs.isMaster()' |  /data/service/mongodb/bin/mongo  localhost:27017 --quiet
 
