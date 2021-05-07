@@ -16,8 +16,10 @@ function install_redis(){
     # 判断系统
     if [ -f /usr/bin/apt ];then
         apt -y install make  build-essential libjemalloc-dev
+	mv /root/redis.service /lib/systemd/system/
     elif [ -f /usr/bin/yum ];then
-	    yum -y install  gcc gcc-c++
+	yum -y install  gcc gcc-c++
+	mv /root/redis.service /usr/lib/systemd/system/
     else
 	    echo 'unknow OS'
 	    exit 1
@@ -64,14 +66,15 @@ function install_redis(){
     if command -v update-rc.d >/dev/null 2>&1; then
     	#if we're not a chkconfig box assume we're able to use update-rc.d
     	update-rc.d redis_${REDIS_PORT} defaults && echo "Success!"
+        chmod +x /etc/init.d/redis_${REDIS_PORT}
+        /etc/init.d/redis_${REDIS_PORT} start
     else
     	echo "No supported init tool found."
     fi
 
-    chmod +x /etc/init.d/redis_${REDIS_PORT}
-    /etc/init.d/redis_${REDIS_PORT} start
-    systemctl enable redis_6379
-    systemctl restart redis_6379
+    systemctl enable redis
+    systemctl restart redis
+
 }
 
 
