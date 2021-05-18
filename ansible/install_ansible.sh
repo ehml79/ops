@@ -14,6 +14,8 @@ pip3 install --upgrade pip -i https://mirrors.aliyun.com/pypi/simple/
 
 pip3 install ansible  -i https://mirrors.aliyun.com/pypi/simple/
 
+# pip3 install ansible.runner  -i https://mirrors.aliyun.com/pypi/simple/
+
 mkdir /etc/ansible
 
 mv {ansible.cfg,hosts} /etc/ansible
