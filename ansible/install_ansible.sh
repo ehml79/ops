@@ -12,7 +12,7 @@ fi
 
 pip3 install --upgrade pip -i https://mirrors.aliyun.com/pypi/simple/
 
-pip3 install ansible  -i https://mirrors.aliyun.com/pypi/simple/
+pip3 install ansible==2.9.11 -i https://mirrors.aliyun.com/pypi/simple/
 
 # pip3 install ansible.runner  -i https://mirrors.aliyun.com/pypi/simple/
 
