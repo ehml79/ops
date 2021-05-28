@@ -21,3 +21,7 @@ mkdir /etc/ansible
 mv {ansible.cfg,hosts} /etc/ansible
 
 mkdir -p /root/ansible/roles/temp/{defaults,handlers,tasks,templates,vars}
+
+
+mkdir /tmp/facts_cache
+chmod 777 /tmp/facts_cache/
