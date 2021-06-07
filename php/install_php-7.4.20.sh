@@ -86,10 +86,10 @@ function install_php(){
     fi
 
     mkdir -p /data/service/src/
-    wget -O /data/service/src/php-7.4.1.tar.bz2  https://www.php.net/distributions/php-7.4.1.tar.bz2
+    wget -O /data/service/src/php-7.4.20.tar.bz2  https://www.php.net/distributions/php-7.4.20.tar.bz2
     cd /data/service/src/
-    tar xf php-7.4.1.tar.bz2
-    cd php-7.4.1
+    tar xf php-7.4.20.tar.bz2
+    cd php-7.4.20
     ./configure \
     --prefix=/data/service/php \
     --enable-fpm \
@@ -142,7 +142,7 @@ function install_php(){
     make && make install 
 
     cp /data/service/php/etc/php-fpm.conf.default  /data/service/php/etc/php-fpm.conf
-    cp /data/service/src/php-7.4.1/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+    cp /data/service/src/php-7.4.20/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
     chmod +x /etc/init.d/php-fpm
     mkdir -p /data/service/php/log/
 
@@ -186,7 +186,7 @@ function install_php(){
     
 
     # 配置 /data/service/php/etc/php.ini
-    cp /data/service/src/php-7.4.1/php.ini-production /data/service/php/etc/php.ini
+    cp /data/service/src/php-7.4.20/php.ini-production /data/service/php/etc/php.ini
     
     # sed -i 's@; max_input_vars.*@; max_input_vars = 1000@' /data/service/php/etc/php.ini
     # sed -i 's@; extension_dir.*@extension_dir = "/data/service/php/lib/php/extensions/no-debug-non-zts-20170718/"@' /data/service/php/etc/php.ini
