@@ -6,9 +6,18 @@ function install_mysql(){
     mysql_passwd=`< /dev/urandom tr -dc A-Za-z0-9 | head -c16`
     mysql_port=3306
 
-    sudo apt -y install make cmake gcc g++ bison libncurses5-dev build-essential libssl-dev  libaio1  libncurses5
-    sudo yum -y install ncurses-compat-libs 
-    
+    # 判断系统
+    if [ -f /usr/bin/apt ];then
+        echo 'ubuntu'
+        sudo apt update &&
+        sudo apt -y install make cmake gcc g++ bison libncurses5-dev build-essential libssl-dev  libaio1  libncurses5 
+    elif [ -f /usr/bin/yum ];then
+        echo 'centOS'
+        sudo yum -y install ncurses-compat-libs gcc gcc-c++  ncurses-devel bison libgcrypt perl  cmake
+    else
+        echo 'unknow OS'
+        exit 1
+    fi
 
     groupadd mysql
     useradd -r -g mysql -s /bin/false mysql

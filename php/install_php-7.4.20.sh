@@ -1,6 +1,7 @@
 #!/bin/bash
 
 run_user=nginx
+php_version=7.3.28
 
 function install_php(){
 
@@ -79,17 +80,23 @@ function install_php(){
 	libxslt-devel  \
 	libfreetype6-dev   \
 	libxslt-dev \
-	libmcrypt-devel
+	libmcrypt-devel \
+        re2c \
+        sqlite-devel \
+        oniguruma-devel \
+        libsodium-devel \
+        libargon2-devel \
+        libzip-devel
     else
         echo 'unknow OS'
         exit 1
     fi
 
     mkdir -p /data/service/src/
-    wget -O /data/service/src/php-7.4.20.tar.bz2  https://www.php.net/distributions/php-7.4.20.tar.bz2
+#    wget -O /data/service/src/php-${php_version}.tar.bz2  https://www.php.net/distributions/php-${php_version}.tar.bz2
     cd /data/service/src/
-    tar xf php-7.4.20.tar.bz2
-    cd php-7.4.20
+    tar xf php-${php_version}.tar.bz2
+    cd php-${php_version}
     ./configure \
     --prefix=/data/service/php \
     --enable-fpm \
@@ -142,7 +149,7 @@ function install_php(){
     make && make install 
 
     cp /data/service/php/etc/php-fpm.conf.default  /data/service/php/etc/php-fpm.conf
-    cp /data/service/src/php-7.4.20/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+    cp /data/service/src/php-${php_version}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
     chmod +x /etc/init.d/php-fpm
     mkdir -p /data/service/php/log/
 
@@ -186,7 +193,7 @@ function install_php(){
     
 
     # 配置 /data/service/php/etc/php.ini
-    cp /data/service/src/php-7.4.20/php.ini-production /data/service/php/etc/php.ini
+    cp /data/service/src/php-${php_version}/php.ini-production /data/service/php/etc/php.ini
     
     # sed -i 's@; max_input_vars.*@; max_input_vars = 1000@' /data/service/php/etc/php.ini
     # sed -i 's@; extension_dir.*@extension_dir = "/data/service/php/lib/php/extensions/no-debug-non-zts-20170718/"@' /data/service/php/etc/php.ini
@@ -283,10 +290,10 @@ function install_extension(){
 
 
     # swoole
-    wget -O /data/service/src/swoole-src-4.5.2.tgz wget -c https://github.com/swoole/swoole-src/archive/v4.5.2.tar.gz
+    wget -O /data/service/src/swoole-src-4.6.2.tgz wget -c https://github.com/swoole/swoole-src/archive/v4.6.2.tar.gz
     cd /data/service/src/
-    tar xf swoole-src-4.5.2.tgz
-    cd swoole-src-4.5.2
+    tar xf swoole-src-4.6.2.tgz
+    cd swoole-src-4.6.2
     /data/service/php/bin/phpize
     ./configure --with-php-config=/data/service/php/bin/php-config \
     --enable-openssl \
