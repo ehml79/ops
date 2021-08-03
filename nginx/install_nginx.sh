@@ -20,6 +20,7 @@ install_nginx(){
     # 判断系统
     if [ -f /usr/bin/apt ];then
     	echo 'ubuntu'
+	apt update
     	apt -y install  git \
 	build-essential \
         libpcre3 \
