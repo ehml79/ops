@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 project_name=proj
 port=5000
 
@@ -22,7 +21,7 @@ cat > /data/service/svn/${project_name}/conf/authz << EOF
 [groups]
 developer = server
 
-[/]
+[${project_name}:/]
 @developer = rw
 EOF
 
@@ -65,12 +64,7 @@ chmod +x /data/service/svn/${project_name}/hooks/pre-commit
 cat > /root/svn_restart.sh <<EOF
 #!/bin/bash
 
-
 sudo killall svnserve
-
 
 /usr/bin/svnserve -d -T --listen-host=0.0.0.0 --listen-port=${port} -r /data/service/svn/${project_name} --log-file /data/logs/svn_${project_name}.log
 EOF
-
-
-
