@@ -14,7 +14,7 @@ yum -y install nodejs
 配置 NPM 加速
 安装完成后，我们为 NPM 添加国内的镜像，从而实现 node 依赖的加速下载
 
-npm install -g cnpm --registry=https://registry.npm.taobao.org
+npm install -g cnpm --registry=https://registry.npmmirror.com
 
 
 
