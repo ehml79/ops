@@ -24,7 +24,7 @@ function install_mysql(){
     
     mkdir -p /data/service/src/
     
-    wget -O /data/service/src/${mysql_version}-linux-glibc2.12-x86_64.tar.xz  https://dev.mysql.com/get/Downloads/MySQL-8.0/${mysql_version}-linux-glibc2.12-x86_64.tar.xz 
+    #wget -O /data/service/src/${mysql_version}-linux-glibc2.12-x86_64.tar.xz  https://dev.mysql.com/get/Downloads/MySQL-8.0/${mysql_version}-linux-glibc2.12-x86_64.tar.xz 
     
     
     cd /data/service/src
@@ -86,7 +86,7 @@ read_rnd_buffer_size = 16M
 bulk_insert_buffer_size = 64M
 myisam_sort_buffer_size = 128M
 myisam_max_sort_file_size = 10G
-myisam_repair_threads = 1
+#myisam_repair_threads = 1
 #myisam_recover
 
 server-id = 1
