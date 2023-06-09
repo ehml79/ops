@@ -93,7 +93,7 @@ function install_php(){
     fi
 
     mkdir -p /data/service/src/
-#    wget -O /data/service/src/php-${php_version}.tar.bz2  https://www.php.net/distributions/php-${php_version}.tar.bz2
+    wget -O /data/service/src/php-${php_version}.tar.bz2  https://www.php.net/distributions/php-${php_version}.tar.bz2
     cd /data/service/src/
     tar xf php-${php_version}.tar.bz2
     cd php-${php_version}

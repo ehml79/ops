@@ -55,7 +55,7 @@ function install_php(){
         exit 1
     fi
 
-    #wget -O /data/service/src/php-7.3.11.tar.gz  https://www.php.net/distributions/php-7.3.11.tar.gz
+    wget -O /data/service/src/php-7.3.11.tar.gz  https://www.php.net/distributions/php-7.3.11.tar.gz
     
     cd /data/service/src/
     tar xf php-7.3.11.tar.gz
