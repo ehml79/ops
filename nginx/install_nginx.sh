@@ -56,7 +56,7 @@ install_nginx(){
     # install nginx
     cd ${SRC_DIR}
     [ ! -d /data/web ] && mkdir -p /data/web
-    if [ ! -f ${NGINX} ];then
+    if [ ! -f /data/service/src/${NGINX}.tar.gz ];then
         wget -O ${SRC_DIR}/${NGINX}.tar.gz http://nginx.org/download/${NGINX}.tar.gz 
     fi
 
