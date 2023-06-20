@@ -32,24 +32,10 @@ function install_php(){
     # 判断系统
     if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
-        sudo apt -y install git libpcre3 libpcre3-dev  
-        sudo apt -y install zlib1g-dev build-essential libxml2-dev openssl 
-        sudo apt -y install libssl-dev make curl libcurl4-openssl-dev 
-        sudo apt -y install libjpeg-dev libpng-dev  libmcrypt-dev libcurl4-gnutls-dev 
-        sudo apt -y install libxslt-dev pkg-config libxml2-dev openssl  
-        sudo apt -y install libfreetype6-dev  libmcrypt-dev  libsodium-dev 
-        sudo apt -y install argon2 libargon2-0 libargon2-0-dev libxml2-dev
-        sudo apt -y install m4
-        sudo apt -y install autoconf
+        sudo apt -y install git libpcre3 libpcre3-dev  zlib1g-dev build-essential libxml2-dev openssl libssl-dev make curl libcurl4-openssl-dev libjpeg-dev libpng-dev  libmcrypt-dev libcurl4-gnutls-dev libxslt-dev pkg-config libxml2-dev openssl  libfreetype6-dev  libmcrypt-dev  libsodium-dev argon2 libargon2-0 libargon2-0-dev libxml2-dev m4 autoconf
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
-        yum install -y git gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  \
-	libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel \
-	libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 \
-	bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs \
-	e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap \
-	openldap-devel nss_ldap openldap-clients openldap-servers libicu-devel \
-	libxslt-devel  libfreetype6-dev   libxslt-dev libmcrypt-devel
+        yum install -y git gcc gcc-c++  make zlib zlib-devel pcre pcre-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers libicu-devel libxslt-devel  libfreetype6-dev  libxslt-dev libmcrypt-devel
     else
         echo 'unknow OS'
         exit 1

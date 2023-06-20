@@ -21,33 +21,10 @@ install_nginx(){
     if [ -f /usr/bin/apt ];then
     	echo 'ubuntu'
 	apt update
-    	apt -y install  git \
-	build-essential \
-        libpcre3 \
-        libpcre3-dev \
-        zlib1g-dev \
-        openssl \
-        libssl-dev \
-        build-essential \
-        python3-pip \
-        libgd-dev \
-        libgeoip-dev \
-        libgoogle-perftools-dev \
-        libatomic-ops-dev \
-        libxml2-dev \
-        libxslt1-dev
+    	apt -y install git build-essential libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev build-essential python3-pip libgd-dev libgeoip-dev libgoogle-perftools-dev libatomic-ops-dev libxml2-dev libxslt1-dev
     elif [ -f /usr/bin/yum ];then
     	echo 'centOS'
-    	yum -y install wget \
-        gcc-c++ \
-        git \
-        pcre-devel \
-        openssl-devel \
-        libxml2 \
-        libxslt-devel \
-        gd-devel gperftools \
-        GeoIP GeoIP-devel GeoIP-data \
-        libatomic_ops-devel
+    	yum -y install wget gcc-c++ git pcre-devel openssl-devel libxml2 libxslt-devel gd-devel gperftools GeoIP GeoIP-devel GeoIP-data libatomic_ops-devel
     else
     	echo 'unknow OS'
     	exit 1

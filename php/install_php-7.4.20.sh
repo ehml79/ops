@@ -11,82 +11,10 @@ function install_php(){
     if [ -f /usr/bin/apt ];then
         echo 'ubuntu'
 	sudo apt update
-	sudo apt -y install \
-	libzip-dev \
-	bison \
-	autoconf \
-	build-essential \
-	pkg-config git-core \
-	libltdl-dev \
-	libbz2-dev \
-	libxml2-dev \
-	libxslt1-dev \
-	libssl-dev \
-	libicu-dev \
-	libpspell-dev \
-	libenchant-dev \
-	libmcrypt-dev \
-	libpng-dev \
-	libjpeg8-dev \
-	libfreetype6-dev \
-	libmysqlclient-dev \
-	libreadline-dev \
-	libcurl4-openssl-dev \
-	librecode-dev \
-	libsqlite3-dev \
-	libonig-dev \
-	libsodium-dev \
-	libargon2-0-dev 
+	sudo apt -y install libzip-dev bison autoconf build-essential pkg-config git-core libltdl-dev libbz2-dev libxml2-dev libxslt1-dev libssl-dev libicu-dev libpspell-dev libenchant-dev libmcrypt-dev libpng-dev libjpeg8-dev libfreetype6-dev libmysqlclient-dev libreadline-dev libcurl4-openssl-dev librecode-dev libsqlite3-dev libonig-dev libsodium-dev libargon2-0-dev 
     elif [ -f /usr/bin/yum ];then
         echo 'centOS'
-        yum install -y \
-        git \
-        gcc \
-        gcc-c++  \
-        make \
-        zlib \
-        zlib-devel \
-        pcre pcre-devel  \
-	libjpeg \
-	libjpeg-devel \
-	libpng \
-	libpng-devel \
-	freetype \
-	freetype-devel \
-	libxml2 \
-	libxml2-devel \
-	glibc \
-	glibc-devel \
-	glib2 \
-	glib2-devel \
-	bzip2 \
-	bzip2-devel \
-	ncurses \
-	ncurses-devel \
-	curl \
-	curl-devel \
-	e2fsprogs \
-	e2fsprogs-devel \
-	krb5 \
-	krb5-devel \
-	openssl \
-	openssl-devel \
-	openldap \
-	openldap-devel \
-	nss_ldap \
-	openldap-clients \
-	openldap-servers \
-	libicu-devel \
-	libxslt-devel  \
-	libfreetype6-dev   \
-	libxslt-dev \
-	libmcrypt-devel \
-        re2c \
-        sqlite-devel \
-        oniguruma-devel \
-        libsodium-devel \
-        libargon2-devel \
-        libzip-devel
+        yum install -y git gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers libicu-devel libxslt-devel libfreetype6-dev libxslt-dev libmcrypt-devel re2c sqlite-devel oniguruma-devel libsodium-devel libargon2-devel libzip-devel
     else
         echo 'unknow OS'
         exit 1
