@@ -1,8 +1,8 @@
-#!/bin/bash
 
 
-# mongo 创建用户
-db.createUser({user:'mongo_username',pwd:'mongo_password',roles:['userAdminAnyDatabase']})
+# mongo 创建超级用户
+use admin
+db.createUser({ user: "mongo_username", pwd: "mongo_password", roles: [{ role: "root", db: "admin" }] })
 
 
 # mongo单机连接方式
